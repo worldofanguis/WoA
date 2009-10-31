@@ -7,8 +7,8 @@
  *     \___/\___/ |___|/__/    \__\
  *                    World Of Anguis
  *
- *	Network packet source file
  */
+ 
  
 #include "Packet.h"
 

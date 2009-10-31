@@ -7,7 +7,6 @@
  *     \___/\___/ |___|/__/    \__\
  *                    World Of Anguis
  *
- *	Common header files
  */
  
 
@@ -27,3 +26,7 @@
  
 #include <windows.h>
 #include <queue>
+#include <vector>
+
+#include <d3d9.h>
+#include <d3dx9.h>

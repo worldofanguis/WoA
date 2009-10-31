@@ -7,8 +7,8 @@
  *     \___/\___/ |___|/__/    \__\
  *                    World Of Anguis
  *
- *	Network packet header file
  */
+
 
 /*          PACKET STRUCT 
  *	BYTE	-	Packet size		) Msg Header

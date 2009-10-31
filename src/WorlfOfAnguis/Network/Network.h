@@ -7,12 +7,12 @@
  *     \___/\___/ |___|/__/    \__\
  *                    World Of Anguis
  *
- *	Network header file
  */
+ 
  
 #pragma once
 #include "Common.h"
-#include "Packet.h"
+#include "Network\Packet.h"
 
 class Network
 {

@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src\WoAServer\Network;..\..\src\Shared;..\..\src\Shared\Network;..\..\src\WoAServer"
+				AdditionalIncludeDirectories="..\..\src\WoAServer;..\..\src\Shared"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -188,6 +188,26 @@
 				RelativePath="..\..\src\WoAServer\Main.cpp"
 				>
 			</File>
+		</Filter>
+		<Filter
+			Name="Shared"
+			>
+			<File
+				RelativePath="..\..\src\Shared\Common.h"
+				>
+			</File>
+			<Filter
+				Name="Network"
+				>
+				<File
+					RelativePath="..\..\src\Shared\Network\Packet.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\Shared\Network\Packet.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>

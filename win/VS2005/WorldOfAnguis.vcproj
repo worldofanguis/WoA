@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src\WorlfOfAnguis\Network;..\..\src\Shared;..\..\src\Shared\Network;..\..\src\WorlfOfAnguis"
+				AdditionalIncludeDirectories="..\..\src\Shared;..\..\src\WorlfOfAnguis"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -118,7 +118,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\src\WorlfOfAnguis\Network;..\..\src\Shared;..\..\src\Shared\Network;..\..\src\WorlfOfAnguis"
+				AdditionalIncludeDirectories="..\..\src\Shared;..\..\src\WorlfOfAnguis"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -212,6 +212,98 @@
 				RelativePath="..\..\src\WorlfOfAnguis\Network\Network.h"
 				>
 			</File>
+		</Filter>
+		<Filter
+			Name="Graphics"
+			>
+			<Filter
+				Name="DirectX"
+				>
+				<File
+					RelativePath="..\..\src\WorlfOfAnguis\Graphics\DirectX\DirectXInterface.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\WorlfOfAnguis\Graphics\DirectX\DirectXInterface.h"
+					>
+				</File>
+				<Filter
+					Name="Units"
+					>
+					<Filter
+						Name="Player"
+						>
+						<File
+							RelativePath="..\..\src\WorlfOfAnguis\Graphics\Units\Player\DXPlayerView.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\WorlfOfAnguis\Graphics\Units\Player\DXPlayerView.h"
+							>
+						</File>
+					</Filter>
+				</Filter>
+				<Filter
+					Name="World"
+					>
+					<File
+						RelativePath="..\..\src\WorlfOfAnguis\Graphics\World\DXWorldView.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\WorlfOfAnguis\Graphics\World\DXWorldView.h"
+						>
+					</File>
+				</Filter>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="World"
+			>
+			<File
+				RelativePath="..\..\src\WorlfOfAnguis\World\World.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\WorlfOfAnguis\World\World.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Units"
+			>
+			<File
+				RelativePath="..\..\src\WorlfOfAnguis\Units\Unit.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\WorlfOfAnguis\Units\Unit.h"
+				>
+			</File>
+			<Filter
+				Name="Player"
+				>
+				<File
+					RelativePath="..\..\src\WorlfOfAnguis\Units\Player\Player.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\WorlfOfAnguis\Units\Player\Player.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Weapon"
+				>
+				<File
+					RelativePath="..\..\src\WorlfOfAnguis\Units\Weapon\Weapon.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\WorlfOfAnguis\Units\Weapon\Weapon.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath="..\..\src\WorlfOfAnguis\Main.cpp"

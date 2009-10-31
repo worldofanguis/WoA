@@ -7,8 +7,9 @@
  *     \___/\___/ |___|/__/    \__\
  *                    World Of Anguis
  *
- *	Network source file
  */
+ 
+ 
  #pragma comment(lib,"ws2_32.lib")
  #include "Network.h"
  
