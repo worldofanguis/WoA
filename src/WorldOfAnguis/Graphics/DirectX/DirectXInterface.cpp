@@ -11,7 +11,7 @@
  
 #pragma comment(lib, "d3d9.lib")
 #ifdef _DEBUG
-#pragma comment(lib, "d3dx9.lib")		// d3dx9d.lib is the debug lib, just the dll is missing ?_? //
+#pragma comment(lib, "d3dx9d.lib")
 #else
 #pragma comment(lib, "d3dx9.lib")
 #endif
@@ -38,26 +38,42 @@ DirectXInterface::~DirectXInterface()
 	Cleanup();
 }
 
-HRESULT DirectXInterface::Initialize(HWND hwnd)
+HRESULT DirectXInterface::Initialize(HWND hwnd,bool Windowed)
 {
 	// Create the D3D object, which is needed to create the D3DDevice.
 	if((pD3D = Direct3DCreate9(D3D_SDK_VERSION)) == NULL)
 		return E_FAIL;
 
-	// Get the current desktop display mode
 	D3DDISPLAYMODE d3ddm;
-	if(FAILED( pD3D->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &d3ddm)))
-		return E_FAIL;
-
 	D3DPRESENT_PARAMETERS d3dpp; 
+	
 	ZeroMemory(&d3dpp, sizeof(d3dpp));
-	d3dpp.Windowed = TRUE;
-	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
-	d3dpp.BackBufferFormat = d3ddm.Format;				// D3DFMT_X8R8G8B8 !!! // 
-	d3dpp.Flags = D3DPRESENTFLAG_LOCKABLE_BACKBUFFER;	// We want to be able to directly write to backbuffer memory
+
+	if(Windowed)
+		{
+		// Get the current desktop display mode
+		if(FAILED( pD3D->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &d3ddm)))
+			return E_FAIL;
+
+		d3dpp.Windowed = TRUE;
+		d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
+		d3dpp.BackBufferFormat = d3ddm.Format;				// D3DFMT_X8R8G8B8 !!! // 
+		d3dpp.Flags = D3DPRESENT_INTERVAL_ONE;				// D3DPRESENTFLAG_LOCKABLE_BACKBUFFER;	// D3DPRESENT_INTERVAL_IMMEDIATE // We want to be able to directly write to backbuffer memory
+		}
+	else
+		{
+		d3dpp.Windowed               = FALSE;
+		d3dpp.SwapEffect             = D3DSWAPEFFECT_DISCARD;
+		d3dpp.BackBufferWidth        = 1024;
+		d3dpp.BackBufferHeight       = 768;
+		d3dpp.BackBufferFormat       = D3DFMT_X8R8G8B8;
+		d3dpp.PresentationInterval   = D3DPRESENT_INTERVAL_ONE;		// This is what we need ? //
+		// Hide cursor //
+		ShowCursor(false);
+		}
 
 	// Create D3D Device
-	if(FAILED(pD3D->CreateDevice(D3DADAPTER_DEFAULT,D3DDEVTYPE_HAL, hwnd,D3DCREATE_HARDWARE_VERTEXPROCESSING,&d3dpp, &pD3DDevice)))
+	if(FAILED(pD3D->CreateDevice(D3DADAPTER_DEFAULT,D3DDEVTYPE_HAL,hwnd,D3DCREATE_HARDWARE_VERTEXPROCESSING,&d3dpp,&pD3DDevice)))
         return E_FAIL;
 
 	if(FAILED(pD3DDevice->GetBackBuffer(0,0,D3DBACKBUFFER_TYPE_MONO,&pBackBuffer)))
@@ -77,7 +93,7 @@ return S_OK;
 
 void DirectXInterface::Cleanup()
 {
-	SAFE_RELEASE(pBackBuffer);
+//	SAFE_RELEASE(pBackBuffer);			// Is this needed ? //
 	SAFE_RELEASE(pD3DDevice);
 	SAFE_RELEASE(pD3D);
 }

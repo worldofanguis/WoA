@@ -39,12 +39,18 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLin
 	WinClass.lpszClassName = "WoA";
     RegisterClassEx(&WinClass);
 
+    HWND hwnd;
     // Create the application's window
-    HWND hwnd = CreateWindow("WoA", "woa",WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU,0,0,500,500,HWND_DESKTOP,NULL,hInstance,NULL);
-
-	// Initialize Direct3D
-	if(SUCCEEDED(DXI.Initialize(hwnd)))
+    if((hwnd = CreateWindow("WoA", "woa",WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU,0,0,1024,768,HWND_DESKTOP,NULL,hInstance,NULL)) == NULL)
 		{
+		MessageBox(NULL,"Failed to create the main window","Oops",MB_OK);
+		return 0;
+		}
+	
+		
+	// Initialize Direct3D
+	if(SUCCEEDED(DXI.Initialize(hwnd,false)))
+		{				
 		// Show the window
 		ShowWindow(hwnd,nCmdShow);
 		UpdateWindow(hwnd);
@@ -75,6 +81,14 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		case WM_DESTROY:
 			PostQuitMessage(0);
 			return 0;
+			
+		case WM_KEYDOWN:
+			if(wParam == VK_ESCAPE)
+				{
+				PostQuitMessage(0);
+				return 0;
+				}
+			break;
 
 		case WM_PAINT:
 			DXI.Render();

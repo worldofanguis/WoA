@@ -22,8 +22,8 @@ public:
 	DirectXInterface();
 	~DirectXInterface();
 	
-	HRESULT Initialize(HWND hwnd);		// Initializes DirectX //
-	void Cleanup();						// Cleanup DirectX //
+	HRESULT Initialize(HWND hwnd,bool Windowed);		// Initializes DirectX //
+	void Cleanup();								// Cleanup DirectX //
 	
 	void Render();						// Render the screen, (units->update()) should be moved from here ? //
 	
@@ -60,5 +60,4 @@ private:
 	int ViewHeight;			// Screen height (BackBuffer height) //
 	int ViewLeft;			// Left coord of the screen //
 	int ViewTop;			// Top coord of the screen //
-
 };
