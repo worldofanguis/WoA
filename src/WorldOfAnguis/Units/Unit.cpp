@@ -25,6 +25,10 @@ Unit::~Unit()
 {
 }
 
+void Unit::Update()
+{
+}
+
 bool Unit::HitTest()
 {
 return false;

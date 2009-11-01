@@ -12,10 +12,10 @@
 #pragma once
 #include "Common.h"
 
-class Unit // abstract
+class Unit
 {
 public:
-	virtual void Update() = 0;
+	void Update();
 	virtual void Draw(int VX,int VY) = 0;
 	
 	int GetWidth() {return Width;}

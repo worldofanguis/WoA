@@ -17,8 +17,7 @@
 class Player : public Unit , DXPlayerView
 {
 public:
-	Player();
-	Player(int X,int Y);
+	Player(int X = 0,int Y = 0);
 	~Player();
 
 	void Update();

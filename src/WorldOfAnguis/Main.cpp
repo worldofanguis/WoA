@@ -15,8 +15,6 @@
 #include "Graphics/DirectX/DirectXInterface.h"
 
 DirectXInterface DXI;
-		World *w;
-		Player *p;
 
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -24,7 +22,6 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLin
 {
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
-
 
 	// Register the window class
 	WNDCLASSEX WinClass;
@@ -43,16 +40,13 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLin
     RegisterClassEx(&WinClass);
 
     // Create the application's window
-    HWND hwnd = CreateWindow("WoA", "woa",WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU,100,100,500,500,HWND_DESKTOP,NULL,hInstance,NULL);
+    HWND hwnd = CreateWindow("WoA", "woa",WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU,0,0,500,500,HWND_DESKTOP,NULL,hInstance,NULL);
 
 	// Initialize Direct3D
 	if(SUCCEEDED(DXI.Initialize(hwnd)))
 		{
-		w = new World();
-		p = new Player();
-		w->LoadMaps(NULL,"..\\..\\pic\\Map.bmp");
 		// Show the window
-		ShowWindow(hwnd, SW_SHOWDEFAULT);
+		ShowWindow(hwnd,nCmdShow);
 		UpdateWindow(hwnd);
 
 		// Enter the message loop
@@ -85,26 +79,6 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		case WM_PAINT:
 			DXI.Render();
 			return 0;
-		case WM_KEYDOWN:
-			if(wParam == VK_LEFT)
-				DXI.ScrollLeft(2);
-			else if(wParam == VK_RIGHT)
-				DXI.ScrollRight(2);
-			else if(wParam == VK_UP)
-				DXI.ScrollUp(2);
-			else if(wParam == VK_DOWN)
-				DXI.ScrollDown(2);
-
-			if(wParam == 'A')
-				p->SetPos(p->GetX()-2,p->GetY());
-			else if(wParam == 'D')
-				p->SetPos(p->GetX()+2,p->GetY());
-			else if(wParam == 'W')
-				p->SetPos(p->GetX(),p->GetY()-2);
-			else if(wParam == 'S')
-				p->SetPos(p->GetX(),p->GetY()+2);
-
-			break;
 		}
 
 return DefWindowProc(hWnd, msg, wParam, lParam);
