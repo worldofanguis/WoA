@@ -15,8 +15,9 @@
 #include "Graphics/DirectX/DirectXInterface.h"
 
 DirectXInterface DXI;
-World w;
-Player p;
+		World *w;
+		Player *p;
+
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLine,int nCmdShow)
@@ -47,10 +48,9 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLin
 	// Initialize Direct3D
 	if(SUCCEEDED(DXI.Initialize(hwnd)))
 		{
-		w.LoadMaps(NULL,"..\\..\\pic\\Map.bmp");
-		DXI.RegisterWorld(&w);
-		p.SetPos(10,10);
-		DXI.RegisterUnit(reinterpret_cast<Unit*>(&p));
+		w = new World();
+		p = new Player();
+		w->LoadMaps(NULL,"..\\..\\pic\\Map.bmp");
 		// Show the window
 		ShowWindow(hwnd, SW_SHOWDEFAULT);
 		UpdateWindow(hwnd);
@@ -96,13 +96,13 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				DXI.ScrollDown(2);
 
 			if(wParam == 'A')
-				p.SetPos(p.GetX()-2,p.GetY());
+				p->SetPos(p->GetX()-2,p->GetY());
 			else if(wParam == 'D')
-				p.SetPos(p.GetX()+2,p.GetY());
+				p->SetPos(p->GetX()+2,p->GetY());
 			else if(wParam == 'W')
-				p.SetPos(p.GetX(),p.GetY()-2);
+				p->SetPos(p->GetX(),p->GetY()-2);
 			else if(wParam == 'S')
-				p.SetPos(p.GetX(),p.GetY()+2);
+				p->SetPos(p->GetX(),p->GetY()+2);
 
 			break;
 		}

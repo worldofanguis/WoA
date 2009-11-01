@@ -9,7 +9,7 @@
  *
  */
  
- 
+#pragma once
 #include "Common.h"
 
 class Unit // abstract

@@ -9,7 +9,7 @@
  *
  */
  
-
+#pragma once
 #include "Common.h"
 #include "Graphics/World/DXWorldView.h"
 

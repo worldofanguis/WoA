@@ -9,8 +9,9 @@
  *
  */
  
- // View for the player class -> this class is responsigble for drawing the player on the screen //
- 
+// View for the player class -> this class is responsigble for drawing the player on the screen //
+
+#pragma once
 #include "Common.h"
 
 class DXPlayerView
@@ -18,7 +19,6 @@ class DXPlayerView
 public:
 	static void SetDevice(LPDIRECT3DDEVICE9 pDevice) {DXPlayerView::pDevice = pDevice;}
 	static void SetSprite(LPD3DXSPRITE pSprite) {DXPlayerView::pSprite = pSprite;}
-	static void LoadTexture();
 
 	
 protected:
@@ -30,10 +30,14 @@ protected:
 	void Draw(int X,int Y);
 	
 private:
+	void LoadTexture(int TextureID);
+	
+	
 	int AnimationFrame;
 
+	/* Texture for the player */
+	LPDIRECT3DTEXTURE9 pTexture;
 	/* Static stuff for drawing (all instances uses the same) */
 	static LPDIRECT3DDEVICE9 pDevice;
-	static LPDIRECT3DTEXTURE9 pTexture;
 	static LPD3DXSPRITE pSprite;
 };

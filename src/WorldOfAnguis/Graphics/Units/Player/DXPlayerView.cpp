@@ -11,24 +11,33 @@
  
  
 #include "DXPlayerView.h"
+#include "Graphics/DirectX/DirectXInterface.h"
+
 
 LPDIRECT3DDEVICE9 DXPlayerView::pDevice = NULL;
-LPDIRECT3DTEXTURE9 DXPlayerView::pTexture = NULL;
 LPD3DXSPRITE DXPlayerView::pSprite = NULL;
 
 DXPlayerView::DXPlayerView()
 {
+	pTexture = NULL;
+	AnimationFrame = 0;
+	LoadTexture(1);
 }
 
 DXPlayerView::~DXPlayerView()
 {
+	SAFE_RELEASE(pTexture);
 }
 
-void DXPlayerView::LoadTexture()
+void DXPlayerView::LoadTexture(int TextureID)
 {
+	if(pTexture != NULL)
+		return;
 	D3DXIMAGE_INFO d3dxImageInfo;
+	char File[MAX_PATH];
+	sprintf_s(File,sizeof(File),"..\\..\\pic\\Player%d.bmp",TextureID);
 	D3DXCreateTextureFromFileEx(DXPlayerView::pDevice,			// Device
-								"..\\..\\pic\\Player.bmp",
+								File,
 								20,								// Width
 								30,								// Height
 								1,
@@ -40,7 +49,7 @@ void DXPlayerView::LoadTexture()
 								D3DCOLOR_COLORVALUE(1.0f,0.0f,1.0f,1.0f),		// pink = transparent
 								&d3dxImageInfo,
 								NULL,
-								&DXPlayerView::pTexture);
+								&pTexture);
 
     pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 	pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);

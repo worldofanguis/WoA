@@ -21,10 +21,14 @@ DXWorldView::DXWorldView()
 
 DXWorldView::~DXWorldView()
 {
+	SAFE_RELEASE(pSurface);
+	SAFE_RELEASE(pOriginalSurface);
 }
 
 void DXWorldView::Draw(int Left,int Top,int Width,int Height)
 {
+	if(pSurface == NULL || pBackBuffer == NULL)
+		return;
 	RECT r = {Left,Top,Left+Width,Top+Height};
 	/* Copy the r region from pSurface to the whole pBackBuffer */
 	pDevice->UpdateSurface(pSurface,&r,pBackBuffer,NULL);

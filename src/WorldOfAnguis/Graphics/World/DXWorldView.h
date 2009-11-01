@@ -9,9 +9,10 @@
  *
  */
  
- // View for the world class -> this class is responsigble for drawing the map on the screen //
- 
- #include "Common.h"
+// View for the world class -> this class is responsigble for drawing the map on the screen //
+
+#pragma once
+#include "Common.h"
 
 class DXWorldView
 {

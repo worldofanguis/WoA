@@ -11,15 +11,18 @@
  
 
 #include "World.h"
+#include "Graphics/DirectX/DirectXInterface.h"
 
 World::World()
 {
 	Map = NULL;
+	DirectXInterface::RegisterWorld(this);
 }
 
 World::~World()
 {
 	delete[] Map;
+	DirectXInterface::UnRegisterWorld();
 }
 
 void World::LoadMaps(char *HitMap,char* TexturedMap)

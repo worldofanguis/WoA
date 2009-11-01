@@ -9,7 +9,7 @@
  *
  */
  
- // Interface for drawing on the screen //
+// Interface for drawing on the screen //
  
 #pragma once
 #include "Common.h"
@@ -34,19 +34,21 @@ public:
 	void ScrollDown(int Dist);			// Scrolling the screen down with dist //
 	
 	/* Registers the world class for drawing the world */
-	void RegisterWorld(World* world) {this->world = world;}
+	static void RegisterWorld(World* world) {DirectXInterface::world = world;}
+	/* UnRegisters the world */
+	static void UnRegisterWorld() {DirectXInterface::world = NULL;}
 	/* Registers a unit (Player,Missile,etc...) for drawing */
-	void RegisterUnit(Unit* unit) {Objects.push_back(unit);}
+	static void RegisterUnit(Unit* unit) {Objects.push_back(unit);}
 	/* UnRegisters a unit (because its expired) */
-	void UnRegisterUnit(Unit* unit) {for(it=Objects.begin();it!=Objects.end();it++){if((*it) == unit){Objects.erase(it); break;}}}
+	static void UnRegisterUnit(Unit* unit) {for(it=Objects.begin();it!=Objects.end();it++){if((*it) == unit){Objects.erase(it); break;}}}
 	
 private:
 	/* Check if the unit is in the field of view */
 	bool InSight(Unit* unit);
 
-	World* world;						// world pointer //
-	std::vector<Unit*> Objects;			// containter for the units //
-	std::vector<Unit*>::iterator it;
+	static World* world;						// world pointer //
+	static std::vector<Unit*> Objects;			// containter for the units //
+	static std::vector<Unit*>::iterator it;
 	
 	HWND hwnd;							// Window handle //
 	LPDIRECT3D9 pD3D;

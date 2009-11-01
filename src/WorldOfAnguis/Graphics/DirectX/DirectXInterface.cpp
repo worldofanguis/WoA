@@ -18,6 +18,11 @@
 
 #include "Graphics\DirectX\DirectXInterface.h"
 
+/* Static parts */
+World* DirectXInterface::world = NULL;
+std::vector<Unit*> DirectXInterface::Objects;
+std::vector<Unit*>::iterator DirectXInterface::it;
+
 DirectXInterface::DirectXInterface()
 {
 	pD3D = NULL;
@@ -67,7 +72,6 @@ HRESULT DirectXInterface::Initialize(HWND hwnd)
 	
 	DXPlayerView::SetDevice(pD3DDevice);
 	DXPlayerView::SetSprite(pSprite);
-	DXPlayerView::LoadTexture();
 return S_OK;
 }
 
