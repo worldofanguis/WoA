@@ -15,8 +15,8 @@
 class Unit // abstract
 {
 public:
-	virtual void Update() {}
-	virtual void Draw() {}
+	virtual void Update() = 0;
+	virtual void Draw(int VX,int VY) = 0;
 	
 	int GetWidth() {return Width;}
 	int GetHeight() {return Height;}

@@ -22,17 +22,18 @@ public:
 
 	
 protected:
+	/* Hide constructor/desctructor because its an abstract class */
 	DXPlayerView();
 	~DXPlayerView();
 	
+	/* Draws the player on the X,Y coords */
 	void Draw(int X,int Y);
 	
 private:
 	int AnimationFrame;
 
-
+	/* Static stuff for drawing (all instances uses the same) */
 	static LPDIRECT3DDEVICE9 pDevice;
 	static LPDIRECT3DTEXTURE9 pTexture;
 	static LPD3DXSPRITE pSprite;
-	
 };

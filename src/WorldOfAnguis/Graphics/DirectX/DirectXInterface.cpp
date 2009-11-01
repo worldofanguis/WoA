@@ -97,7 +97,7 @@ void DirectXInterface::Render()
 		{
 		(*it)->Update();		// Updating the game objects //
 		if(InSight((*it)))
-			(*it)->Draw();
+			(*it)->Draw(ViewLeft,ViewTop);
 		}
 	// End Drawing Objects //
 	pSprite->End();
