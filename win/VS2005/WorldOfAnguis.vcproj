@@ -17,8 +17,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory=".\WorlfOfAnguis__$(PlatformName)_$(ConfigurationName)"
-			IntermediateDirectory=".\WorlfOfAnguis__$(PlatformName)_$(ConfigurationName)"
+			OutputDirectory=".\WordOfAnguis__$(PlatformName)_$(ConfigurationName)"
+			IntermediateDirectory=".\WorldOfAnguis__$(PlatformName)_$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="2"
 			>
@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src\Shared;..\..\src\WorlfOfAnguis"
+				AdditionalIncludeDirectories="..\..\src\Shared;..\..\src\WorldOfAnguis"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -61,10 +61,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="..\..\bin\$(PlatformName)_$(ConfigurationName)\WorlfOfAnguis.exe"
+				OutputFile="..\..\bin\$(PlatformName)_$(ConfigurationName)\WorldOfAnguis.exe"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="..\..\bin\$(PlatformName)_$(ConfigurationName)\WorlfOfAnguis.pdb"
+				ProgramDatabaseFile="..\..\bin\$(PlatformName)_$(ConfigurationName)\WorldOfAnguis.pdb"
 				SubSystem="2"
 				TargetMachine="1"
 			/>
@@ -95,10 +95,10 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory=".\WorlfOfAnguis__$(PlatformName)_$(ConfigurationName)"
-			IntermediateDirectory=".\WorlfOfAnguis__$(PlatformName)_$(ConfigurationName)"
+			OutputDirectory=".\WorldOfAnguis__$(PlatformName)_$(ConfigurationName)"
+			IntermediateDirectory=".\WorldOfAnguis__$(PlatformName)_$(ConfigurationName)"
 			ConfigurationType="1"
-			CharacterSet="1"
+			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -118,7 +118,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\src\Shared;..\..\src\WorlfOfAnguis"
+				AdditionalIncludeDirectories="..\..\src\Shared;..\..\src\WorldOfAnguis"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -137,10 +137,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="..\..\bin\$(PlatformName)_$(ConfigurationName)\WorlfOfAnguis.exe"
+				OutputFile="..\..\bin\$(PlatformName)_$(ConfigurationName)\WorldOfAnguis.exe"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="..\..\bin\$(PlatformName)_$(ConfigurationName)\WorlfOfAnguis.pdb"
+				ProgramDatabaseFile="..\..\bin\$(PlatformName)_$(ConfigurationName)\WorldOfAnguis.pdb"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -205,11 +205,11 @@
 			Name="Network"
 			>
 			<File
-				RelativePath="..\..\src\WorlfOfAnguis\Network\Network.cpp"
+				RelativePath="..\..\src\WorldOfAnguis\Network\Network.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\WorlfOfAnguis\Network\Network.h"
+				RelativePath="..\..\src\WorldOfAnguis\Network\Network.h"
 				>
 			</File>
 		</Filter>
@@ -220,11 +220,11 @@
 				Name="DirectX"
 				>
 				<File
-					RelativePath="..\..\src\WorlfOfAnguis\Graphics\DirectX\DirectXInterface.cpp"
+					RelativePath="..\..\src\WorldOfAnguis\Graphics\DirectX\DirectXInterface.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\WorlfOfAnguis\Graphics\DirectX\DirectXInterface.h"
+					RelativePath="..\..\src\WorldOfAnguis\Graphics\DirectX\DirectXInterface.h"
 					>
 				</File>
 				<Filter
@@ -234,11 +234,11 @@
 						Name="Player"
 						>
 						<File
-							RelativePath="..\..\src\WorlfOfAnguis\Graphics\Units\Player\DXPlayerView.cpp"
+							RelativePath="..\..\src\WorldOfAnguis\Graphics\Units\Player\DXPlayerView.cpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\src\WorlfOfAnguis\Graphics\Units\Player\DXPlayerView.h"
+							RelativePath="..\..\src\WorldOfAnguis\Graphics\Units\Player\DXPlayerView.h"
 							>
 						</File>
 					</Filter>
@@ -247,11 +247,11 @@
 					Name="World"
 					>
 					<File
-						RelativePath="..\..\src\WorlfOfAnguis\Graphics\World\DXWorldView.cpp"
+						RelativePath="..\..\src\WorldOfAnguis\Graphics\World\DXWorldView.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\WorlfOfAnguis\Graphics\World\DXWorldView.h"
+						RelativePath="..\..\src\WorldOfAnguis\Graphics\World\DXWorldView.h"
 						>
 					</File>
 				</Filter>
@@ -261,11 +261,11 @@
 			Name="World"
 			>
 			<File
-				RelativePath="..\..\src\WorlfOfAnguis\World\World.cpp"
+				RelativePath="..\..\src\WorldOfAnguis\World\World.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\WorlfOfAnguis\World\World.h"
+				RelativePath="..\..\src\WorldOfAnguis\World\World.h"
 				>
 			</File>
 		</Filter>
@@ -273,22 +273,22 @@
 			Name="Units"
 			>
 			<File
-				RelativePath="..\..\src\WorlfOfAnguis\Units\Unit.cpp"
+				RelativePath="..\..\src\WorldOfAnguis\Units\Unit.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\WorlfOfAnguis\Units\Unit.h"
+				RelativePath="..\..\src\WorldOfAnguis\Units\Unit.h"
 				>
 			</File>
 			<Filter
 				Name="Player"
 				>
 				<File
-					RelativePath="..\..\src\WorlfOfAnguis\Units\Player\Player.cpp"
+					RelativePath="..\..\src\WorldOfAnguis\Units\Player\Player.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\WorlfOfAnguis\Units\Player\Player.h"
+					RelativePath="..\..\src\WorldOfAnguis\Units\Player\Player.h"
 					>
 				</File>
 			</Filter>
@@ -296,17 +296,17 @@
 				Name="Weapon"
 				>
 				<File
-					RelativePath="..\..\src\WorlfOfAnguis\Units\Weapon\Weapon.cpp"
+					RelativePath="..\..\src\WorldOfAnguis\Units\Weapon\Weapon.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\WorlfOfAnguis\Units\Weapon\Weapon.h"
+					RelativePath="..\..\src\WorldOfAnguis\Units\Weapon\Weapon.h"
 					>
 				</File>
 			</Filter>
 		</Filter>
 		<File
-			RelativePath="..\..\src\WorlfOfAnguis\Main.cpp"
+			RelativePath="..\..\src\WorldOfAnguis\Main.cpp"
 			>
 		</File>
 	</Files>
