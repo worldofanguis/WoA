@@ -27,7 +27,7 @@ protected:
 	~DXPlayerView();
 	
 	/* Draws the player on the X,Y coords of the screen */
-	void Draw(int X,int Y,bool Jumping);
+	void Draw(int X,int Y,bool FaceRight,bool Jumping);
 	
 private:
 	/* Load the player texture based on the ID (Player<ID>.bmp) */

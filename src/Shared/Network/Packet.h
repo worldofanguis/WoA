@@ -52,7 +52,7 @@ public:
 	/* Overloaded operator << - adds a float to the packet */
 	Packet& operator<< (float);
 	/* Overloaded operator << - adds an int to the packet */	
-	Packet& operator<< (int Data)
+	Packet& operator<< (int Data);
 
 	/* Returns with the size of the msg */
 	unsigned int GetMsgSize() {return _size;}

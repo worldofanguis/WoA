@@ -21,7 +21,7 @@ public:
 	~Player();
 
 	/* Call the View class draw function to draw the player on the screen (substact the viewX,viewY to position on the MAP and not on the SCREEN) */
-	void Draw(int ViewX,int ViewY) {DXPlayerView::Draw(X-ViewX,Y-ViewY,Jumping);}
+	void Draw(int ViewX,int ViewY) {DXPlayerView::Draw(X-ViewX,Y-ViewY,FaceRight,Jumping);}
 
 	/* Set the player position (not sure we'll need it later) */
 	void SetPos(int X,int Y) {this->X = X; this->Y = Y;}

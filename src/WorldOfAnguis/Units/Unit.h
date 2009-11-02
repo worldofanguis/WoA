@@ -40,6 +40,8 @@ protected:
 
 	int Width;		// Size of the Unit //
 	int Height;
+	
+	bool FaceRight;
 
 };
 

@@ -55,7 +55,7 @@ void DXPlayerView::LoadTexture(int TextureID)
 	pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 }
 
-void DXPlayerView::Draw(int X,int Y,bool Jumping)
+void DXPlayerView::Draw(int X,int Y,bool FaceRight,bool Jumping)
 {
 	if(pTexture == NULL || pSprite == NULL)
 		return;
