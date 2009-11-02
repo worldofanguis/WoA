@@ -59,4 +59,9 @@ private:
 	int ViewHeight;			// Screen height (BackBuffer height) //
 	int ViewLeft;			// Left coord of the screen //
 	int ViewTop;			// Top coord of the screen //
+	
+	LPD3DXFONT pFont;		// Font for drawing FPS //
+	bool ShowFPS;
+	char FPS[10];
+	DWORD TickCount,PrevTickCount;
 };

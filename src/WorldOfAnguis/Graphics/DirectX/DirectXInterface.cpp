@@ -32,6 +32,8 @@ DirectXInterface::DirectXInterface()
 	
 	world = NULL;
 	Objects.clear();
+	
+	ShowFPS = true;
 }
 
 DirectXInterface::~DirectXInterface()
@@ -80,6 +82,8 @@ HRESULT DirectXInterface::Initialize(HWND hwnd,bool Windowed)
 	if(FAILED(pD3DDevice->GetBackBuffer(0,0,D3DBACKBUFFER_TYPE_MONO,&pBackBuffer)))
 		return E_FAIL;
 
+	D3DXCreateFont(pD3DDevice,21,0,FW_BOLD,1,false,DEFAULT_CHARSET,OUT_DEFAULT_PRECIS,ANTIALIASED_QUALITY,DEFAULT_PITCH|FF_DONTCARE,"Arial",&pFont);
+ 
 
 	ViewWidth = d3dpp.BackBufferWidth;
 	ViewHeight = d3dpp.BackBufferHeight;
@@ -97,6 +101,7 @@ return S_OK;
 void DirectXInterface::Cleanup()
 {
 //	SAFE_RELEASE(pBackBuffer);			// We havent created the backbuffer just used it, so i think we dont need to realease it (or do we ?) //
+	SAFE_RELEASE(pFont);
 	SAFE_RELEASE(pD3DDevice);
 	SAFE_RELEASE(pD3D);
 }
@@ -105,7 +110,8 @@ void DirectXInterface::Render()
 {
 	if(pD3DDevice == NULL)
 		return;
-		
+	
+	
 	pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0,0,0),1.0f,0);	// If covering the whoe screen with pictures its not necceseary (not sure) ^^ //
 	pD3DDevice->BeginScene();
 	pSprite->Begin(D3DXSPRITE_ALPHABLEND);
@@ -122,10 +128,22 @@ void DirectXInterface::Render()
 		if(InSight((*it)))
 			(*it)->Draw(ViewLeft,ViewTop);
 		}
-	// End Drawing Objects //
+
+	// Display FPS counter //
+	if(ShowFPS)
+		{
+		if(PrevTickCount != TickCount)
+			{
+			sprintf_s(FPS,sizeof(FPS),"%d",1000/(TickCount-PrevTickCount));
+			pFont->DrawText(NULL,FPS,-1,NULL,DT_LEFT|DT_NOCLIP,0xFF0000FF);
+			}
+		}
+
 	pSprite->End();
 	pD3DDevice->EndScene();
 	pD3DDevice->Present(NULL,NULL,NULL,NULL);		// TODO: check present paramters maybe there is a better on than just NULL-s //
+	PrevTickCount = TickCount;
+	TickCount = GetTickCount();
 }
 
 bool DirectXInterface::InSight(Unit* unit)
