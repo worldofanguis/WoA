@@ -50,11 +50,12 @@ bool DXWorldView::LoadWorldTexture(char *File)
 	BITMAPINFOHEADER bmih;
 	
 	fread(&bmfh,sizeof(BITMAPFILEHEADER),1,FKez);
-	if(bmfh.bfType != 0x4D42)		// BM //
+	if(bmfh.bfType != 0x4D42)		// check if its a BMP (BM flag) //
 		{
 		fclose(FKez);
 		return false;
 		}
+
 	fread(&bmih,sizeof(BITMAPINFOHEADER),1,FKez);
 	fclose(FKez);
 	
@@ -64,6 +65,7 @@ bool DXWorldView::LoadWorldTexture(char *File)
 	pDevice->CreateOffscreenPlainSurface(SurfaceWidth,SurfaceHeight,D3DFMT_X8R8G8B8,D3DPOOL_SYSTEMMEM,&pSurface,NULL);
 	pDevice->CreateOffscreenPlainSurface(SurfaceWidth,SurfaceHeight,D3DFMT_X8R8G8B8,D3DPOOL_SYSTEMMEM,&pOriginalSurface,NULL);
 	D3DXLoadSurfaceFromFile(pOriginalSurface,NULL,NULL,File,NULL,D3DX_FILTER_LINEAR,D3DCOLOR_ARGB(255,0,0,0),NULL);
+	/* This call is requied because of some conversions (not sure, but this way its working ^^) */
 	D3DXLoadSurfaceFromSurface(pSurface,NULL,NULL,pOriginalSurface,NULL,NULL,D3DX_FILTER_LINEAR,0);
 
 return true;

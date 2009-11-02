@@ -8,8 +8,7 @@
  *                    World Of Anguis
  *
  */
- 
-// View for the player class -> this class is responsigble for drawing the player on the screen //
+
 
 #pragma once
 #include "Common.h"
@@ -17,6 +16,7 @@
 class DXPlayerView
 {
 public:
+	/* Static functions for setting the requied stuffs (Device & Sprite) */
 	static void SetDevice(LPDIRECT3DDEVICE9 pDevice) {DXPlayerView::pDevice = pDevice;}
 	static void SetSprite(LPD3DXSPRITE pSprite) {DXPlayerView::pSprite = pSprite;}
 
@@ -26,13 +26,14 @@ protected:
 	DXPlayerView();
 	~DXPlayerView();
 	
-	/* Draws the player on the X,Y coords */
-	void Draw(int X,int Y);
+	/* Draws the player on the X,Y coords of the screen */
+	void Draw(int X,int Y,bool Jumping);
 	
 private:
+	/* Load the player texture based on the ID (Player<ID>.bmp) */
 	void LoadTexture(int TextureID);
 	
-	
+	/* The current animation frame */
 	int AnimationFrame;
 
 	/* Texture for the player */

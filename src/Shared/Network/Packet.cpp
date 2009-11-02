@@ -8,14 +8,14 @@
  *                    World Of Anguis
  *
  */
- 
- 
+
+
 #include "Packet.h"
 
 Packet::Packet()
 {
 	_size = 0;
-	_buffer = new char[15];
+	_buffer = new char[15];		// Allocate a 15-BYTE buffer (this should handle the biggest messages too) //
 }
 
 Packet::Packet(const Packet& packet)
@@ -45,6 +45,13 @@ return *this;
 }
 
 Packet& Packet::operator<< (float Data)
+{
+	memcpy(_buffer+_size,&Data,4);
+	_size+=4;
+return *this;
+}
+
+Packet& Packet::operator<< (int Data)
 {
 	memcpy(_buffer+_size,&Data,4);
 	_size+=4;

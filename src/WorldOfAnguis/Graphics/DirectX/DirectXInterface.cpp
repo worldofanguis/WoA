@@ -9,6 +9,7 @@
  *
  */
  
+ 
 #pragma comment(lib, "d3d9.lib")
 #ifdef _DEBUG
 #pragma comment(lib, "d3dx9d.lib")
@@ -18,7 +19,7 @@
 
 #include "Graphics\DirectX\DirectXInterface.h"
 
-/* Static parts */
+
 World* DirectXInterface::world = NULL;
 std::vector<Unit*> DirectXInterface::Objects;
 std::vector<Unit*>::iterator DirectXInterface::it;
@@ -40,7 +41,7 @@ DirectXInterface::~DirectXInterface()
 
 HRESULT DirectXInterface::Initialize(HWND hwnd,bool Windowed)
 {
-	// Create the D3D object, which is needed to create the D3DDevice.
+	// Create the D3D object, which is needed to create the D3DDevice. //
 	if((pD3D = Direct3DCreate9(D3D_SDK_VERSION)) == NULL)
 		return E_FAIL;
 
@@ -51,7 +52,7 @@ HRESULT DirectXInterface::Initialize(HWND hwnd,bool Windowed)
 
 	if(Windowed)
 		{
-		// Get the current desktop display mode
+		// Get the current desktop display mode //
 		if(FAILED( pD3D->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &d3ddm)))
 			return E_FAIL;
 
@@ -68,21 +69,23 @@ HRESULT DirectXInterface::Initialize(HWND hwnd,bool Windowed)
 		d3dpp.BackBufferHeight       = 768;
 		d3dpp.BackBufferFormat       = D3DFMT_X8R8G8B8;
 		d3dpp.PresentationInterval   = D3DPRESENT_INTERVAL_ONE;		// This is what we need ? //
-		// Hide cursor //
-		ShowCursor(false);
+		
+		ShowCursor(false);		 		// Hide cursor //
 		}
 
-	// Create D3D Device
+	// Create D3D Device //
 	if(FAILED(pD3D->CreateDevice(D3DADAPTER_DEFAULT,D3DDEVTYPE_HAL,hwnd,D3DCREATE_HARDWARE_VERTEXPROCESSING,&d3dpp,&pD3DDevice)))
         return E_FAIL;
 
 	if(FAILED(pD3DDevice->GetBackBuffer(0,0,D3DBACKBUFFER_TYPE_MONO,&pBackBuffer)))
 		return E_FAIL;
 
+
 	ViewWidth = d3dpp.BackBufferWidth;
 	ViewHeight = d3dpp.BackBufferHeight;
 	D3DXCreateSprite(pD3DDevice,&pSprite);
 	
+	/* Set the static parts of the View classes */
 	DXWorldView::SetDevice(pD3DDevice);
 	DXWorldView::SetBackBuffer(pBackBuffer);
 	
@@ -93,7 +96,7 @@ return S_OK;
 
 void DirectXInterface::Cleanup()
 {
-//	SAFE_RELEASE(pBackBuffer);			// Is this needed ? //
+//	SAFE_RELEASE(pBackBuffer);			// We havent created the backbuffer just used it, so i think we dont need to realease it (or do we ?) //
 	SAFE_RELEASE(pD3DDevice);
 	SAFE_RELEASE(pD3D);
 }
@@ -107,32 +110,34 @@ void DirectXInterface::Render()
 	pD3DDevice->BeginScene();
 	pSprite->Begin(D3DXSPRITE_ALPHABLEND);
 	
-	// Drawing World //
+	// Drawing the world //
 	if(world)
 		world->Draw(ViewLeft,ViewTop,ViewWidth,ViewHeight);
-	// End Drawind World //
+
 	
-	// Drawing Objects: Players, Bullets, etc //
+	// Drawing objects: Players, Pickups, Bullets, etc (everything what implements <Units> can be added the the drawing queue) //
 	for(it=Objects.begin();it!=Objects.end();it++)
 		{
-		(*it)->Update();		// Updating the game objects //
+		(*it)->Update();		// Updating the game objects (should be moved from there) since we are responsible for DRAWING only //
 		if(InSight((*it)))
 			(*it)->Draw(ViewLeft,ViewTop);
 		}
 	// End Drawing Objects //
 	pSprite->End();
 	pD3DDevice->EndScene();
-	pD3DDevice->Present(NULL,NULL,NULL,NULL);
+	pD3DDevice->Present(NULL,NULL,NULL,NULL);		// TODO: check present paramters maybe there is a better on than just NULL-s //
 }
 
 bool DirectXInterface::InSight(Unit* unit)
 {
+	/* Check if the object we want to draw is truly in sight (if not just leave it alone) */
 	if((ViewLeft < (unit->GetX()+unit->GetWidth())) && (ViewTop < (unit->GetY()+unit->GetHeight())) &&
 	   ((ViewLeft+ViewWidth) > unit->GetX()) && ((ViewTop+ViewHeight) > unit->GetY()))
 		return true;
 return false;
 }
 
+/* Maybe this functions should be moved to 2 (ScrollingVertical and ScrollingHorizontal) */
 void DirectXInterface::ScrollLeft(int Dist)
 {
 	if(ViewLeft-Dist > 0)

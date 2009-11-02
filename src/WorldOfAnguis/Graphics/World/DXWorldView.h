@@ -9,7 +9,6 @@
  *
  */
  
-// View for the world class -> this class is responsigble for drawing the map on the screen //
 
 #pragma once
 #include "Common.h"
@@ -17,6 +16,7 @@
 class DXWorldView
 {
 public:
+	/* Static functions for setting the requied stuffs (Device & Sprite) */
 	static void SetDevice(LPDIRECT3DDEVICE9 pDevice) {DXWorldView::pDevice = pDevice;}
 	static void SetBackBuffer(LPDIRECT3DSURFACE9 pBackBuffer) {DXWorldView::pBackBuffer = pBackBuffer;}
 
@@ -25,6 +25,7 @@ protected:
 	/* Hide constructor/desctructor because its an abstract class */
 	DXWorldView();
 	~DXWorldView();
+	
 	/* Load the map texture from file */
 	bool LoadWorldTexture(char *File);
 	/* Copy the pSurface (Terrain) to the BackBuffer */
@@ -32,8 +33,8 @@ protected:
 	/* Updates the pSurface (Terrain), should be called after exlosions */ 
 	void UpdateSurface(char *Map);
 	
-	int GetSurfaceWidth() {return SurfaceWidth;}
-	int GetSurfaceHeight() {return SurfaceHeight;}
+	int GetSurfaceWidth() {return SurfaceWidth;}	// The size of the map //
+	int GetSurfaceHeight() {return SurfaceHeight;}	// The size of the map //
 	
 	
 	int SurfaceWidth,SurfaceHeight;

@@ -21,7 +21,7 @@ DXPlayerView::DXPlayerView()
 {
 	pTexture = NULL;
 	AnimationFrame = 0;
-	LoadTexture(1);
+	LoadTexture(1);					// Player<ID>.bmp //
 }
 
 DXPlayerView::~DXPlayerView()
@@ -55,7 +55,7 @@ void DXPlayerView::LoadTexture(int TextureID)
 	pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 }
 
-void DXPlayerView::Draw(int X,int Y)
+void DXPlayerView::Draw(int X,int Y,bool Jumping)
 {
 	if(pTexture == NULL || pSprite == NULL)
 		return;

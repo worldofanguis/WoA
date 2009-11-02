@@ -8,11 +8,15 @@
  *                    World Of Anguis
  *
  */
- 
+
+
 #define __SHOW_STUPID_WARNINGS__		// Debug //
  
 #include "Common.h"
 #include "Graphics/DirectX/DirectXInterface.h"
+
+
+// TODO: This whole stuff should be wrapped in a class (or whatever) //
 
 DirectXInterface DXI;
 
@@ -20,10 +24,10 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLine,int nCmdShow)
 {
-	UNREFERENCED_PARAMETER(hPrevInstance);
+	UNREFERENCED_PARAMETER(hPrevInstance);		// We wont use this paramters //
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
-	// Register the window class
+	// Register the window class //
 	WNDCLASSEX WinClass;
 	WinClass.cbSize = sizeof(WNDCLASSEX);
 	WinClass.style = CS_CLASSDC;
@@ -40,22 +44,21 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLin
     RegisterClassEx(&WinClass);
 
     HWND hwnd;
-    // Create the application's window
+    // Create the application's window //
     if((hwnd = CreateWindow("WoA", "woa",WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU,0,0,1024,768,HWND_DESKTOP,NULL,hInstance,NULL)) == NULL)
 		{
 		MessageBox(NULL,"Failed to create the main window","Oops",MB_OK);
 		return 0;
 		}
-	
-		
-	// Initialize Direct3D
-	if(SUCCEEDED(DXI.Initialize(hwnd,false)))
+
+	// Initialize the DXInterface //
+	if(SUCCEEDED(DXI.Initialize(hwnd,true)))
 		{				
-		// Show the window
+		// Show the window //
 		ShowWindow(hwnd,nCmdShow);
 		UpdateWindow(hwnd);
 
-		// Enter the message loop
+		// Enter the message loop //
 		MSG msg; 
 		while(GetMessage(&msg,NULL,0,0))
 			{
@@ -66,10 +69,10 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLin
 	else
 		MessageBox(hwnd,"Failed to initialize Direct3D!","Oops",MB_OK);
 
-    // Clean up everything and exit the app
+    // Cleanup the DXInterface //
     DXI.Cleanup();
 
-    UnregisterClass("WoA",hInstance);
+    UnregisterClass("WoA",hInstance);		// Unregister our window's class //
 return 0;
 }
 

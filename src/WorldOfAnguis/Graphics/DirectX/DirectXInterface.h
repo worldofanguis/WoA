@@ -9,7 +9,6 @@
  *
  */
  
-// Interface for drawing on the screen //
  
 #pragma once
 #include "Common.h"
@@ -25,7 +24,7 @@ public:
 	HRESULT Initialize(HWND hwnd,bool Windowed);		// Initializes DirectX //
 	void Cleanup();								// Cleanup DirectX //
 	
-	void Render();						// Render the screen, (units->update()) should be moved from here ? //
+	void Render();						// Render the screen //
 	
 	void SetView(int Left,int Top) {ViewLeft = Left;ViewTop = Top;}		// Set the viewpoint //
 	void ScrollLeft(int Dist);			// Scrolling the screen left with dist //

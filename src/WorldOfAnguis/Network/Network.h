@@ -17,9 +17,7 @@
 class Network
 {
 public:
-	/* Std Constructor - Initializes WindowSockets */
 	Network();
-	/* Std Destructor - Deinizializes WindowSockets */
 	~Network();
 	/* Connects to the IP on the Port */
 	bool Connect(char* IP,int Port);
@@ -40,7 +38,7 @@ public:
 	 */
 	BOOL PeekMessages();
 private:
-	std::queue<Packet*> _packets;
+	std::queue<Packet*> _packets;		// queue for the recieved packets //
 	bool _connected;
 	
 	SOCKET _socket;

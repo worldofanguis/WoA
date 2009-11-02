@@ -16,10 +16,12 @@
  *	...		-	Msg data		) Msg Body
  */
 
+/* TODO: Rethink the packet types!!! */
+
 /*			PACKET TYPES
  *	MSG_MOVE_START [BYTE]				- Data: [Direction]		- Start moving in direction
  *	MSG_MOVE_STOP						-						- Stop moving
- *	MSG_MOVE_HEARTHBEAT [FLOAT][FLOAT]	- Data: [X][Y]			- Move hearthbeat
+ *	MSG_MOVE_HEARTHBEAT [INT][INT]		- Data: [X][Y]			- Move hearthbeat
  *	MSG_JUMP							-						- Jump
  *	MSG_FIRE_START [BYTE]				- Data: [WeaponID]		- Start fireing
  *	MSG_FIRE_STOP						-						- Stop fireing
@@ -36,8 +38,8 @@ public:
 				MSG_JUMP,
 				MSG_FIRE_START,MSG_FIRE_STOP,MSG_FIRE_HEARTHBEAT};
 	
-	/* Std Constructor - Creates a packet with a buffer sized 15 */
 	Packet();
+	~Packet();
 	/* Constructor - call Create function */
 	Packet(TYPES Type,char* Data,BYTE Size) {Create(Type,Data,Size);}
 	/* Copy Constructor */
@@ -49,9 +51,8 @@ public:
 	Packet& operator<< (BYTE);
 	/* Overloaded operator << - adds a float to the packet */
 	Packet& operator<< (float);
-
-	/* Std Destructor */
-	~Packet();
+	/* Overloaded operator << - adds an int to the packet */	
+	Packet& operator<< (int Data)
 
 	/* Returns with the size of the msg */
 	unsigned int GetMsgSize() {return _size;}

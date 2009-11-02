@@ -28,4 +28,8 @@ World::~World()
 void World::LoadMaps(char *HitMap,char* TexturedMap)
 {
 	DXWorldView::LoadWorldTexture(TexturedMap);
+	
+	/* Later we wont need these */
+	Width = DXWorldView::GetSurfaceWidth();
+	Height = DXWorldView::GetSurfaceHeight();
 }
