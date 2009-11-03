@@ -84,6 +84,9 @@ HRESULT DirectXInterface::Initialize(HWND hwnd,bool Windowed)
 
 	D3DXCreateFont(pD3DDevice,21,0,FW_BOLD,1,false,DEFAULT_CHARSET,OUT_DEFAULT_PRECIS,ANTIALIASED_QUALITY,DEFAULT_PITCH|FF_DONTCARE,"Arial",&pFont);
  
+	pD3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+	pD3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+
 
 	ViewWidth = d3dpp.BackBufferWidth;
 	ViewHeight = d3dpp.BackBufferHeight-100;		// Space for the HUD //
@@ -95,6 +98,9 @@ HRESULT DirectXInterface::Initialize(HWND hwnd,bool Windowed)
 	
 	DXPlayerView::SetDevice(pD3DDevice);
 	DXPlayerView::SetSprite(pSprite);
+	
+	DXHUDView::SetDevice(pD3DDevice);
+	DXHUDView::SetSprite(pSprite);
 return S_OK;
 }
 

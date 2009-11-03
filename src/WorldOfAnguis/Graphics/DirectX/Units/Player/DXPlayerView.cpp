@@ -48,9 +48,6 @@ void DXPlayerView::LoadTexture(int TextureID)
 								&d3dxImageInfo,
 								NULL,
 								&pTexture);
-
-    pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
-	pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 }
 
 void DXPlayerView::Draw(int X,int Y,bool FaceRight,bool Jumping)

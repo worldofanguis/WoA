@@ -11,7 +11,7 @@
  
 #pragma once
 #include "Common.h"
-#include "Graphics/World/DXWorldView.h"
+#include "Graphics/DirectX/World/DXWorldView.h"
 
 class World : DXWorldView
 {

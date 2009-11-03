@@ -12,7 +12,7 @@
 
 #pragma once
 #include "../Unit.h"
-#include "Graphics/Units/Player/DXPlayerView.h"
+#include "Graphics/DirectX/Units/Player/DXPlayerView.h"
 
 class Player : public Unit , DXPlayerView
 {
