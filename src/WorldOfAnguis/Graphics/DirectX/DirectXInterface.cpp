@@ -86,7 +86,7 @@ HRESULT DirectXInterface::Initialize(HWND hwnd,bool Windowed)
  
 
 	ViewWidth = d3dpp.BackBufferWidth;
-	ViewHeight = d3dpp.BackBufferHeight;
+	ViewHeight = d3dpp.BackBufferHeight-100;		// Space for the HUD //
 	D3DXCreateSprite(pD3DDevice,&pSprite);
 	
 	/* Set the static parts of the View classes */

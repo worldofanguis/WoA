@@ -53,7 +53,9 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLin
 
 	// Initialize the DXInterface //
 	if(SUCCEEDED(DXI.Initialize(hwnd,true)))
-		{				
+		{
+		World W;
+		W.LoadMaps(NULL,"..\\..\\pic\\Map.bmp");
 		// Show the window //
 		ShowWindow(hwnd,nCmdShow);
 		UpdateWindow(hwnd);
@@ -91,6 +93,8 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				PostQuitMessage(0);
 				return 0;
 				}
+			else if(wParam = VK_DOWN)
+				DXI.ScrollDown(10);
 			break;
 
 		case WM_PAINT:
