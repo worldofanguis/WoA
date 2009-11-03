@@ -101,6 +101,7 @@ return S_OK;
 void DirectXInterface::Cleanup()
 {
 //	SAFE_RELEASE(pBackBuffer);			// We havent created the backbuffer just used it, so i think we dont need to realease it (or do we ?) //
+	SAFE_RELEASE(pSprite);
 	SAFE_RELEASE(pFont);
 	SAFE_RELEASE(pD3DDevice);
 	SAFE_RELEASE(pD3D);
@@ -110,8 +111,7 @@ void DirectXInterface::Render()
 {
 	if(pD3DDevice == NULL)
 		return;
-	
-	
+
 	pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0,0,0),1.0f,0);	// If covering the whoe screen with pictures its not necceseary (not sure) ^^ //
 	pD3DDevice->BeginScene();
 	pSprite->Begin(D3DXSPRITE_ALPHABLEND);
