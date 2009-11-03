@@ -11,8 +11,6 @@
  
  
 #include "DXPlayerView.h"
-#include "Graphics/DirectX/DirectXInterface.h"
-
 
 LPDIRECT3DDEVICE9 DXPlayerView::pDevice = NULL;
 LPD3DXSPRITE DXPlayerView::pSprite = NULL;
