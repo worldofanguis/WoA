@@ -14,6 +14,7 @@
 
 HUD::HUD()
 {
+	DXHUDView::LoadTexture();		// could be moved to the dxhudview class //
 }
 
 HUD::~HUD()

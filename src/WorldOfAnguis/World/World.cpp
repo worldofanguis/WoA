@@ -16,7 +16,7 @@
 World::World()
 {
 	Map = NULL;
-	DirectXInterface::RegisterWorld(this);
+	DirectXInterface::RegisterWorld(this);			// could be moved to the DXWorldView //
 }
 
 World::~World()

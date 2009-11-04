@@ -23,6 +23,9 @@ DXHUDView::DXHUDView()
 	rLifeBar.left = 0;
 	rLifeBar.right = 300;
 	
+	pHUD = NULL;
+	pLifeBar = NULL;
+	
 	
 }
 
@@ -63,7 +66,7 @@ void DXHUDView::LoadTexture()
 								D3DCOLOR_COLORVALUE(1.0f,0.0f,1.0f,1.0f),		// pink = transparent
 								&d3dxImageInfo,
 								NULL,
-								&pHUD);
+								&pLifeBar);
 }
 
 void DXHUDView::Draw()
@@ -72,7 +75,7 @@ void DXHUDView::Draw()
 		return;
 	D3DXVECTOR3 v(0,618,0);
 	pSprite->Draw(pHUD,NULL,NULL,&v,0xFFFFFFFF);
-	v = D3DXVECTOR3(49,618+24,0);
+	v = D3DXVECTOR3(49,618+30,0);
 	pSprite->Draw(pLifeBar,&rLifeBar,NULL,&v,0xFFFFFFFF);	
 }
 

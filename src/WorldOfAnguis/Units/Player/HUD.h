@@ -19,6 +19,8 @@ public:
 	HUD();
 	~HUD();
 	
+	void Draw() {DXHUDView::Draw();}
+	void Update(DXHUDView::HUD_PART Part,int Data) {DXHUDView::Update(Part,Data);}
 private:
 
 };

@@ -16,13 +16,13 @@
 
 class DXHUDView
 {
-private:
+public:
 	/* Static functions for setting the requied stuffs (Device & Sprite) */
 	static void SetDevice(LPDIRECT3DDEVICE9 pDevice) {DXHUDView::pDevice = pDevice;}
 	static void SetSprite(LPD3DXSPRITE pSprite) {DXHUDView::pSprite = pSprite;}
+	enum HUD_PART {HUD_LIFE,HUD_WEAPON};
 
 protected:
-	enum HUD_PART {HUD_LIFE,HUD_WEAPON};
 	DXHUDView();
 	~DXHUDView();
 	
