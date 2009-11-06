@@ -19,6 +19,8 @@ Player::Player(int X,int Y)
 	this->Y = Y;
 	Width = 20;
 	Height = 30;
+	Life = 100;
+	
 	DirectXInterface::RegisterUnit(this);
 }
 

@@ -20,6 +20,9 @@
 
 DirectXInterface DXI;
 
+Player* p;
+HUD* hud;
+
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLine,int nCmdShow)
@@ -54,8 +57,15 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLin
 	// Initialize the DXInterface //
 	if(SUCCEEDED(DXI.Initialize(hwnd,true)))
 		{
+		// Testing initializations (TODO: Remove these) //
 		World W;
 		W.LoadMaps(NULL,"..\\..\\pic\\Map.bmp");
+		
+		p = new Player(30,30);
+		
+		hud = new HUD();
+		// End of TI //
+		
 		// Show the window //
 		ShowWindow(hwnd,nCmdShow);
 		UpdateWindow(hwnd);
@@ -93,8 +103,24 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				PostQuitMessage(0);
 				return 0;
 				}
-			else if(wParam = VK_DOWN)
-				DXI.ScrollDown(10);
+			else if(wParam == VK_DOWN)
+				DXI.ScrollDown(5);
+			else if(wParam == VK_UP)
+				DXI.ScrollUp(5);
+			else if(wParam == VK_LEFT)
+				DXI.ScrollLeft(5);
+			else if(wParam == VK_RIGHT)
+				DXI.ScrollRight(5);
+			else if(wParam == VK_PRIOR)
+				{
+				p->SetLife(p->GetLife()-1);
+				hud->Update(DXHUDView::HUD_LIFE,p->GetLife());
+				}
+			else if(wParam == VK_NEXT)
+				{
+				p->SetLife(p->GetLife()+1);
+				hud->Update(DXHUDView::HUD_LIFE,p->GetLife());
+				}				
 			break;
 
 		case WM_PAINT:

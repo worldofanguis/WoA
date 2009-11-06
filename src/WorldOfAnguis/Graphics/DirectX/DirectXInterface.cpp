@@ -18,13 +18,12 @@
 #endif
 
 #include "Graphics\DirectX\DirectXInterface.h"
-#include "Units\Player\HUD.h"		// only for testing!!! //
 
 World* DirectXInterface::world = NULL;
+HUD* DirectXInterface::hud = NULL;
 std::vector<Unit*> DirectXInterface::Objects;
 std::vector<Unit*>::iterator DirectXInterface::it;
 
-HUD* hud;
 
 DirectXInterface::DirectXInterface()
 {
@@ -104,7 +103,6 @@ HRESULT DirectXInterface::Initialize(HWND hwnd,bool Windowed)
 	DXHUDView::SetDevice(pD3DDevice);
 	DXHUDView::SetSprite(pSprite);
 	
-	hud = new HUD;		// TODO: remove me //
 return S_OK;
 }
 
@@ -130,7 +128,9 @@ void DirectXInterface::Render()
 	if(world)
 		world->Draw(ViewLeft,ViewTop,ViewWidth,ViewHeight);
 
-	hud->Draw();		// TODO: remove me //
+	// Drawing the HUD //
+	if(hud)
+		hud->Draw();
 	
 	// Drawing objects: Players, Pickups, Bullets, etc (everything what implements <Units> can be added the the drawing queue) //
 	for(it=Objects.begin();it!=Objects.end();it++)
@@ -198,4 +198,3 @@ void DirectXInterface::ScrollDown(int Dist)
 	else
 		ViewTop = world->GetHeight()-ViewHeight;
 }
-

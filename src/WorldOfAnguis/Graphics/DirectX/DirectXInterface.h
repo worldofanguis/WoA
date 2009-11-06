@@ -14,6 +14,7 @@
 #include "Common.h"
 #include "Units/Player/Player.h"
 #include "World/World.h"
+#include "Units/Player/HUD.h"
 
 class DirectXInterface
 {
@@ -36,6 +37,10 @@ public:
 	static void RegisterWorld(World* world) {DirectXInterface::world = world;}
 	/* UnRegisters the world */
 	static void UnRegisterWorld() {DirectXInterface::world = NULL;}
+	/* Registers the hud class for drawing the hud */
+	static void RegisterHUD(HUD* hud) {DirectXInterface::hud = hud;}
+	/* UnRegisters the world */
+	static void UnRegisterHUD() {DirectXInterface::hud = NULL;}
 	/* Registers a unit (Player,Missile,etc...) for drawing */
 	static void RegisterUnit(Unit* unit) {Objects.push_back(unit);}
 	/* UnRegisters a unit (because its expired) */
@@ -46,6 +51,7 @@ private:
 	bool InSight(Unit* unit);
 
 	static World* world;						// world pointer //
+	static HUD* hud;							// hud pointer //
 	static std::vector<Unit*> Objects;			// containter for the units //
 	static std::vector<Unit*>::iterator it;
 	
