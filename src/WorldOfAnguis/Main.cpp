@@ -22,7 +22,7 @@ DirectXInterface DXI;
 
 Player* p;
 HUD* hud;
-
+// komment //
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLine,int nCmdShow)
@@ -103,6 +103,18 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				PostQuitMessage(0);
 				return 0;
 				}
+
+			else if(wParam == 'W')
+				p->SetPos(p->GetX(),p->GetY()+5);
+			else if(wParam == 'S')
+				p->SetPos(p->GetX(),p->GetY()-5);
+			else if(wParam == 'A')
+				p->SetPos(p->GetX()-5,p->GetY());
+			else if(wParam == 'D')
+				p->SetPos(p->GetX()+5,p->GetY());
+
+
+
 			else if(wParam == VK_DOWN)
 				DXI.ScrollDown(5);
 			else if(wParam == VK_UP)
