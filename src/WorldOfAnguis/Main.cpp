@@ -22,7 +22,7 @@ DirectXInterface DXI;
 
 Player* p;
 HUD* hud;
-// komment //
+
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLine,int nCmdShow)
@@ -85,6 +85,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLin
     DXI.Cleanup();
 
     UnregisterClass("WoA",hInstance);		// Unregister our window's class //
+    
 return 0;
 }
 

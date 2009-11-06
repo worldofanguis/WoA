@@ -53,7 +53,7 @@ private:
 	static World* world;						// world pointer //
 	static HUD* hud;							// hud pointer //
 	static std::vector<Unit*> Objects;			// containter for the units //
-	static std::vector<Unit*>::iterator it;
+	static std::vector<Unit*>::iterator it;		// iterator for the units //
 	
 	HWND hwnd;							// Window handle //
 	LPDIRECT3D9 pD3D;

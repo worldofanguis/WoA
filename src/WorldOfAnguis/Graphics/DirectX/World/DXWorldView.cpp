@@ -64,7 +64,7 @@ bool DXWorldView::LoadWorldTexture(char *File)
 
 	pDevice->CreateOffscreenPlainSurface(SurfaceWidth,SurfaceHeight,D3DFMT_X8R8G8B8,D3DPOOL_SYSTEMMEM,&pSurface,NULL);
 	pDevice->CreateOffscreenPlainSurface(SurfaceWidth,SurfaceHeight,D3DFMT_X8R8G8B8,D3DPOOL_SYSTEMMEM,&pOriginalSurface,NULL);
-	D3DXLoadSurfaceFromFile(pOriginalSurface,NULL,NULL,File,NULL,D3DX_FILTER_LINEAR,D3DCOLOR_ARGB(255,0,0,0),NULL);
+	D3DXLoadSurfaceFromFile(pOriginalSurface,NULL,NULL,File,NULL,D3DX_FILTER_LINEAR,D3DCOLOR_ARGB(255,255,0,255),NULL);
 	/* This call is requied because of some conversions (not sure, but this way its working ^^) */
 	D3DXLoadSurfaceFromSurface(pSurface,NULL,NULL,pOriginalSurface,NULL,NULL,D3DX_FILTER_LINEAR,0);
 
