@@ -38,9 +38,14 @@ public:
 	/* Deform the map */
 	void Explode(Explosion* Ex);
 	
-	/* Get the map size */
-	int GetWidth() {return Width;}
-	int GetHeight() {return Height;}
+	/* Get map infos */
+	char* GetHitMap() {return Map;}
+	int GetPixelPerHitMap() {return PPHM;}
+	int GetHitMapWidth() {return Width;}
+	int GetHitMapHeight() {return Height;}
+	
+	int GetWidth() {return Width*PPHM;}
+	int GetHeight() {return Height*PPHM;}
 private:
 	char *Map;				// HitMap //
 	int MapSize;
