@@ -16,7 +16,7 @@
 World::World()
 {
 	Map = NULL;
-	PPHM = 2;				// PixelPerHitMap (2 means 2x2 pixel is 1 entry in the hit map) //
+	PPHM = 2;				// PixelPerHitMap (2 means 2x2 pixel is 1 entry in the hit map) // dont think we should go higher than 2 //
 	DirectXInterface::RegisterWorld(this);			// could be moved to the DXWorldView //
 }
 
@@ -26,8 +26,8 @@ World::~World()
 	DirectXInterface::UnRegisterWorld();
 }
 
-/* NOTE: Not working with maps which are not divisible with PPHM!
- *  TODO: Fix this (but its not that important
+/* NOTE: Not working with maps which are not divisible with PPHM! << only for 24bit BMP-s >>
+ *  TODO: Fix this (but its not that important)
  */
 bool World::LoadMaps(char *HitMap,char* TexturedMap)
 {
@@ -50,7 +50,7 @@ bool World::LoadMaps(char *HitMap,char* TexturedMap)
 	
 	Width = bmih.biWidth/PPHM;
 	Height = bmih.biHeight/PPHM;
-	int LinePadding = ((bmih.biSizeImage)-(bmih.biWidth*bmih.biHeight*3))/bmih.biHeight;
+	int LinePadding = ((bmih.biSizeImage)-(bmih.biWidth*bmih.biHeight*3))/bmih.biHeight;		// Calc the line padding //
 	
 	MapSize = Width*Height;
 	Map = new char[MapSize];
@@ -58,6 +58,10 @@ bool World::LoadMaps(char *HitMap,char* TexturedMap)
 
 	fseek(FKez,bmfh.bfOffBits,SEEK_SET);
 	DWORD PixelColor = 0;
+	
+	/* NOTE: Windows BMP is stored in a reversed format, so it starts with the LAST line
+	 *       To every line is added a padding for 4 byte alignment (1,2 or 3 bytes)
+	 */
 	
 	for(int h=0;h<Height;h++)
 		{
@@ -80,6 +84,7 @@ bool World::LoadMaps(char *HitMap,char* TexturedMap)
 		fseek(FKez,((PPHM-1)*bmih.biWidth*3)+((PPHM-1)*LinePadding),SEEK_CUR);		// Skip PPHM-1 lines + padding //
 		}
 	fclose(FKez);
+
 	/* Load the TexturedMap */
 	if(!DXWorldView::LoadWorldTexture(TexturedMap))
 		return false;

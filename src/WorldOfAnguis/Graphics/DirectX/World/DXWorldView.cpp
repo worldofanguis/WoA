@@ -39,7 +39,7 @@ void DXWorldView::UpdateSurface(char *Map,int MapWidth,int PPHM)
 	D3DLOCKED_RECT SurfaceRect;
 	D3DLOCKED_RECT OriginalRect;
 	
-	pSurface->LockRect(&SurfaceRect,NULL,0);		// Lock the surfaces for manipulation ; TODO: FlagCheck //
+	pSurface->LockRect(&SurfaceRect,NULL,0);			// Lock the surfaces for manipulation //
 	pOriginalSurface->LockRect(&OriginalRect,NULL,D3DLOCK_READONLY);
 	
 	BYTE* Dest = (BYTE*)SurfaceRect.pBits;				// Get the pointer to the surface //
@@ -52,12 +52,13 @@ void DXWorldView::UpdateSurface(char *Map,int MapWidth,int PPHM)
 			if(Map[(((int)(h/PPHM))*MapWidth)+((int)(w/PPHM))])		// There is something on the map there //
 				{
 				memcpy(Dest,Source,BytesPerPixel);				// Copy 1 Pixel //
+				//*(DWORD*)Dest = *(DWORD*)Source;				// This line does the same //
 				}
 			Dest+=4;				// Move the pointer with 4 bytes (1 pixel (XRGB))
 			Source+=4;
 			}
 		}
-	pSurface->UnlockRect();
+	pSurface->UnlockRect();					// Unlock the surfaces //
 	pOriginalSurface->UnlockRect();
 }
 
