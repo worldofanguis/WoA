@@ -16,7 +16,7 @@
 World::World()
 {
 	Map = NULL;
-	PPHM = 1;
+	PPHM = 2;
 	DirectXInterface::RegisterWorld(this);			// could be moved to the DXWorldView //
 }
 
@@ -26,7 +26,6 @@ World::~World()
 	DirectXInterface::UnRegisterWorld();
 }
 
-/* TODO: FIX ME!!! */
 bool World::LoadMaps(char *HitMap,char* TexturedMap)
 {
 	FILE *FKez;
@@ -48,6 +47,7 @@ bool World::LoadMaps(char *HitMap,char* TexturedMap)
 	
 	Width = bmih.biWidth/PPHM;
 	Height = bmih.biHeight/PPHM;
+	int LinePadding = ((bmih.biSizeImage)-(bmih.biWidth*bmih.biHeight*3))/bmih.biHeight;
 	
 	MapSize = Width*Height;
 	Map = new char[MapSize];
@@ -57,6 +57,12 @@ bool World::LoadMaps(char *HitMap,char* TexturedMap)
 	DWORD PixelColor = 0;
 	for(int i=0;i<MapSize;i++)
 		{
+		if((i % Width == 0) && i)					// We have read a whole line //
+			{
+			fseek(FKez,LinePadding,SEEK_CUR);				// Skip the line padding //			
+			fseek(FKez,((PPHM-1)*bmih.biWidth*3)+((PPHM-1)*LinePadding),SEEK_CUR);		// Skip PPHM-1 lines + padding //
+			}
+
 		fread(&PixelColor,3,1,FKez);			// Read 1 Pixel //
 		if(PixelColor == 0xFF0000)						// RED //
 			Map[i] = 1;										// Destructable earth //
@@ -68,12 +74,7 @@ bool World::LoadMaps(char *HitMap,char* TexturedMap)
 			Map[i] = 0;
 		else
 			Map[i] = 9;
-//		fseek(FKez,(PPHM-1)*3,SEEK_CUR);		// Move the file pointer with PPHM-1 pixels //
-		if((i % Width == 0) && i)					// We have read a whole line //
-			{
-			fseek(FKez,((bmih.biSizeImage)-(bmih.biWidth*bmih.biHeight*3))/bmih.biHeight,SEEK_CUR);				// Skip the line padding //			
-//			fseek(FKez,((PPHM-1)*Width)+(PPHM-1)*((bmih.biSizeImage/(bmih.biWidth*3))/bmih.biHeight),SEEK_CUR);		// Skip PPHM-1 lines + padding //
-			}
+		fseek(FKez,(PPHM-1)*3,SEEK_CUR);		// Move the file pointer with PPHM-1 pixels //
 		}
 	fclose(FKez);
 	/* Load the TexturedMap */
