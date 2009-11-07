@@ -34,9 +34,31 @@ void DXWorldView::Draw(int Left,int Top,int Width,int Height)
 	pDevice->UpdateSurface(pSurface,&r,pBackBuffer,NULL);
 }
 
-void DXWorldView::UpdateSurface(char *Map)
+void DXWorldView::UpdateSurface(char *Map,int MapWidth,int PPHM)
 {
-	// Create pSurface from the Map and the pOriginalSurface //
+	D3DLOCKED_RECT SurfaceRect;
+	D3DLOCKED_RECT OriginalRect;
+	
+	pSurface->LockRect(&SurfaceRect,NULL,0);		// Lock the surfaces for manipulation ; TODO: FlagCheck //
+	pOriginalSurface->LockRect(&OriginalRect,NULL,D3DLOCK_READONLY);
+	
+	BYTE* Dest = (BYTE*)SurfaceRect.pBits;				// Get the pointer to the surface //
+	BYTE* Source = (BYTE*)OriginalRect.pBits;			// We want a byte - byte copy //
+		
+	for(int h=0;h<SurfaceHeight;h++)
+		{
+		for(int w=0;w<SurfaceWidth;w++)
+			{
+			if(Map[(((int)(h/PPHM))*MapWidth)+((int)(w/PPHM))])		// There is something on the map there //
+				{
+				memcpy(Dest,Source,BytesPerPixel);				// Copy 1 Pixel //
+				}
+			Dest+=4;				// Move the pointer with 4 bytes (1 pixel (XRGB))
+			Source+=4;
+			}
+		}
+	pSurface->UnlockRect();
+	pOriginalSurface->UnlockRect();
 }
 
 bool DXWorldView::LoadWorldTexture(char *File)
@@ -59,6 +81,7 @@ bool DXWorldView::LoadWorldTexture(char *File)
 	fread(&bmih,sizeof(BITMAPINFOHEADER),1,FKez);
 	fclose(FKez);
 	
+	BytesPerPixel = bmih.biBitCount/8;
 	SurfaceWidth = bmih.biWidth;
 	SurfaceHeight = bmih.biHeight;
 
@@ -66,7 +89,6 @@ bool DXWorldView::LoadWorldTexture(char *File)
 	pDevice->CreateOffscreenPlainSurface(SurfaceWidth,SurfaceHeight,D3DFMT_X8R8G8B8,D3DPOOL_SYSTEMMEM,&pOriginalSurface,NULL);
 	D3DXLoadSurfaceFromFile(pOriginalSurface,NULL,NULL,File,NULL,D3DX_FILTER_LINEAR,D3DCOLOR_ARGB(255,255,0,255),NULL);
 	/* This call is requied because of some conversions (not sure, but this way its working ^^) */
-	D3DXLoadSurfaceFromSurface(pSurface,NULL,NULL,pOriginalSurface,NULL,NULL,D3DX_FILTER_LINEAR,0);
-
+//	D3DXLoadSurfaceFromSurface(pSurface,NULL,NULL,pOriginalSurface,NULL,NULL,D3DX_FILTER_LINEAR,0);		// Copy the original textured map to the display buffer //
 return true;
 }

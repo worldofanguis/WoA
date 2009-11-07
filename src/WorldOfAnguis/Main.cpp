@@ -59,7 +59,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLin
 		{
 		// Testing initializations (TODO: Remove these) //
 		World W;
-		W.LoadMaps(NULL,"..\\..\\pic\\Map.bmp");
+		W.LoadMaps("..\\..\\pic\\Map\\TesztMap.bmp","..\\..\\pic\\Map\\TexturedMap.bmp");
 		
 		p = new Player(30,30);
 		

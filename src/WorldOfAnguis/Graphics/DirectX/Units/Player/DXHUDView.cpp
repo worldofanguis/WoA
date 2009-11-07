@@ -39,7 +39,7 @@ void DXHUDView::LoadTexture()
 		return;
 	D3DXIMAGE_INFO d3dxImageInfo;
 	D3DXCreateTextureFromFileEx(DXHUDView::pDevice,				// Device
-								"..\\..\\pic\\Player\\HUD.bmp",
+								"..\\..\\pic\\HUD\\HUD.bmp",
 								1024,								// Width
 								150,								// Height
 								1,
@@ -54,7 +54,7 @@ void DXHUDView::LoadTexture()
 								&pHUD);
 
 	D3DXCreateTextureFromFileEx(DXHUDView::pDevice,				// Device
-								"..\\..\\pic\\Player\\HUD_LifeBar.bmp",
+								"..\\..\\pic\\HUD\\HUD_LifeBar.bmp",
 								300,								// Width
 								15,									// Height
 								1,

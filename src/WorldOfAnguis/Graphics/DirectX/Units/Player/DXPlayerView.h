@@ -14,8 +14,6 @@
 #ifndef __PlayerView__
 #define __PlayerView__
 #include "Common.h"
-class Player;
-#include "Units/Player/Player.h"
 
 class DXPlayerView
 {

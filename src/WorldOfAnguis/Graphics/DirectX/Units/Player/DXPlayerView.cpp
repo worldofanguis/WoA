@@ -33,7 +33,7 @@ void DXPlayerView::LoadTexture(int TextureID)
 		return;
 	D3DXIMAGE_INFO d3dxImageInfo;
 	char File[MAX_PATH];
-	sprintf_s(File,sizeof(File),"..\\..\\pic\\Player%d.bmp",TextureID);
+	sprintf_s(File,sizeof(File),"..\\..\\pic\\Player\\Player%d.bmp",TextureID);
 	D3DXCreateTextureFromFileEx(DXPlayerView::pDevice,			// Device
 								File,
 								20,								// Width
