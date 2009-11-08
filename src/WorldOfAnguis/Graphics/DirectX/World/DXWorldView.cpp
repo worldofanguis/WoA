@@ -37,7 +37,6 @@ void DXWorldView::Draw(int Left,int Top,int Width,int Height)
 
 void DXWorldView::UpdateSurface(char *Map,int MapWidth,int PPHM)
 {
-
 	D3DLOCKED_RECT SurfaceRect;
 	D3DLOCKED_RECT OriginalRect;
 	
@@ -53,8 +52,7 @@ void DXWorldView::UpdateSurface(char *Map,int MapWidth,int PPHM)
 			{
 			if(Map[(((int)(h/PPHM))*MapWidth)+((int)(w/PPHM))])		// There is something on the map there //
 				{
-				memcpy(Dest,Source,BytesPerPixel);				// Copy 1 Pixel //
-				//*(DWORD*)Dest = *(DWORD*)Source;				// This line does the same //
+				*(DWORD*)Dest = *(DWORD*)Source;				// Copy 1 pixel from the source to the destination //
 				}
 			Dest+=4;				// Move the pointer with 4 bytes (1 pixel (XRGB))
 			Source+=4;
@@ -62,7 +60,7 @@ void DXWorldView::UpdateSurface(char *Map,int MapWidth,int PPHM)
 		}
 	pDisplaySurface->UnlockRect(0);					// Unlock the surfaces //
 	pOriginalSurface->UnlockRect(0);
-	
+
 	pDevice->UpdateTexture(pWorkSurface,pDisplaySurface);
 }
 
