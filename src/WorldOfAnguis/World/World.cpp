@@ -17,7 +17,7 @@
 World::World()
 {
 	Map = NULL;
-	PPHM = 1;				// PixelPerHitMap (2 means 2x2 pixel is 1 entry in the hit map) // dont think we should go higher than 2 //
+	PPHM = 2;				// PixelPerHitMap (2 means 2x2 pixel is 1 entry in the hit map) // dont think we should go higher than 2 //
 	DirectXInterface::RegisterWorld(this);			// Register the world pointer in the DXInterface class //
 	Unit::RegisterWorld(this);					// Register the world pointer in the Unit class //
 }
@@ -65,7 +65,6 @@ bool World::LoadMaps(char *HitMap,char* TexturedMap)
 	/* NOTE: Windows BMP is stored in a reversed format, so it starts with the LAST line
 	 *       To every line is added a padding for 4 byte alignment (1,2 or 3 bytes)
 	 */
-	
 	for(int h=0;h<Height;h++)
 		{
 		for(int w=0;w<Width;w++)

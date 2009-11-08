@@ -40,6 +40,7 @@ void DXWorldView::UpdateSurface(char *Map,int MapWidth,int PPHM)
 	D3DLOCKED_RECT SurfaceRect;
 	D3DLOCKED_RECT OriginalRect;
 	
+	/* NOTE: We are working in the WorkSurface because we cant access directly the DisplaySurface */
 	pWorkSurface->LockRect(0,&SurfaceRect,NULL,0);			// Lock the surfaces for manipulation //
 	pOriginalSurface->LockRect(0,&OriginalRect,NULL,D3DLOCK_READONLY);
 	
@@ -61,6 +62,7 @@ void DXWorldView::UpdateSurface(char *Map,int MapWidth,int PPHM)
 	pDisplaySurface->UnlockRect(0);					// Unlock the surfaces //
 	pOriginalSurface->UnlockRect(0);
 
+	/* Update the DisplaySurface */
 	pDevice->UpdateTexture(pWorkSurface,pDisplaySurface);
 }
 
@@ -103,9 +105,12 @@ bool DXWorldView::LoadWorldTexture(char *File)
 								NULL,
 								&pOriginalSurface);
 
+	/* NOTE: WorkSurface (texture) for generating the DisplaySurface from the Original and the HitMap
+	 *       we do it this way because its in the system memory and the DisplaySurface is in the video memory and we dont want to (and cant) access to that
+	 */
 	pDevice->CreateTexture(SurfaceWidth,SurfaceHeight,1,0,D3DFMT_A8R8G8B8,D3DPOOL_SYSTEMMEM,&pWorkSurface,NULL);
 	pDevice->CreateTexture(SurfaceWidth,SurfaceHeight,1,0,D3DFMT_A8R8G8B8,D3DPOOL_DEFAULT,&pDisplaySurface,NULL);
 	
-//	pDevice->UpdateTexture(pOriginalSurface,pDisplaySurface);
+//	pDevice->UpdateTexture(pOriginalSurface,pDisplaySurface);	// Used for testing //
 return true;
 }

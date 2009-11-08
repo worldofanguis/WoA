@@ -126,11 +126,11 @@ void DirectXInterface::Render()
 	// Drawing the world //
 	if(world)
 		world->Draw(ViewLeft,ViewTop,ViewWidth,ViewHeight);
-/*
+
 	// Drawing the HUD //
 	if(hud)
 		hud->Draw();
-*/	
+	
 	// Drawing objects: Players, Pickups, Bullets, etc (everything what implements <Units> can be added the the drawing queue) //
 	for(it=Objects.begin();it!=Objects.end();it++)
 		{
