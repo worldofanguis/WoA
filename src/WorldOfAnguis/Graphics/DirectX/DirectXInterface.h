@@ -58,7 +58,6 @@ private:
 	HWND hwnd;							// Window handle //
 	LPDIRECT3D9 pD3D;
 	LPDIRECT3DDEVICE9 pD3DDevice;		// D3DX Device //
-	LPDIRECT3DSURFACE9 pBackBuffer;		// Surface for drawing the map //
 	LPD3DXSPRITE pSprite;				// Sprite for drawing images //
 	
 	int ViewWidth;			// Screen width (BackBuffer width) //

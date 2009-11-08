@@ -8,8 +8,8 @@
  *                    World Of Anguis
  *
  */
- 
- 
+
+
 #pragma comment(lib, "d3d9.lib")
 #ifdef _DEBUG
 #pragma comment(lib, "d3dx9d.lib")
@@ -29,11 +29,10 @@ DirectXInterface::DirectXInterface()
 {
 	pD3D = NULL;
 	pD3DDevice = NULL;
-	pBackBuffer = NULL;
-	
+
 	world = NULL;
 	Objects.clear();
-	
+
 	ShowFPS = true;
 }
 
@@ -50,7 +49,7 @@ HRESULT DirectXInterface::Initialize(HWND hwnd,bool Windowed)
 
 	D3DDISPLAYMODE d3ddm;
 	D3DPRESENT_PARAMETERS d3dpp; 
-	
+
 	ZeroMemory(&d3dpp, sizeof(d3dpp));
 
 	if(Windowed)
@@ -80,18 +79,15 @@ HRESULT DirectXInterface::Initialize(HWND hwnd,bool Windowed)
 	if(FAILED(pD3D->CreateDevice(D3DADAPTER_DEFAULT,D3DDEVTYPE_HAL,hwnd,D3DCREATE_HARDWARE_VERTEXPROCESSING,&d3dpp,&pD3DDevice)))
         return E_FAIL;
 
-	if(FAILED(pD3DDevice->GetBackBuffer(0,0,D3DBACKBUFFER_TYPE_MONO,&pBackBuffer)))
-		return E_FAIL;
-
 	D3DXCreateFont(pD3DDevice,21,0,FW_BOLD,1,false,DEFAULT_CHARSET,OUT_DEFAULT_PRECIS,ANTIALIASED_QUALITY,DEFAULT_PITCH|FF_DONTCARE,"Arial",&pFont);
- 
+
 	pD3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 	pD3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 
 	ViewWidth = d3dpp.BackBufferWidth;
 	ViewHeight = d3dpp.BackBufferHeight-100;		// Space for the HUD //
 	D3DXCreateSprite(pD3DDevice,&pSprite);
-	
+
 	/* Set the static parts of the View classes */
 	DXWorldView::SetDevice(pD3DDevice);
 	DXWorldView::SetSprite(pSprite);
@@ -107,7 +103,6 @@ return S_OK;
 
 void DirectXInterface::Cleanup()
 {
-//	SAFE_RELEASE(pBackBuffer);			// We havent created the backbuffer just used it, so i think we dont need to realease it (or do we ?) //
 	SAFE_RELEASE(pSprite);
 	SAFE_RELEASE(pFont);
 	SAFE_RELEASE(pD3DDevice);
