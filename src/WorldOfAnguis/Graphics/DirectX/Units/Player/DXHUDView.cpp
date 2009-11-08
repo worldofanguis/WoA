@@ -37,7 +37,6 @@ void DXHUDView::LoadTexture()
 {
 	if(pHUD != NULL)
 		return;
-	D3DXIMAGE_INFO d3dxImageInfo;
 	D3DXCreateTextureFromFileEx(DXHUDView::pDevice,				// Device
 								"..\\..\\pic\\HUD\\HUD.bmp",
 								1024,								// Width
@@ -49,7 +48,7 @@ void DXHUDView::LoadTexture()
 								D3DX_DEFAULT,
 								D3DX_DEFAULT,
 								D3DCOLOR_COLORVALUE(1.0f,0.0f,1.0f,1.0f),		// pink = transparent
-								&d3dxImageInfo,
+								NULL,
 								NULL,
 								&pHUD);
 
@@ -64,7 +63,7 @@ void DXHUDView::LoadTexture()
 								D3DX_DEFAULT,
 								D3DX_DEFAULT,
 								D3DCOLOR_COLORVALUE(1.0f,0.0f,1.0f,1.0f),		// pink = transparent
-								&d3dxImageInfo,
+								NULL,
 								NULL,
 								&pLifeBar);
 }

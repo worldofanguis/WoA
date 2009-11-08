@@ -18,7 +18,7 @@ class DXWorldView
 public:
 	/* Static functions for setting the requied stuffs (Device & Sprite) */
 	static void SetDevice(LPDIRECT3DDEVICE9 pDevice) {DXWorldView::pDevice = pDevice;}
-	static void SetBackBuffer(LPDIRECT3DSURFACE9 pBackBuffer) {DXWorldView::pBackBuffer = pBackBuffer;}
+	static void SetSprite(LPD3DXSPRITE pSprite) {DXWorldView::pSprite = pSprite;}
 	
 protected:
 	/* Hide constructor/desctructor because its an abstract class */
@@ -40,10 +40,11 @@ protected:
 	int SurfaceHeight;
 	
 	int BytesPerPixel;
-	LPDIRECT3DSURFACE9 pSurface;				// Active map texture //
-	LPDIRECT3DSURFACE9 pOriginalSurface;		// Original map texture //
+	LPDIRECT3DTEXTURE9 pDisplaySurface;			// Active map texture //
+	LPDIRECT3DTEXTURE9 pWorkSurface;			// Working texture //
+	LPDIRECT3DTEXTURE9 pOriginalSurface;		// Original map texture //
 	
 	/* Static stuff for drawing (all instances uses the same) */
 	static LPDIRECT3DDEVICE9 pDevice;
-	static LPDIRECT3DSURFACE9 pBackBuffer;
+	static LPD3DXSPRITE pSprite;
 };

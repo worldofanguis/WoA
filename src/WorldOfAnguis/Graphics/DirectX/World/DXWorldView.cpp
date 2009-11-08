@@ -13,7 +13,7 @@
 #include "DXWorldView.h"
 
 LPDIRECT3DDEVICE9 DXWorldView::pDevice = NULL;
-LPDIRECT3DSURFACE9 DXWorldView::pBackBuffer = NULL;
+LPD3DXSPRITE DXWorldView::pSprite = NULL;
 
 DXWorldView::DXWorldView()
 {
@@ -21,26 +21,28 @@ DXWorldView::DXWorldView()
 
 DXWorldView::~DXWorldView()
 {
-	SAFE_RELEASE(pSurface);
+	SAFE_RELEASE(pDisplaySurface);
+	SAFE_RELEASE(pWorkSurface);
 	SAFE_RELEASE(pOriginalSurface);
 }
 
 void DXWorldView::Draw(int Left,int Top,int Width,int Height)
 {
-	if(pSurface == NULL || pBackBuffer == NULL)
+	if(pDisplaySurface == NULL || pSprite == NULL)
 		return;
 	RECT r = {Left,Top,Left+Width,Top+Height};
-	/* Copy the r region from pSurface to the whole pBackBuffer */
-	pDevice->UpdateSurface(pSurface,&r,pBackBuffer,NULL);
+	/* Copy the r region from pDisplaySurface to the screen */
+	pSprite->Draw(pDisplaySurface,&r,NULL,NULL,0xFFFFFFFF);
 }
 
 void DXWorldView::UpdateSurface(char *Map,int MapWidth,int PPHM)
 {
+
 	D3DLOCKED_RECT SurfaceRect;
 	D3DLOCKED_RECT OriginalRect;
 	
-	pSurface->LockRect(&SurfaceRect,NULL,0);			// Lock the surfaces for manipulation //
-	pOriginalSurface->LockRect(&OriginalRect,NULL,D3DLOCK_READONLY);
+	pWorkSurface->LockRect(0,&SurfaceRect,NULL,0);			// Lock the surfaces for manipulation //
+	pOriginalSurface->LockRect(0,&OriginalRect,NULL,D3DLOCK_READONLY);
 	
 	BYTE* Dest = (BYTE*)SurfaceRect.pBits;				// Get the pointer to the surface //
 	BYTE* Source = (BYTE*)OriginalRect.pBits;			// We want a byte - byte copy //
@@ -58,8 +60,10 @@ void DXWorldView::UpdateSurface(char *Map,int MapWidth,int PPHM)
 			Source+=4;
 			}
 		}
-	pSurface->UnlockRect();					// Unlock the surfaces //
-	pOriginalSurface->UnlockRect();
+	pDisplaySurface->UnlockRect(0);					// Unlock the surfaces //
+	pOriginalSurface->UnlockRect(0);
+	
+	pDevice->UpdateTexture(pWorkSurface,pDisplaySurface);
 }
 
 bool DXWorldView::LoadWorldTexture(char *File)
@@ -86,10 +90,24 @@ bool DXWorldView::LoadWorldTexture(char *File)
 	SurfaceWidth = bmih.biWidth;
 	SurfaceHeight = bmih.biHeight;
 
-	pDevice->CreateOffscreenPlainSurface(SurfaceWidth,SurfaceHeight,D3DFMT_X8R8G8B8,D3DPOOL_SYSTEMMEM,&pSurface,NULL);
-	pDevice->CreateOffscreenPlainSurface(SurfaceWidth,SurfaceHeight,D3DFMT_X8R8G8B8,D3DPOOL_SYSTEMMEM,&pOriginalSurface,NULL);
-	D3DXLoadSurfaceFromFile(pOriginalSurface,NULL,NULL,File,NULL,D3DX_FILTER_LINEAR,D3DCOLOR_ARGB(255,255,0,255),NULL);
-	/* This call is requied because of some conversions (not sure, but this way its working ^^) */
-//	D3DXLoadSurfaceFromSurface(pSurface,NULL,NULL,pOriginalSurface,NULL,NULL,D3DX_FILTER_LINEAR,0);		// Copy the original textured map to the display buffer //
+	D3DXCreateTextureFromFileEx(DXWorldView::pDevice,			// Device
+								File,
+								SurfaceWidth,					// Width
+								SurfaceHeight,					// Height
+								1,
+								0,
+								D3DFMT_UNKNOWN,
+								D3DPOOL_SYSTEMMEM,
+								D3DX_DEFAULT,
+								D3DX_DEFAULT,
+								D3DCOLOR_COLORVALUE(1.0f,0.0f,1.0f,1.0f),		// pink = transparent
+								NULL,
+								NULL,
+								&pOriginalSurface);
+
+	pDevice->CreateTexture(SurfaceWidth,SurfaceHeight,1,0,D3DFMT_A8R8G8B8,D3DPOOL_SYSTEMMEM,&pWorkSurface,NULL);
+	pDevice->CreateTexture(SurfaceWidth,SurfaceHeight,1,0,D3DFMT_A8R8G8B8,D3DPOOL_DEFAULT,&pDisplaySurface,NULL);
+	
+//	pDevice->UpdateTexture(pOriginalSurface,pDisplaySurface);
 return true;
 }

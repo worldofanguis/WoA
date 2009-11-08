@@ -11,12 +11,13 @@
  
 #pragma once
 #include "Common.h"
+#include "World/World.h"
 
 class Unit
 {
 public:
 	/* Updates the Unit position, this func should call the HitTest and calc all the physic */
-	void Update();
+	bool Update();
 	/* Virtual function for drawing */
 	virtual void Draw(int ViewX,int ViewY) = 0;
 	
@@ -25,23 +26,24 @@ public:
 	
 	int GetX() {return X;}
 	int GetY() {return Y;}
+	
+	/* Save the world pointer for collision detection */
+	static void RegisterWorld(World* world) {Unit::world = world;}
+	static void UnRegisterWorld() {Unit::world = NULL;}
 
 protected:
 	/* We dont want this class to be created */
 	Unit();
 	~Unit();
 
-	/* Function for checking if we truly can move there (TODO: this wont work this way, should this be moved to the update?) */
-	bool HitTest();
-
+	static World* world;	// World pointer (requied for hittest) // 
+	
 	int X,Y;		// Position //
 	int vX,vY;		// Velocity //
-	int aX,aY;		// Acceleration //
 
 	int Width;		// Size of the Unit //
 	int Height;
 	
 	bool FaceRight;
-
 };
 

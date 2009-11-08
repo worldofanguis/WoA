@@ -31,7 +31,6 @@ void DXPlayerView::LoadTexture(int TextureID)
 {
 	if(pTexture != NULL)
 		return;
-	D3DXIMAGE_INFO d3dxImageInfo;
 	char File[MAX_PATH];
 	sprintf_s(File,sizeof(File),"..\\..\\pic\\Player\\Player%d.bmp",TextureID);
 	D3DXCreateTextureFromFileEx(DXPlayerView::pDevice,			// Device
@@ -39,13 +38,13 @@ void DXPlayerView::LoadTexture(int TextureID)
 								20,								// Width
 								30,								// Height
 								1,
-								D3DPOOL_DEFAULT,
+								0,
 								D3DFMT_UNKNOWN,
 								D3DPOOL_DEFAULT,
 								D3DX_DEFAULT,
 								D3DX_DEFAULT,
 								D3DCOLOR_COLORVALUE(1.0f,0.0f,1.0f,1.0f),		// pink = transparent
-								&d3dxImageInfo,
+								NULL,
 								NULL,
 								&pTexture);
 }

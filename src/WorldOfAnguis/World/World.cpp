@@ -12,18 +12,21 @@
 
 #include "World.h"
 #include "Graphics/DirectX/DirectXInterface.h"
+#include "Units/Unit.h"
 
 World::World()
 {
 	Map = NULL;
 	PPHM = 2;				// PixelPerHitMap (2 means 2x2 pixel is 1 entry in the hit map) // dont think we should go higher than 2 //
-	DirectXInterface::RegisterWorld(this);			// could be moved to the DXWorldView //
+	DirectXInterface::RegisterWorld(this);			// Register the world pointer in the DXInterface class //
+	Unit::RegisterWorld(this);					// Register the world pointer in the Unit class //
 }
 
 World::~World()
 {
 	delete[] Map;
 	DirectXInterface::UnRegisterWorld();
+	Unit::UnRegisterWorld();
 }
 
 /* NOTE: Not working with maps which are not divisible with PPHM! << only for 24bit BMP-s >>

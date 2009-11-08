@@ -88,14 +88,13 @@ HRESULT DirectXInterface::Initialize(HWND hwnd,bool Windowed)
 	pD3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 	pD3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 
-
 	ViewWidth = d3dpp.BackBufferWidth;
 	ViewHeight = d3dpp.BackBufferHeight-100;		// Space for the HUD //
 	D3DXCreateSprite(pD3DDevice,&pSprite);
 	
 	/* Set the static parts of the View classes */
 	DXWorldView::SetDevice(pD3DDevice);
-	DXWorldView::SetBackBuffer(pBackBuffer);
+	DXWorldView::SetSprite(pSprite);
 	
 	DXPlayerView::SetDevice(pD3DDevice);
 	DXPlayerView::SetSprite(pSprite);
@@ -120,18 +119,18 @@ void DirectXInterface::Render()
 	if(pD3DDevice == NULL)
 		return;
 
-	pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0,0,0),1.0f,0);	// If covering the whoe screen with pictures its not necceseary (not sure) ^^ //
+	pD3DDevice->Clear(0,NULL,D3DCLEAR_TARGET,D3DCOLOR_COLORVALUE(0.35f,0.53f,0.7f,1.0f),1.0f,0);	// If covering the whoe screen with pictures its not necceseary (not sure) ^^ //
 	pD3DDevice->BeginScene();
 	pSprite->Begin(D3DXSPRITE_ALPHABLEND);
 	
 	// Drawing the world //
 	if(world)
 		world->Draw(ViewLeft,ViewTop,ViewWidth,ViewHeight);
-
+/*
 	// Drawing the HUD //
 	if(hud)
 		hud->Draw();
-	
+*/	
 	// Drawing objects: Players, Pickups, Bullets, etc (everything what implements <Units> can be added the the drawing queue) //
 	for(it=Objects.begin();it!=Objects.end();it++)
 		{

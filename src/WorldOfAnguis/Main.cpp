@@ -61,7 +61,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLin
 		World W;
 		W.LoadMaps("..\\..\\pic\\Map\\HitMap.bmp","..\\..\\pic\\Map\\TexturedMap.bmp");
 		
-		p = new Player(30,30);
+		p = new Player(30,70);
 		
 		hud = new HUD();
 		// End of TI //
@@ -106,15 +106,16 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				}
 
 			else if(wParam == 'W')
-				p->SetPos(p->GetX(),p->GetY()+5);
+				p->AddYVelocity(-5);
 			else if(wParam == 'S')
-				p->SetPos(p->GetX(),p->GetY()-5);
+				p->AddYVelocity(5);
 			else if(wParam == 'A')
-				p->SetPos(p->GetX()-5,p->GetY());
+				p->AddXVelocity(-5);
 			else if(wParam == 'D')
-				p->SetPos(p->GetX()+5,p->GetY());
-
-
+				p->AddXVelocity(5);
+			
+			else if(wParam == 'R')
+				p->SetPos(30,70);
 
 			else if(wParam == VK_DOWN)
 				DXI.ScrollDown(5);
