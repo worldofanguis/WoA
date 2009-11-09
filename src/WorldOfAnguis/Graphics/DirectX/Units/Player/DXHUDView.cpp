@@ -43,11 +43,11 @@ void DXHUDView::LoadTexture()
 								150,								// Height
 								1,
 								D3DPOOL_DEFAULT,
-								D3DFMT_UNKNOWN,
+								D3DFMT_A8R8G8B8,
 								D3DPOOL_DEFAULT,
 								D3DX_DEFAULT,
 								D3DX_DEFAULT,
-								D3DCOLOR_COLORVALUE(1.0f,0.0f,1.0f,1.0f),		// pink = transparent
+								D3DCOLOR_XRGB(255,0,255),		// pink = transparent
 								NULL,
 								NULL,
 								&pHUD);
@@ -58,11 +58,11 @@ void DXHUDView::LoadTexture()
 								15,									// Height
 								1,
 								D3DPOOL_DEFAULT,
-								D3DFMT_UNKNOWN,
+								D3DFMT_A8R8G8B8,
 								D3DPOOL_DEFAULT,
 								D3DX_DEFAULT,
 								D3DX_DEFAULT,
-								D3DCOLOR_COLORVALUE(1.0f,0.0f,1.0f,1.0f),		// pink = transparent
+								D3DCOLOR_XRGB(255,0,255),		// pink = transparent
 								NULL,
 								NULL,
 								&pLifeBar);
@@ -72,6 +72,7 @@ void DXHUDView::Draw()
 {
 	if(pHUD == NULL || pSprite == NULL)
 		return;
+
 	D3DXVECTOR3 v(0,618,0);
 	pSprite->Draw(pHUD,NULL,NULL,&v,0xFFFFFFFF);
 	v = D3DXVECTOR3(49,618+30,0);

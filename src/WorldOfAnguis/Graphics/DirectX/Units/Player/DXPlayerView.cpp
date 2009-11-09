@@ -39,11 +39,11 @@ void DXPlayerView::LoadTexture(int TextureID)
 								30,								// Height
 								1,
 								0,
-								D3DFMT_UNKNOWN,
+								D3DFMT_A8R8G8B8,
 								D3DPOOL_DEFAULT,
 								D3DX_DEFAULT,
 								D3DX_DEFAULT,
-								D3DCOLOR_COLORVALUE(1.0f,0.0f,1.0f,1.0f),		// pink = transparent
+								D3DCOLOR_XRGB(255,0,255),		// pink = transparent
 								NULL,
 								NULL,
 								&pTexture);
@@ -53,6 +53,7 @@ void DXPlayerView::Draw(int X,int Y,bool FaceRight,bool Jumping)
 {
 	if(pTexture == NULL || pSprite == NULL)
 		return;
+
 	D3DXVECTOR3 v(X,Y,0);
 	pSprite->Draw(pTexture,NULL,NULL,&v,0xFFFFFFFF);
 }

@@ -35,6 +35,7 @@ void DXWorldView::Draw(int Left,int Top,int Width,int Height)
 	pSprite->Draw(pDisplaySurface,&r,NULL,NULL,0xFFFFFFFF);
 }
 
+/* NOTE: To speed things up we can do a dirty region only update */
 void DXWorldView::UpdateSurface(char *Map,int MapWidth,int PPHM)
 {
 	D3DLOCKED_RECT SurfaceRect;
@@ -55,7 +56,7 @@ void DXWorldView::UpdateSurface(char *Map,int MapWidth,int PPHM)
 				{
 				*(DWORD*)Dest = *(DWORD*)Source;				// Copy 1 pixel from the source to the destination //
 				}
-			Dest+=4;				// Move the pointer with 4 bytes (1 pixel (XRGB))
+			Dest+=4;				// Move the pointer with 4 bytes (1 pixel (ARGB))
 			Source+=4;
 			}
 		}
@@ -73,7 +74,7 @@ bool DXWorldView::LoadWorldTexture(char *File)
 	if(FKez == NULL)
 		return false;
 
-	BITMAPFILEHEADER bmfh;
+	BITMAPFILEHEADER bmfh;		 // Bitmap file headers //
 	BITMAPINFOHEADER bmih;
 	
 	fread(&bmfh,sizeof(BITMAPFILEHEADER),1,FKez);
@@ -94,13 +95,13 @@ bool DXWorldView::LoadWorldTexture(char *File)
 								File,
 								SurfaceWidth,					// Width
 								SurfaceHeight,					// Height
-								1,
-								0,
-								D3DFMT_UNKNOWN,
-								D3DPOOL_SYSTEMMEM,
+								1,								// Levels
+								0,								// Usage
+								D3DFMT_A8R8G8B8,				// Format
+								D3DPOOL_SYSTEMMEM,				// Memory pool
 								D3DX_DEFAULT,
 								D3DX_DEFAULT,
-								D3DCOLOR_COLORVALUE(1.0f,0.0f,1.0f,1.0f),		// pink = transparent
+								D3DCOLOR_XRGB(255,0,255),		// pink = transparent
 								NULL,
 								NULL,
 								&pOriginalSurface);
