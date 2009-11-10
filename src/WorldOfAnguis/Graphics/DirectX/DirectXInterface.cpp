@@ -8,10 +8,7 @@
  *                    World Of Anguis
  *
  */
-
-
-#pragma comment(lib, "d3d9.lib")
-#ifdef _DEBUG
+// komment //#pragma comment(lib, "d3d9.lib")#ifdef _DEBUG
 #pragma comment(lib, "d3dx9d.lib")
 #else
 #pragma comment(lib, "d3dx9.lib")
