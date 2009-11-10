@@ -324,6 +324,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="ObjectMgr"
+				>
+				<File
+					RelativePath="..\..\src\WorldOfAnguis\Units\ObjectMgr\ObjectMgr.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\WorldOfAnguis\Units\ObjectMgr\ObjectMgr.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="HUD"

@@ -76,10 +76,8 @@ bool World::LoadMaps(char *HitMap,char* TexturedMap)
 				Map[(Height-1-h)*Width+w] = 2;					// Undestructable earth //
 			else if(PixelColor == 0x0000FF)					// BLUE //
 				Map[(Height-1-h)*Width+w] = 3;					// ?_? //
-			else if(PixelColor == 0xFFFFFF)
-				Map[(Height-1-h)*Width+w] = 0;
 			else
-				Map[(Height-1-h)*Width+w] = 9;
+				Map[(Height-1-h)*Width+w] = 0;
 			fseek(FKez,(PPHM-1)*3,SEEK_CUR);		// Move the file pointer with PPHM-1 pixels //
 			}
 		fseek(FKez,LinePadding,SEEK_CUR);										// Skip the line padding //			

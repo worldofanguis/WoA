@@ -23,7 +23,13 @@
 #   pragma warning(disable:4800)                            // 'type' : forcing value to bool 'true' or 'false' (performance warning)
 #endif                                                      // __SHOW_STUPID_WARNINGS__
 #endif
- 
+
+#ifdef _DEBUG
+#define _CRTDBG_MAP_ALLOC				// Memory Leak Detection //
+#include <stdlib.h>
+#include <crtdbg.h>
+#endif
+
 #include <windows.h>
 #include <queue>
 #include <vector>

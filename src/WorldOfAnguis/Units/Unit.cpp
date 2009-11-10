@@ -32,11 +32,11 @@ bool Unit::Update()
 	if(vX == 0 && vY == 0)		// We dont move since we dont have any velocity //
 		return false;
 	bool Collided = false;
-	char* Map = world->GetHitMap();
-	int PPHM = world->GetPixelPerHitMap();
-	int MapWidth = world->GetHitMapWidth();
+	//char* Map = world->GetHitMap();
+	//int PPHM = world->GetPixelPerHitMap();
+	//int MapWidth = world->GetHitMapWidth();
 	
-	int dX,dY; //new coord.
+	//int dX,dY; //new coord.
 
 
 	/* kell egy külön ütközésvizsgálat, csak 1 pontra */
@@ -68,7 +68,7 @@ bool Unit::Update()
 	//		}
 	//	}
 	
-	X = dX;
-	Y = dY;
+	//X = dX;
+	//Y = dY;
 return Collided;
 }

@@ -81,11 +81,14 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLin
 	else
 		MessageBox(hwnd,"Failed to initialize Direct3D!","Oops",MB_OK);
 
-    // Cleanup the DXInterface //
-    DXI.Cleanup();
+	// Cleanup the DXInterface //
+	DXI.Cleanup();
 
-    UnregisterClass("WoA",hInstance);		// Unregister our window's class //
-    
+	UnregisterClass("WoA",hInstance);		// Unregister our window's class //
+
+#ifdef _DEBUG
+	_CrtDumpMemoryLeaks();
+#endif
 return 0;
 }
 
