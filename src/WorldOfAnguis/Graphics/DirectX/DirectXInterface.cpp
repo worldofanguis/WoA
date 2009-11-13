@@ -21,9 +21,6 @@
 
 World* DirectXInterface::world = NULL;
 HUD* DirectXInterface::hud = NULL;
-std::vector<Unit*> DirectXInterface::Objects;
-std::vector<Unit*>::iterator DirectXInterface::it;
-
 
 DirectXInterface::DirectXInterface()
 {
@@ -31,7 +28,6 @@ DirectXInterface::DirectXInterface()
 	pD3DDevice = NULL;
 
 	world = NULL;
-	Objects.clear();
 
 	ShowFPS = true;
 }
@@ -39,6 +35,7 @@ DirectXInterface::DirectXInterface()
 DirectXInterface::~DirectXInterface()
 {
 	Cleanup();
+	delete drawmgr;
 }
 
 HRESULT DirectXInterface::Initialize(HWND hwnd,bool Windowed)
@@ -92,11 +89,10 @@ HRESULT DirectXInterface::Initialize(HWND hwnd,bool Windowed)
 	DXWorldView::SetDevice(pD3DDevice);
 	DXWorldView::SetSprite(pSprite);
 	
-	DXPlayerView::SetDevice(pD3DDevice);
-	DXPlayerView::SetSprite(pSprite);
-	
 	DXHUDView::SetDevice(pD3DDevice);
 	DXHUDView::SetSprite(pSprite);
+	
+	drawmgr = new DrawMgr(pD3DDevice,pSprite);
 	
 return S_OK;
 }
@@ -126,13 +122,7 @@ void DirectXInterface::Render()
 	if(hud)
 		hud->Draw();
 	
-	// Drawing objects: Players, Pickups, Bullets, etc (everything what implements <Units> can be added the the drawing queue) //
-	for(it=Objects.begin();it!=Objects.end();it++)
-		{
-		(*it)->Update();		// Updating the game objects (should be moved from there) since we are responsible for DRAWING only //
-		if(InSight((*it)))
-			(*it)->Draw(ViewLeft,ViewTop);
-		}
+	drawmgr->Draw(ViewLeft,ViewTop);
 
 	// Display FPS counter //
 	if(ShowFPS)
@@ -149,15 +139,6 @@ void DirectXInterface::Render()
 	pD3DDevice->Present(NULL,NULL,NULL,NULL);		// TODO: check present paramters maybe there is a better on than just NULL-s //
 	PrevTickCount = TickCount;
 	TickCount = GetTickCount();
-}
-
-bool DirectXInterface::InSight(Unit* unit)
-{
-	/* Check if the object we want to draw is truly in sight (if not just leave it alone) */
-	if((ViewLeft < (unit->GetX()+unit->GetWidth())) && (ViewTop < (unit->GetY()+unit->GetHeight())) &&
-	   ((ViewLeft+ViewWidth) > unit->GetX()) && ((ViewTop+ViewHeight) > unit->GetY()))
-		return true;
-return false;
 }
 
 /* Maybe this functions should be moved to 2 (ScrollingVertical and ScrollingHorizontal) */

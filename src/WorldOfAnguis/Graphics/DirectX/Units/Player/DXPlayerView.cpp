@@ -12,9 +12,6 @@
  
 #include "DXPlayerView.h"
 
-LPDIRECT3DDEVICE9 DXPlayerView::pDevice = NULL;
-LPD3DXSPRITE DXPlayerView::pSprite = NULL;
-
 DXPlayerView::DXPlayerView()
 {
 	pTexture = NULL;

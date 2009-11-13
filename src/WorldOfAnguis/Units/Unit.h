@@ -16,14 +16,15 @@
 class Unit
 {
 public:
+	enum TYPES {PLAYER};
 	/* Updates the Unit position, this func should call the HitTest and calc all the physic */
 	bool Update();
-	/* Virtual function for drawing */
-	virtual void Draw(int ViewX,int ViewY) = 0;
+	bool IsActive() {return Active;}
 	
 	int GetWidth() {return Width;}
 	int GetHeight() {return Height;}
 	
+	TYPES GetType() {return Type;}
 	int GetX() {return X;}
 	int GetY() {return Y;}
 	
@@ -31,10 +32,10 @@ public:
 	static void RegisterWorld(World* world) {Unit::world = world;}
 	static void UnRegisterWorld() {Unit::world = NULL;}
 
+	virtual ~Unit();
 protected:
 	/* We dont want this class to be created */
-	Unit();
-	~Unit();
+	Unit(TYPES Type);
 
 	static World* world;	// World pointer (requied for hittest) // 
 	
@@ -45,5 +46,9 @@ protected:
 	int Height;
 	
 	bool FaceRight;
+	
+	bool Active;
+private:
+	TYPES Type;
 };
 

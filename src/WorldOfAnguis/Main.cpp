@@ -14,6 +14,7 @@
  
 #include "Common.h"
 #include "Graphics/DirectX/DirectXInterface.h"
+#include "Units/ObjectMgr.h"
 
 
 // TODO: This whole stuff should be wrapped in a class (or whatever) //
@@ -22,6 +23,7 @@ DirectXInterface DXI;
 
 Player* p;
 HUD* hud;
+ObjectMgr ObjMgr;
 
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -44,11 +46,11 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLin
 	WinClass.hbrBackground = NULL;
 	WinClass.lpszMenuName = NULL;
 	WinClass.lpszClassName = "WoA";
-    RegisterClassEx(&WinClass);
+	RegisterClassEx(&WinClass);
 
-    HWND hwnd;
-    // Create the application's window //
-    if((hwnd = CreateWindow("WoA", "woa",WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU,0,0,1024,768,HWND_DESKTOP,NULL,hInstance,NULL)) == NULL)
+	HWND hwnd;
+	// Create the application's window //
+	if((hwnd = CreateWindow("WoA", "woa",WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU,0,0,1024,768,HWND_DESKTOP,NULL,hInstance,NULL)) == NULL)
 		{
 		MessageBox(NULL,"Failed to create the main window","Oops",MB_OK);
 		return 0;
@@ -60,9 +62,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLin
 		// Testing initializations (TODO: Remove these) //
 		World W;
 		W.LoadMaps("..\\..\\pic\\Map\\HitMap.bmp","..\\..\\pic\\Map\\TexturedMap.bmp");
-		
-		p = new Player(30,70);
-		
+				
 		hud = new HUD();
 		// End of TI //
 		
@@ -84,6 +84,8 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLin
 	// Cleanup the DXInterface //
 	DXI.Cleanup();
 
+	delete p;
+	delete hud;
 	UnregisterClass("WoA",hInstance);		// Unregister our window's class //
 
 #ifdef _DEBUG

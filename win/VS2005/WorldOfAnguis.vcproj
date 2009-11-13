@@ -230,6 +230,22 @@
 				<Filter
 					Name="Units"
 					>
+					<File
+						RelativePath="..\..\src\WorldOfAnguis\Graphics\DirectX\Units\DrawMgr.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\WorldOfAnguis\Graphics\DirectX\Units\DrawMgr.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\WorldOfAnguis\Graphics\DirectX\Units\UnitDrawInfo.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\WorldOfAnguis\Graphics\DirectX\Units\UnitDrawInfo.h"
+						>
+					</File>
 					<Filter
 						Name="Player"
 						>
@@ -239,14 +255,6 @@
 						</File>
 						<File
 							RelativePath="..\..\src\WorldOfAnguis\Graphics\DirectX\Units\Player\DXHUDView.h"
-							>
-						</File>
-						<File
-							RelativePath="..\..\src\WorldOfAnguis\Graphics\DirectX\Units\Player\DXPlayerView.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\src\WorldOfAnguis\Graphics\DirectX\Units\Player\DXPlayerView.h"
 							>
 						</File>
 					</Filter>
@@ -285,6 +293,14 @@
 			Name="Units"
 			>
 			<File
+				RelativePath="..\..\src\WorldOfAnguis\Units\ObjectMgr.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\WorldOfAnguis\Units\ObjectMgr.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\WorldOfAnguis\Units\Unit.cpp"
 				>
 			</File>
@@ -321,18 +337,6 @@
 				</File>
 				<File
 					RelativePath="..\..\src\WorldOfAnguis\Units\Weapon\Weapon.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="ObjectMgr"
-				>
-				<File
-					RelativePath="..\..\src\WorldOfAnguis\Units\ObjectMgr\ObjectMgr.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\WorldOfAnguis\Units\ObjectMgr\ObjectMgr.h"
 					>
 				</File>
 			</Filter>

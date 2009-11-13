@@ -14,12 +14,14 @@
 
 World* Unit::world = NULL;
 
-Unit::Unit()
+Unit::Unit(TYPES Type)
 {
 	X = Y = 0;
 	vX = vY = 0;
 
 	Width = Height = 0;
+	
+	this->Type = Type;
 }
 
 Unit::~Unit()
@@ -32,6 +34,9 @@ bool Unit::Update()
 	if(vX == 0 && vY == 0)		// We dont move since we dont have any velocity //
 		return false;
 	bool Collided = false;
+	X += vX;
+	Y += vY;
+
 	//char* Map = world->GetHitMap();
 	//int PPHM = world->GetPixelPerHitMap();
 	//int MapWidth = world->GetHitMapWidth();

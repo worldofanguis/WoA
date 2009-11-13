@@ -12,9 +12,10 @@
  
 #pragma once
 #include "Common.h"
-#include "Units/Player/Player.h"
 #include "World/World.h"
 #include "Units/Player/HUD.h"
+
+#include "Graphics/DirectX/Units/DrawMgr.h"
 
 class DirectXInterface
 {
@@ -40,21 +41,12 @@ public:
 	/* Registers the hud class for drawing the hud */
 	static void RegisterHUD(HUD* hud) {DirectXInterface::hud = hud;}
 	/* UnRegisters the world */
-	static void UnRegisterHUD() {DirectXInterface::hud = NULL;}
-	/* Registers a unit (Player,Missile,etc...) for drawing */
-	static void RegisterUnit(Unit* unit) {Objects.push_back(unit);}
-	/* UnRegisters a unit (because its expired) */
-	static void UnRegisterUnit(Unit* unit) {for(it=Objects.begin();it!=Objects.end();it++){if((*it) == unit){Objects.erase(it); break;}}}
-	
+	static void UnRegisterHUD() {DirectXInterface::hud = NULL;}	
 private:
-	/* Check if the unit is in the field of view */
-	bool InSight(Unit* unit);
-
 	static World* world;						// world pointer //
 	static HUD* hud;							// hud pointer //
-	static std::vector<Unit*> Objects;			// containter for the units //
-	static std::vector<Unit*>::iterator it;		// iterator for the units //
 	
+	DrawMgr* drawmgr;
 	HWND hwnd;							// Window handle //
 	LPDIRECT3D9 pD3D;
 	LPDIRECT3DDEVICE9 pD3DDevice;		// D3DX Device //
