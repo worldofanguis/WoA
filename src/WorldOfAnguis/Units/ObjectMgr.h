@@ -22,6 +22,7 @@ public:
 	~ObjectMgr();
 	
 	void AddPlayer();
+	Unit* Me() {return Objects.front();}
 
 	void Update();
 private:

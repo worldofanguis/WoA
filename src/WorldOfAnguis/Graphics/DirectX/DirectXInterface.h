@@ -14,7 +14,7 @@
 #include "Common.h"
 #include "World/World.h"
 #include "Units/Player/HUD.h"
-
+#include "Units/ObjectMgr.h"
 #include "Graphics/DirectX/Units/DrawMgr.h"
 
 class DirectXInterface

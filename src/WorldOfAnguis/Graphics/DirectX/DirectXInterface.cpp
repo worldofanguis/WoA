@@ -123,6 +123,8 @@ void DirectXInterface::Render()
 	if(hud)
 		hud->Draw();
 	
+	
+	ObjMgr->Update(); //Doesn't really belong here
 	DrwMgr->Draw(ViewLeft,ViewTop);
 
 	// Display FPS counter //

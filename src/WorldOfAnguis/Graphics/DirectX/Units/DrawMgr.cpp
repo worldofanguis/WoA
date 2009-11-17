@@ -61,15 +61,15 @@ void DrawMgr::Draw(int ViewLeft,int ViewTop)
 			switch(it->first->GetType())
 				{
 				case Unit::PLAYER:
-					DrawPlayer(reinterpret_cast<Player*>(it->first),it->second);
+					DrawPlayer(reinterpret_cast<Player*>(it->first),it->second,ViewLeft,ViewTop);
 					break;
 				}
 			}
 		}
 }
 
-void DrawMgr::DrawPlayer(Player* player,UnitDrawInfo* unitinfo)
+void DrawMgr::DrawPlayer(Player* player,UnitDrawInfo* unitinfo,int ViewLeft,int ViewTop)
 {
-	D3DXVECTOR3 v(player->GetX(),player->GetY(),0);
+	D3DXVECTOR3 v(player->GetX()-ViewLeft,player->GetY()-ViewTop,0);
 	pSprite->Draw(unitinfo->GetTexture(),NULL,NULL,&v,0xFFFFFFFF);
 }

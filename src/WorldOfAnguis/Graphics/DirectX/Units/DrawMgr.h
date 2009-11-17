@@ -31,7 +31,7 @@ public:
 	
 	void Draw(int ViewLeft,int ViewTop);
 	
-	void DrawPlayer(Player* player,UnitDrawInfo* unitinfo);
+	void DrawPlayer(Player* player,UnitDrawInfo* unitinfo,int ViewLeft,int ViewTop);
 private:
 	bool InSight(Unit* unit,int ViewLeft,int ViewTop);
 

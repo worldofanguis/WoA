@@ -20,6 +20,8 @@ Player::Player(int X,int Y) : Unit(PLAYER)
 	Width = 20;
 	Height = 30;
 	Life = 100;
+	Angle = 0;
+	Jumping = false;
 }
 
 Player::~Player()

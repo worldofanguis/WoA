@@ -20,8 +20,6 @@
 // TODO: This whole stuff should be wrapped in a class (or whatever) //
 
 DirectXInterface DXI;
-
-Player* p;
 HUD* hud;
 
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -63,6 +61,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLin
 		W.LoadMaps("..\\..\\pic\\Map\\HitMap.bmp","..\\..\\pic\\Map\\TexturedMap.bmp");
 		
 		ObjMgr->AddPlayer();
+		
 		hud = new HUD();
 		// End of TI //
 		
@@ -84,7 +83,6 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLin
 	// Cleanup the DXInterface //
 	DXI.Cleanup();
 
-	delete p;
 	delete hud;
 	UnregisterClass("WoA",hInstance);		// Unregister our window's class //
 
@@ -111,16 +109,16 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				}
 
 			else if(wParam == 'W')
-				p->AddYVelocity(-5);
+				reinterpret_cast<Player*>(ObjMgr->Me())->AddYVelocity(-5);
 			else if(wParam == 'S')
-				p->AddYVelocity(5);
+				reinterpret_cast<Player*>(ObjMgr->Me())->AddYVelocity(5);
 			else if(wParam == 'A')
-				p->AddXVelocity(-5);
+				reinterpret_cast<Player*>(ObjMgr->Me())->AddXVelocity(-5);
 			else if(wParam == 'D')
-				p->AddXVelocity(5);
+				reinterpret_cast<Player*>(ObjMgr->Me())->AddXVelocity(5);
 			
 			else if(wParam == 'R')
-				p->SetPos(30,70);
+				reinterpret_cast<Player*>(ObjMgr->Me())->SetPos(30,70);
 
 			else if(wParam == VK_DOWN)
 				DXI.ScrollDown(5);
@@ -130,22 +128,22 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				DXI.ScrollLeft(5);
 			else if(wParam == VK_RIGHT)
 				DXI.ScrollRight(5);
-			else if(wParam == VK_PRIOR)
-				{
-				p->SetLife(p->GetLife()-1);
-				hud->Update(DXHUDView::HUD_LIFE,p->GetLife());
-				}
-			else if(wParam == VK_NEXT)
-				{
-				p->SetLife(p->GetLife()+1);
-				hud->Update(DXHUDView::HUD_LIFE,p->GetLife());
-				}				
+			//else if(wParam == VK_PRIOR)
+			//	{
+			//	hud->Update(DXHUDView::HUD_LIFE,p->GetLife());
+			//	}
+			//else if(wParam == VK_NEXT)
+			//	{
+			//	p->SetLife(p->GetLife()+1);
+			//	hud->Update(DXHUDView::HUD_LIFE,p->GetLife());
+			//	}				
 			break;
 
 		case WM_PAINT:
 			DXI.Render();
 			return 0;
 		}
+		
 
 return DefWindowProc(hWnd, msg, wParam, lParam);
 }
