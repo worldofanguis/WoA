@@ -23,7 +23,6 @@ DirectXInterface DXI;
 
 Player* p;
 HUD* hud;
-ObjectMgr ObjMgr;
 
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -62,7 +61,8 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLin
 		// Testing initializations (TODO: Remove these) //
 		World W;
 		W.LoadMaps("..\\..\\pic\\Map\\HitMap.bmp","..\\..\\pic\\Map\\TexturedMap.bmp");
-				
+		
+		ObjMgr->AddPlayer();
 		hud = new HUD();
 		// End of TI //
 		

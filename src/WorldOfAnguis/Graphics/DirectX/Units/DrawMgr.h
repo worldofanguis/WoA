@@ -11,17 +11,19 @@
  
 #pragma once
 #include "Common.h"
+#include "Singleton.h"
 #include "Units/Unit.h"
 #include "Units/Player/Player.h"
 #include "UnitDrawInfo.h"
 
 typedef std::pair<Unit*,UnitDrawInfo*> UnitInfo;
-class DrawMgr
+class DrawMgr : public Singleton<DrawMgr>
 {
 public:
-	DrawMgr(LPDIRECT3DDEVICE9 pDevice,LPD3DXSPRITE pSprite);
+	DrawMgr();
 	~DrawMgr();
 	
+	void Setup(LPDIRECT3DDEVICE9 pDevice,LPD3DXSPRITE pSprite) {this->pDevice = pDevice; this->pSprite=pSprite;}
 	void SetScreenSize(int Width,int Height) {ViewWidth = Width; ViewHeight = Height;}
 	
 	void RegisterUnit(Unit* unit,char* TextureFileName);
@@ -42,3 +44,5 @@ private:
 	LPD3DXSPRITE pSprite;
 	LPDIRECT3DDEVICE9 pDevice;
 };
+
+#define DrwMgr DrawMgr::Instance()

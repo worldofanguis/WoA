@@ -14,7 +14,6 @@
 ObjectMgr::ObjectMgr()
 {
 	Objects.clear();
-	
 }
 
 ObjectMgr::~ObjectMgr()
@@ -33,7 +32,7 @@ void ObjectMgr::Update()
 			(*it)->Update();			// Paramters: WorldPointer <-> Terran Hittest | UnitsPointer <-> Unit Hittest //
 		else
 			{
-			//DrawMgr->UnRegistrUnit(*it);
+			DrwMgr->UnRegisterUnit(*it);
 			delete *it;
 			}
 		}
@@ -43,5 +42,5 @@ void ObjectMgr::AddPlayer()
 {
 	Unit* unit = new Player(20,30);
 	Objects.push_back(unit);
-	//DrawMgr->RegisterUnit(unit,"..\\..\\pic\\Player\\Player1.bmp");
+	DrwMgr->RegisterUnit(unit,"..\\..\\pic\\Player\\Player1.bmp");
 }

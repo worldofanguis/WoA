@@ -12,11 +12,11 @@
 
 #include "DrawMgr.h"
 
-DrawMgr::DrawMgr(LPDIRECT3DDEVICE9 pDevice,LPD3DXSPRITE pSprite)
+DrawMgr::DrawMgr()
 {
-	this->pDevice = pDevice;
-	this->pSprite = pSprite;
 	Objects.clear();
+	ViewWidth = 0;
+	ViewHeight = 0;
 }
 
 DrawMgr::~DrawMgr()

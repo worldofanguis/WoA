@@ -11,10 +11,11 @@
  
 #pragma once
 #include "Common.h"
+#include "Singleton.h"
 #include "Unit.h"
 #include "Graphics/DirectX/Units/DrawMgr.h"
 
-class ObjectMgr
+class ObjectMgr : public Singleton<ObjectMgr>
 {
 public:
 	ObjectMgr();
@@ -27,3 +28,5 @@ private:
 	std::vector<Unit*> Objects;
 	std::vector<Unit*>::iterator it;
 };
+
+#define ObjMgr ObjectMgr::Instance()

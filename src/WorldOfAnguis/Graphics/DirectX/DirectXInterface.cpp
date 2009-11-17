@@ -35,7 +35,7 @@ DirectXInterface::DirectXInterface()
 DirectXInterface::~DirectXInterface()
 {
 	Cleanup();
-	delete drawmgr;
+	delete DrwMgr;
 }
 
 HRESULT DirectXInterface::Initialize(HWND hwnd,bool Windowed)
@@ -92,7 +92,8 @@ HRESULT DirectXInterface::Initialize(HWND hwnd,bool Windowed)
 	DXHUDView::SetDevice(pD3DDevice);
 	DXHUDView::SetSprite(pSprite);
 	
-	drawmgr = new DrawMgr(pD3DDevice,pSprite);
+	DrwMgr->Setup(pD3DDevice,pSprite);
+	DrwMgr->SetScreenSize(ViewWidth,ViewHeight);
 	
 return S_OK;
 }
@@ -122,7 +123,7 @@ void DirectXInterface::Render()
 	if(hud)
 		hud->Draw();
 	
-	drawmgr->Draw(ViewLeft,ViewTop);
+	DrwMgr->Draw(ViewLeft,ViewTop);
 
 	// Display FPS counter //
 	if(ShowFPS)
