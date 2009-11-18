@@ -12,11 +12,14 @@
 
 #include "DXWorldView.h"
 
-LPDIRECT3DDEVICE9 DXWorldView::pDevice = NULL;
-LPD3DXSPRITE DXWorldView::pSprite = NULL;
-
 DXWorldView::DXWorldView()
 {
+	pDevice = NULL;
+	pSprite = NULL;
+	
+	pDisplaySurface = NULL;
+	pWorkSurface = NULL;
+	pOriginalSurface = NULL;
 }
 
 DXWorldView::~DXWorldView()
@@ -69,10 +72,17 @@ void DXWorldView::UpdateSurface(char *Map,int MapWidth,int PPHM)
 
 bool DXWorldView::LoadWorldTexture(char *File)
 {
+	if(pDevice == NULL)
+		return false;
+
 	FILE *FKez;
 	fopen_s(&FKez,File,"rb");
 	if(FKez == NULL)
 		return false;
+
+	SAFE_RELEASE(pDisplaySurface);		// Destroy the previous stuffs if any //
+	SAFE_RELEASE(pWorkSurface);
+	SAFE_RELEASE(pOriginalSurface);
 
 	BITMAPFILEHEADER bmfh;		 // Bitmap file headers //
 	BITMAPINFOHEADER bmih;
@@ -91,7 +101,7 @@ bool DXWorldView::LoadWorldTexture(char *File)
 	SurfaceWidth = bmih.biWidth;
 	SurfaceHeight = bmih.biHeight;
 
-	D3DXCreateTextureFromFileEx(DXWorldView::pDevice,			// Device
+	D3DXCreateTextureFromFileEx(pDevice,			// Device
 								File,
 								SurfaceWidth,					// Width
 								SurfaceHeight,					// Height

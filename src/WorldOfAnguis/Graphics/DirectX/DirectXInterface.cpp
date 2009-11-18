@@ -19,23 +19,16 @@
 
 #include "Graphics\DirectX\DirectXInterface.h"
 
-World* DirectXInterface::world = NULL;
-HUD* DirectXInterface::hud = NULL;
-
 DirectXInterface::DirectXInterface()
 {
 	pD3D = NULL;
 	pD3DDevice = NULL;
-
-	world = NULL;
 
 	ShowFPS = true;
 }
 
 DirectXInterface::~DirectXInterface()
 {
-	Cleanup();
-	delete DrwMgr;
 }
 
 HRESULT DirectXInterface::Initialize(HWND hwnd,bool Windowed)
@@ -85,21 +78,19 @@ HRESULT DirectXInterface::Initialize(HWND hwnd,bool Windowed)
 	ViewHeight = d3dpp.BackBufferHeight-100;		// Space for the HUD //
 	D3DXCreateSprite(pD3DDevice,&pSprite);
 
-	/* Set the static parts of the View classes */
-	DXWorldView::SetDevice(pD3DDevice);
-	DXWorldView::SetSprite(pSprite);
-	
-	DXHUDView::SetDevice(pD3DDevice);
-	DXHUDView::SetSprite(pSprite);
-	
-	DrwMgr->Setup(pD3DDevice,pSprite);
-	DrwMgr->SetScreenSize(ViewWidth,ViewHeight);
-	
+	sDrawMgr->Setup(pD3DDevice,pSprite,ViewWidth,ViewHeight);
+	sWorldView->Setup(pD3DDevice,pSprite);
+	sHudView->Setup(pD3DDevice,pSprite);
+
 return S_OK;
 }
 
 void DirectXInterface::Cleanup()
 {
+	delete sHudView;
+	delete sDrawMgr;
+	delete sWorldView;
+
 	SAFE_RELEASE(pSprite);
 	SAFE_RELEASE(pFont);
 	SAFE_RELEASE(pD3DDevice);
@@ -116,16 +107,13 @@ void DirectXInterface::Render()
 	pSprite->Begin(D3DXSPRITE_ALPHABLEND);
 	
 	// Drawing the world //
-	if(world)
-		world->Draw(ViewLeft,ViewTop,ViewWidth,ViewHeight);
+	sWorldView->Draw(ViewLeft,ViewTop,ViewWidth,ViewHeight);
 
 	// Drawing the HUD //
-	if(hud)
-		hud->Draw();
-	
-	
-	ObjMgr->Update(); //Doesn't really belong here
-	DrwMgr->Draw(ViewLeft,ViewTop);
+	sHudView->Draw();
+
+	// Drawing the Objects via the DrawMgr //	
+	sDrawMgr->Draw(ViewLeft,ViewTop);
 
 	// Display FPS counter //
 	if(ShowFPS)
@@ -155,10 +143,10 @@ void DirectXInterface::ScrollLeft(int Dist)
 
 void DirectXInterface::ScrollRight(int Dist)
 {
-	if(ViewLeft+ViewWidth+Dist < world->GetWidth())
+	if(ViewLeft+ViewWidth+Dist < sWorld->GetWidth())
 		ViewLeft += Dist;
 	else
-		ViewLeft = world->GetWidth()-ViewWidth;
+		ViewLeft = sWorld->GetWidth()-ViewWidth;
 }
 
 void DirectXInterface::ScrollUp(int Dist)
@@ -171,8 +159,8 @@ void DirectXInterface::ScrollUp(int Dist)
 
 void DirectXInterface::ScrollDown(int Dist)
 {
-	if(ViewTop+ViewHeight+Dist < world->GetHeight())
+	if(ViewTop+ViewHeight+Dist < sWorld->GetHeight())
 		ViewTop += Dist;
 	else
-		ViewTop = world->GetHeight()-ViewHeight;
+		ViewTop = sWorld->GetHeight()-ViewHeight;
 }

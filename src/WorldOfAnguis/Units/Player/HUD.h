@@ -11,16 +11,19 @@
 
 
 #pragma once
-#include "Graphics/DirectX/Units/Player/DXHUDView.h"
+#include "Common.h"
+#include "Singleton.h"
+#include "Graphics/DirectX/HUD/DXHUDView.h"
 
-class HUD : DXHUDView
+class HUD : public Singleton<HUD>
 {
 public:
 	HUD();
 	~HUD();
 	
-	void Draw() {DXHUDView::Draw();}
-	void Update(DXHUDView::HUD_PART Part,int Data) {DXHUDView::Update(Part,Data);}
+	void Update(DXHUDView::HUD_PART Part,int Data) {sHudView->Update(Part,Data);}
 private:
 
 };
+
+#define sHud HUD::Instance()

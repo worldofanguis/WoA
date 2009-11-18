@@ -19,8 +19,8 @@
 
 // TODO: This whole stuff should be wrapped in a class (or whatever) //
 
+bool Running = true;
 DirectXInterface DXI;
-HUD* hud;
 
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -57,33 +57,37 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLin
 	if(SUCCEEDED(DXI.Initialize(hwnd,true)))
 		{
 		// Testing initializations (TODO: Remove these) //
-		World W;
-		W.LoadMaps("..\\..\\pic\\Map\\HitMap.bmp","..\\..\\pic\\Map\\TexturedMap.bmp");
-		
-		ObjMgr->AddPlayer();
-		
-		hud = new HUD();
-		// End of TI //
+		sObjMgr->AddPlayer();
+		sObjMgr->CreateWorld();
 		
 		// Show the window //
 		ShowWindow(hwnd,nCmdShow);
 		UpdateWindow(hwnd);
 
 		// Enter the message loop //
-		MSG msg; 
-		while(GetMessage(&msg,NULL,0,0))
+		MSG msg;
+		while(Running)
 			{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
+			if(PeekMessage(&msg,NULL,0,0,PM_REMOVE))
+				{
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+				}
+				
+			sObjMgr->Update();
+			DXI.Render();
+			Sleep(10);			// To reduce CPU usage from 100% //
 			}
 		}
 	else
 		MessageBox(hwnd,"Failed to initialize Direct3D!","Oops",MB_OK);
 
+
+	delete sObjMgr;		// Err, not sure where to put this ^^ <if needed at all> //
+	
 	// Cleanup the DXInterface //
 	DXI.Cleanup();
 
-	delete hud;
 	UnregisterClass("WoA",hInstance);		// Unregister our window's class //
 
 #ifdef _DEBUG
@@ -99,26 +103,27 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		case WM_TIMER:
 		case WM_DESTROY:
 			PostQuitMessage(0);
+			Running = false;
 			return 0;
 			
 		case WM_KEYDOWN:
 			if(wParam == VK_ESCAPE)
 				{
-				PostQuitMessage(0);
+				Running = false;
 				return 0;
 				}
 
 			else if(wParam == 'W')
-				reinterpret_cast<Player*>(ObjMgr->Me())->AddYVelocity(-5);
+				reinterpret_cast<Player*>(sObjMgr->Me())->AddYVelocity(-5);
 			else if(wParam == 'S')
-				reinterpret_cast<Player*>(ObjMgr->Me())->AddYVelocity(5);
+				reinterpret_cast<Player*>(sObjMgr->Me())->AddYVelocity(5);
 			else if(wParam == 'A')
-				reinterpret_cast<Player*>(ObjMgr->Me())->AddXVelocity(-5);
+				reinterpret_cast<Player*>(sObjMgr->Me())->AddXVelocity(-5);
 			else if(wParam == 'D')
-				reinterpret_cast<Player*>(ObjMgr->Me())->AddXVelocity(5);
+				reinterpret_cast<Player*>(sObjMgr->Me())->AddXVelocity(5);
 			
 			else if(wParam == 'R')
-				reinterpret_cast<Player*>(ObjMgr->Me())->SetPos(30,70);
+				reinterpret_cast<Player*>(sObjMgr->Me())->SetPos(30,70);
 
 			else if(wParam == VK_DOWN)
 				DXI.ScrollDown(5);
@@ -128,22 +133,18 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				DXI.ScrollLeft(5);
 			else if(wParam == VK_RIGHT)
 				DXI.ScrollRight(5);
-			//else if(wParam == VK_PRIOR)
-			//	{
-			//	hud->Update(DXHUDView::HUD_LIFE,p->GetLife());
-			//	}
-			//else if(wParam == VK_NEXT)
-			//	{
-			//	p->SetLife(p->GetLife()+1);
-			//	hud->Update(DXHUDView::HUD_LIFE,p->GetLife());
-			//	}				
+			else if(wParam == VK_PRIOR)
+				{
+				reinterpret_cast<Player*>(sObjMgr->Me())->SetLife(reinterpret_cast<Player*>(sObjMgr->Me())->GetLife()-1);
+				sHud->Update(DXHUDView::HUD_LIFE,reinterpret_cast<Player*>(sObjMgr->Me())->GetLife());
+				}
+			else if(wParam == VK_NEXT)
+				{
+				reinterpret_cast<Player*>(sObjMgr->Me())->SetLife(reinterpret_cast<Player*>(sObjMgr->Me())->GetLife()+1);
+				sHud->Update(DXHUDView::HUD_LIFE,reinterpret_cast<Player*>(sObjMgr->Me())->GetLife());
+				}				
 			break;
-
-		case WM_PAINT:
-			DXI.Render();
-			return 0;
 		}
-		
 
 return DefWindowProc(hWnd, msg, wParam, lParam);
 }

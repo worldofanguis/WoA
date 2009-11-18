@@ -11,32 +11,17 @@
  
 #pragma once
 #include "Common.h"
+#include "Singleton.h"
 #include "Graphics/DirectX/World/DXWorldView.h"
 
-/* TESTING ONLY */
-class Explosion
-{
-public:
-	Explosion() {}
-	~Explosion() {}
-private:
-	
-};
-
-class World : DXWorldView
+class World : public Singleton<World>
 {
 public:
 	World();
 	~World();
 	
 	/* Load the Map for the hittest and the Map with the texture (maybe this could be done from 1 map?) */
-	bool LoadMaps(char *HitMap,char* TexturedMap);
-	
-	/* Call the View class draw function with the paramters */
-	void Draw(int Left,int Top,int Width,int Height) {DXWorldView::Draw(Left,Top,Width,Height);}
-	
-	/* Deform the map */
-	void Explode(Explosion* Ex);
+	bool LoadMaps(char *HitMap);
 	
 	/* Get map infos */
 	char* GetHitMap() {return Map;}
@@ -46,6 +31,7 @@ public:
 	
 	int GetWidth() {return Width*PPHM;}
 	int GetHeight() {return Height*PPHM;}
+
 private:
 	char *Map;				// HitMap //
 	int MapSize;
@@ -54,3 +40,5 @@ private:
 	int Width;
 	int Height;
 };
+
+#define sWorld World::Instance()

@@ -12,10 +12,9 @@
  
 #pragma once
 #include "Common.h"
-#include "World/World.h"
-#include "Units/Player/HUD.h"
-#include "Units/ObjectMgr.h"
-#include "Graphics/DirectX/Units/DrawMgr.h"
+#include "Graphics/DirectX/DrawMgr.h"
+#include "Graphics/DirectX/World/DXWorldView.h"
+#include "Graphics/DirectX/HUD/DXHUDView.h"
 
 class DirectXInterface
 {
@@ -34,19 +33,7 @@ public:
 	void ScrollUp(int Dist);			// Scrolling the screen up with dist //
 	void ScrollDown(int Dist);			// Scrolling the screen down with dist //
 	
-	/* Registers the world class for drawing the world */
-	static void RegisterWorld(World* world) {DirectXInterface::world = world;}
-	/* UnRegisters the world */
-	static void UnRegisterWorld() {DirectXInterface::world = NULL;}
-	/* Registers the hud class for drawing the hud */
-	static void RegisterHUD(HUD* hud) {DirectXInterface::hud = hud;}
-	/* UnRegisters the world */
-	static void UnRegisterHUD() {DirectXInterface::hud = NULL;}	
 private:
-	static World* world;						// world pointer //
-	static HUD* hud;							// hud pointer //
-	
-	DrawMgr* drawmgr;
 	HWND hwnd;							// Window handle //
 	LPDIRECT3D9 pD3D;
 	LPDIRECT3DDEVICE9 pD3DDevice;		// D3DX Device //

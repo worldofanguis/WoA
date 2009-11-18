@@ -28,17 +28,11 @@ public:
 	int GetX() {return X;}
 	int GetY() {return Y;}
 	
-	/* Save the world pointer for collision detection */
-	static void RegisterWorld(World* world) {Unit::world = world;}
-	static void UnRegisterWorld() {Unit::world = NULL;}
-
 	virtual ~Unit();
 protected:
 	/* We dont want this class to be created */
 	Unit(TYPES Type);
 
-	static World* world;	// World pointer (requied for hittest) // 
-	
 	int X,Y;		// Position //
 	int vX,vY;		// Velocity //
 

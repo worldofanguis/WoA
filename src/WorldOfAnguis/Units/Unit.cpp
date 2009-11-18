@@ -12,8 +12,6 @@
 
 #include "Unit.h"
 
-World* Unit::world = NULL;
-
 Unit::Unit(TYPES Type)
 {
 	X = Y = 0;

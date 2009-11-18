@@ -231,17 +231,17 @@
 					RelativePath="..\..\src\WorldOfAnguis\Graphics\DirectX\DirectXInterface.h"
 					>
 				</File>
+				<File
+					RelativePath="..\..\src\WorldOfAnguis\Graphics\DirectX\DrawMgr.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\WorldOfAnguis\Graphics\DirectX\DrawMgr.h"
+					>
+				</File>
 				<Filter
 					Name="Units"
 					>
-					<File
-						RelativePath="..\..\src\WorldOfAnguis\Graphics\DirectX\Units\DrawMgr.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\WorldOfAnguis\Graphics\DirectX\Units\DrawMgr.h"
-						>
-					</File>
 					<File
 						RelativePath="..\..\src\WorldOfAnguis\Graphics\DirectX\Units\UnitDrawInfo.cpp"
 						>
@@ -250,18 +250,6 @@
 						RelativePath="..\..\src\WorldOfAnguis\Graphics\DirectX\Units\UnitDrawInfo.h"
 						>
 					</File>
-					<Filter
-						Name="Player"
-						>
-						<File
-							RelativePath="..\..\src\WorldOfAnguis\Graphics\DirectX\Units\Player\DXHUDView.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\src\WorldOfAnguis\Graphics\DirectX\Units\Player\DXHUDView.h"
-							>
-						</File>
-					</Filter>
 				</Filter>
 				<Filter
 					Name="World"
@@ -278,6 +266,14 @@
 				<Filter
 					Name="HUD"
 					>
+					<File
+						RelativePath="..\..\src\WorldOfAnguis\Graphics\DirectX\HUD\DXHUDView.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\WorldOfAnguis\Graphics\DirectX\HUD\DXHUDView.h"
+						>
+					</File>
 				</Filter>
 			</Filter>
 		</Filter>
@@ -344,10 +340,6 @@
 					>
 				</File>
 			</Filter>
-		</Filter>
-		<Filter
-			Name="HUD"
-			>
 		</Filter>
 		<File
 			RelativePath="..\..\src\WorldOfAnguis\Main.cpp"

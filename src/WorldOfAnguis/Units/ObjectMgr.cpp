@@ -9,6 +9,7 @@
  *
  */
  
+ 
 #include "ObjectMgr.h"
 
 ObjectMgr::ObjectMgr()
@@ -22,6 +23,9 @@ ObjectMgr::~ObjectMgr()
 		delete *it;
 	
 	Objects.clear();
+	
+	delete sHud;
+	delete sWorld;
 }
 
 void ObjectMgr::Update()
@@ -32,7 +36,7 @@ void ObjectMgr::Update()
 			(*it)->Update();			// Paramters: WorldPointer <-> Terran Hittest | UnitsPointer <-> Unit Hittest //
 		else
 			{
-			DrwMgr->UnRegisterUnit(*it);
+			sDrawMgr->UnRegisterUnit(*it);
 			delete *it;
 			}
 		}
@@ -40,7 +44,12 @@ void ObjectMgr::Update()
 
 void ObjectMgr::AddPlayer()
 {
-	Unit* unit = new Player(20,30);
+	Unit* unit = new Player(30,70);
 	Objects.push_back(unit);
-	DrwMgr->RegisterUnit(unit,"..\\..\\pic\\Player\\Player1.bmp");
+	sDrawMgr->RegisterUnit(unit,"..\\..\\pic\\Player\\Player1.bmp");
+}
+
+void ObjectMgr::CreateWorld()
+{
+	sWorld->LoadMaps("..\\..\\pic\\Map\\Map1");
 }

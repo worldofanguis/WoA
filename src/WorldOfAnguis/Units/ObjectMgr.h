@@ -13,7 +13,8 @@
 #include "Common.h"
 #include "Singleton.h"
 #include "Unit.h"
-#include "Graphics/DirectX/Units/DrawMgr.h"
+#include "Units/Player/HUD.h"
+#include "Graphics/DirectX/DrawMgr.h"
 
 class ObjectMgr : public Singleton<ObjectMgr>
 {
@@ -22,6 +23,8 @@ public:
 	~ObjectMgr();
 	
 	void AddPlayer();
+	void CreateWorld();
+	
 	Unit* Me() {return Objects.front();}
 
 	void Update();
@@ -30,4 +33,4 @@ private:
 	std::vector<Unit*>::iterator it;
 };
 
-#define ObjMgr ObjectMgr::Instance()
+#define sObjMgr ObjectMgr::Instance()

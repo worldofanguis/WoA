@@ -14,7 +14,7 @@
 #include "Singleton.h"
 #include "Units/Unit.h"
 #include "Units/Player/Player.h"
-#include "UnitDrawInfo.h"
+#include "Units/UnitDrawInfo.h"
 
 typedef std::pair<Unit*,UnitDrawInfo*> UnitInfo;
 class DrawMgr : public Singleton<DrawMgr>
@@ -23,8 +23,7 @@ public:
 	DrawMgr();
 	~DrawMgr();
 	
-	void Setup(LPDIRECT3DDEVICE9 pDevice,LPD3DXSPRITE pSprite) {this->pDevice = pDevice; this->pSprite=pSprite;}
-	void SetScreenSize(int Width,int Height) {ViewWidth = Width; ViewHeight = Height;}
+	void Setup(LPDIRECT3DDEVICE9 pDevice,LPD3DXSPRITE pSprite,int Width,int Height) {this->pDevice = pDevice; this->pSprite=pSprite; ViewWidth = Width; ViewHeight = Height;}
 	
 	void RegisterUnit(Unit* unit,char* TextureFileName);
 	void UnRegisterUnit(Unit* unit);
@@ -45,4 +44,4 @@ private:
 	LPDIRECT3DDEVICE9 pDevice;
 };
 
-#define DrwMgr DrawMgr::Instance()
+#define sDrawMgr DrawMgr::Instance()

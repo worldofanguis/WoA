@@ -12,9 +12,6 @@
 
 #include "DXHUDView.h"
 
-LPDIRECT3DDEVICE9 DXHUDView::pDevice = NULL;
-LPD3DXSPRITE DXHUDView::pSprite = NULL;
-
 DXHUDView::DXHUDView()
 {
 	/* Max life */
@@ -25,8 +22,6 @@ DXHUDView::DXHUDView()
 	
 	pHUD = NULL;
 	pLifeBar = NULL;
-	
-	
 }
 
 DXHUDView::~DXHUDView()
@@ -87,5 +82,4 @@ void DXHUDView::Update(HUD_PART Part,int Data)
 			rLifeBar.right = Data*3;
 			break;
 		}
-		
 }

@@ -12,25 +12,22 @@
 
 #pragma once
 #include "Common.h"
+#include "Singleton.h"
 
-
-class DXHUDView
+class DXHUDView : public Singleton<DXHUDView>
 {
 public:
-	/* Static functions for setting the requied stuffs (Device & Sprite) */
-	static void SetDevice(LPDIRECT3DDEVICE9 pDevice) {DXHUDView::pDevice = pDevice;}
-	static void SetSprite(LPD3DXSPRITE pSprite) {DXHUDView::pSprite = pSprite;}
 	enum HUD_PART {HUD_LIFE,HUD_WEAPON};
-
-protected:
+	
 	DXHUDView();
 	~DXHUDView();
 	
-	void LoadTexture();
-	
+	void Setup(LPDIRECT3DDEVICE9 pDevice,LPD3DXSPRITE pSprite) {this->pDevice = pDevice; this->pSprite = pSprite; LoadTexture();}
+
 	void Draw();
 	void Update(HUD_PART Part,int Data);
 private:
+	void LoadTexture();
 
 	/* Texture for the HUD frame */
 	LPDIRECT3DTEXTURE9 pHUD;
@@ -38,9 +35,8 @@ private:
 	LPDIRECT3DTEXTURE9 pLifeBar;
 	RECT rLifeBar;
 
-	/* Static stuff for drawing (all instances uses the same) */
-	static LPDIRECT3DDEVICE9 pDevice;
-	static LPD3DXSPRITE pSprite;
-	
-	
+	LPDIRECT3DDEVICE9 pDevice;
+	LPD3DXSPRITE pSprite;
 };
+
+#define sHudView DXHUDView::Instance()

@@ -11,31 +11,28 @@
  
 
 #include "World.h"
-#include "Graphics/DirectX/DirectXInterface.h"
-#include "Units/Unit.h"
 
 World::World()
 {
 	Map = NULL;
 	PPHM = 2;				// PixelPerHitMap (2 means 2x2 pixel is 1 entry in the hit map) // dont think we should go higher than 2 //
-	DirectXInterface::RegisterWorld(this);			// Register the world pointer in the DXInterface class //
-	Unit::RegisterWorld(this);					// Register the world pointer in the Unit class //
 }
 
 World::~World()
 {
 	delete[] Map;
-	DirectXInterface::UnRegisterWorld();
-	Unit::UnRegisterWorld();
 }
 
 /* NOTE: Not working with maps which are not divisible with PPHM! << only for 24bit BMP-s >>
  *  TODO: Fix this (but its not that important)
  */
-bool World::LoadMaps(char *HitMap,char* TexturedMap)
+bool World::LoadMaps(char *MapName)
 {
 	FILE *FKez;
-	fopen_s(&FKez,HitMap,"rb");
+	char FileName[MAX_PATH];
+	sprintf_s(FileName,sizeof(FileName),"%s.bmp",MapName);
+	
+	fopen_s(&FKez,FileName,"rb");
 	if(FKez == NULL)
 		return false;
 
@@ -86,18 +83,11 @@ bool World::LoadMaps(char *HitMap,char* TexturedMap)
 	fclose(FKez);
 
 	/* Load the TexturedMap */
-	if(!DXWorldView::LoadWorldTexture(TexturedMap))
+	sprintf_s(FileName,sizeof(FileName),"%sTextured.bmp",MapName);
+	if(!sWorldView->LoadWorldTexture(FileName))
 		return false;
 
 	// Update our display surface //
-	DXWorldView::UpdateSurface(Map,Width,PPHM);
+	sWorldView->UpdateSurface(Map,Width,PPHM);
 return true;
 }
-
-void World::Explode(Explosion* Ex)
-{
-	// Deformation //
-
-	DXWorldView::UpdateSurface(Map,Width,PPHM);
-}
-
