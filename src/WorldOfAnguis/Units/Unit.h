@@ -13,13 +13,19 @@
 #include "Common.h"
 #include "World/World.h"
 
+#define GRAVITY 2
+
 class Unit
 {
 public:
-	enum TYPES {PLAYER};
-	/* Updates the Unit position, this func should call the HitTest and calc all the physic */
-	bool Update();
+	enum TYPES {PLAYER,BULLET,PICKUP,};
+	
 	bool IsActive() {return Active;}
+	/* Updates the Unit position should be called after collision detections */
+	virtual void Update();
+	
+	virtual bool CollisionWorld();
+	virtual bool CollisionUnit(Unit* unit);
 	
 	int GetWidth() {return Width;}
 	int GetHeight() {return Height;}

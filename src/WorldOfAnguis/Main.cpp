@@ -26,7 +26,7 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLine,int nCmdShow)
 {
-	UNREFERENCED_PARAMETER(hPrevInstance);		// We wont use this paramters //
+	UNREFERENCED_PARAMETER(hPrevInstance);		// We wont use these paramters //
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
 	// Register the window class //
@@ -57,7 +57,8 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLin
 	if(SUCCEEDED(DXI.Initialize(hwnd,true)))
 		{
 		// Testing initializations (TODO: Remove these) //
-		sObjMgr->AddPlayer();
+		sObjMgr->AddPlayer(30,70,1);
+		sObjMgr->AddPlayer(30,150,1);
 		sObjMgr->CreateWorld();
 		
 		// Show the window //

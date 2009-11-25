@@ -33,7 +33,14 @@ void ObjectMgr::Update()
 	for(it=Objects.begin();it!=Objects.end();it++)
 		{
 		if((*it)->IsActive())
-			(*it)->Update();			// Paramters: WorldPointer <-> Terran Hittest | UnitsPointer <-> Unit Hittest //
+			{
+			(*it)->CollisionWorld();
+			
+			for(itc=Objects.begin();itc!=Objects.end();itc++)
+				(*it)->CollisionUnit(*itc);
+			
+			(*it)->Update();
+			}
 		else
 			{
 			sDrawMgr->UnRegisterUnit(*it);
@@ -42,11 +49,13 @@ void ObjectMgr::Update()
 		}
 }
 
-void ObjectMgr::AddPlayer()
+void ObjectMgr::AddPlayer(int X,int Y,int TextureNumber)
 {
-	Unit* unit = new Player(30,70);
+	Unit* unit = new Player(X,Y);
 	Objects.push_back(unit);
-	sDrawMgr->RegisterUnit(unit,"..\\..\\pic\\Player\\Player1.bmp");
+	char PlayerTexture[MAX_PATH];
+	sprintf_s(PlayerTexture,sizeof(PlayerTexture),"..\\..\\pic\\Player\\Player%d.bmp",TextureNumber);
+	sDrawMgr->RegisterUnit(unit,PlayerTexture);
 }
 
 void ObjectMgr::CreateWorld()

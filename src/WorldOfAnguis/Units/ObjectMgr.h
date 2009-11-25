@@ -22,7 +22,7 @@ public:
 	ObjectMgr();
 	~ObjectMgr();
 	
-	void AddPlayer();
+	void AddPlayer(int X,int Y,int TextureNumber);
 	void CreateWorld();
 	
 	Unit* Me() {return Objects.front();}
@@ -31,6 +31,7 @@ public:
 private:
 	std::vector<Unit*> Objects;
 	std::vector<Unit*>::iterator it;
+	std::vector<Unit*>::iterator itc;
 };
 
 #define sObjMgr ObjectMgr::Instance()
