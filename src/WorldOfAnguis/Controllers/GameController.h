@@ -8,23 +8,19 @@
  *                    World Of Anguis
  *
  */
- 
- 
-#pragma once
- 
-template<class T> 
-class Singleton{
-public:
-	inline static T* Instance(){
-		if (_instance == 0) 
-			_instance = new T;
-		return _instance;
-		}
-protected:
-	Singleton() {}
-private:
-	static T* _instance;
-};
 
-template <class T>
-T* Singleton<T>::_instance = 0;
+
+#pragma once
+#include "Common.h"
+#include "KeyboardController.h"
+
+
+class GameController : KeyboardController
+{
+public:
+	GameController();
+	~GameController();
+	
+	void Run();
+private:
+};

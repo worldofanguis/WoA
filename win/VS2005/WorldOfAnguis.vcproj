@@ -341,6 +341,34 @@
 				</File>
 			</Filter>
 		</Filter>
+		<Filter
+			Name="Controllers"
+			>
+			<File
+				RelativePath="..\..\src\WorldOfAnguis\Controllers\GameController.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\WorldOfAnguis\Controllers\GameController.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\WorldOfAnguis\Controllers\KeyboardController.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\WorldOfAnguis\Controllers\KeyboardController.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\WorldOfAnguis\Controllers\MainMenuController.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\WorldOfAnguis\Controllers\MainMenuController.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath="..\..\src\WorldOfAnguis\Main.cpp"
 			>

@@ -22,6 +22,7 @@ public:
 	ObjectMgr();
 	~ObjectMgr();
 	
+	void RegisterUnit(Unit* unit);
 	void AddPlayer(int X,int Y,int TextureNumber);
 	void CreateWorld();
 	

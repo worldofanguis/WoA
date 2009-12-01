@@ -12,18 +12,22 @@
  
 #pragma once
 #include "Common.h"
+#include "Singleton.h"
 #include "Graphics/DirectX/DrawMgr.h"
 #include "Graphics/DirectX/World/DXWorldView.h"
 #include "Graphics/DirectX/HUD/DXHUDView.h"
 
-class DirectXInterface
+class DirectXInterface : public Singleton<DirectXInterface>
 {
 public:
 	DirectXInterface();
 	~DirectXInterface();
 	
-	HRESULT Initialize(HWND hwnd,bool Windowed);		// Initializes DirectX //
+	HRESULT Initialize(HINSTANCE hInstance,bool Windowed);			// Initializes DirectX //
 	void Cleanup();								// Cleanup DirectX //
+	
+	HINSTANCE GetInstance() {return hInstance;}
+	HWND GetHwnd() {return hwnd;}
 	
 	void Render();						// Render the screen //
 	
@@ -34,7 +38,11 @@ public:
 	void ScrollDown(int Dist);			// Scrolling the screen down with dist //
 	
 private:
+	bool CreateAppWindow();
+	void MessagePump();
+
 	HWND hwnd;							// Window handle //
+	HINSTANCE hInstance;				// Window instance //
 	LPDIRECT3D9 pD3D;
 	LPDIRECT3DDEVICE9 pD3DDevice;		// D3DX Device //
 	LPD3DXSPRITE pSprite;				// Sprite for drawing images //
@@ -48,4 +56,8 @@ private:
 	bool ShowFPS;
 	char FPS[10];
 	DWORD TickCount,PrevTickCount;
+	
+	static LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {return DefWindowProc(hWnd,msg,wParam,lParam);}		// We dont want to do anything with window messages :< //
 };
+
+#define sDXInterface DirectXInterface::Instance()

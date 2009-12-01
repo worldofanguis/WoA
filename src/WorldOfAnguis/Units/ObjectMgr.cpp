@@ -20,7 +20,10 @@ ObjectMgr::ObjectMgr()
 ObjectMgr::~ObjectMgr()
 {
 	for(it=Objects.begin();it!=Objects.end();it++)
+		{
+		sDrawMgr->UnRegisterUnit(*it);
 		delete *it;
+		}
 	
 	Objects.clear();
 	
@@ -47,6 +50,11 @@ void ObjectMgr::Update()
 			delete *it;
 			}
 		}
+}
+
+void RegisterUnit(Unit* unit)
+{
+
 }
 
 void ObjectMgr::AddPlayer(int X,int Y,int TextureNumber)

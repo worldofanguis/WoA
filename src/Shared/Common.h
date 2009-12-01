@@ -24,6 +24,8 @@
 #endif                                                      // __SHOW_STUPID_WARNINGS__
 #endif
 
+#define DIRECTINPUT_VERSION 0x0800
+
 #ifdef _DEBUG
 #define _CRTDBG_MAP_ALLOC				// Memory Leak Detection //
 #include <stdlib.h>
@@ -36,6 +38,7 @@
 
 #include <d3d9.h>
 #include <d3dx9.h>
+#include <dinput.h>
 
 #define SAFE_DELETE(p)  { if(p) { delete (p);     (p)=NULL; } }
 #define SAFE_RELEASE(p) { if(p) { (p)->Release(); (p)=NULL; } }

@@ -25,14 +25,58 @@ DirectXInterface::DirectXInterface()
 	pD3DDevice = NULL;
 
 	ShowFPS = true;
+	
+	hwnd = NULL;
+	
+	ViewLeft=ViewTop=0;
 }
 
 DirectXInterface::~DirectXInterface()
 {
+	if(hwnd)
+		UnregisterClass("WoA",hInstance);		// Unregister our window's class //
 }
 
-HRESULT DirectXInterface::Initialize(HWND hwnd,bool Windowed)
+bool DirectXInterface::CreateAppWindow()
 {
+	WNDCLASSEX WinClass;
+	WinClass.cbSize = sizeof(WNDCLASSEX);
+	WinClass.style = CS_CLASSDC;
+	WinClass.lpfnWndProc = WndProc;
+	WinClass.cbClsExtra = 0;
+	WinClass.cbWndExtra = 0;
+	WinClass.hInstance = hInstance;
+	WinClass.hIcon = LoadIcon(hInstance,IDI_APPLICATION);
+	WinClass.hIconSm = LoadIcon(hInstance,IDI_APPLICATION);
+	WinClass.hCursor = LoadCursor(NULL,IDC_ARROW);
+	WinClass.hbrBackground = NULL;
+	WinClass.lpszMenuName = NULL;
+	WinClass.lpszClassName = "WoA";
+	RegisterClassEx(&WinClass);
+
+	// Create the application's window //
+	if((hwnd = CreateWindow("WoA", "woa",WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_VISIBLE,0,0,1024,768,HWND_DESKTOP,NULL,hInstance,NULL)) == NULL)
+		return false;
+
+return true;
+}
+
+void DirectXInterface::MessagePump()
+{
+	MSG msg;
+	if(PeekMessage(&msg,NULL,0,0,PM_REMOVE))
+		{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+		}
+}
+
+HRESULT DirectXInterface::Initialize(HINSTANCE hInstance,bool Windowed)
+{
+	this->hInstance = hInstance;
+	if(!CreateAppWindow())			// Create the apps window
+		return E_FAIL;
+	
 	// Create the D3D object, which is needed to create the D3DDevice. //
 	if((pD3D = Direct3DCreate9(D3D_SDK_VERSION)) == NULL)
 		return E_FAIL;
@@ -99,6 +143,8 @@ void DirectXInterface::Cleanup()
 
 void DirectXInterface::Render()
 {
+	MessagePump();
+	
 	if(pD3DDevice == NULL)
 		return;
 
