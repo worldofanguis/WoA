@@ -40,6 +40,7 @@ void KeyboardController::Release()
 		{
 		DXKeyboardDevice->Unacquire();
 		DXKeyboardDevice->Release();
+		DXKeyboardDevice = NULL;
 		}
 
 	SAFE_RELEASE(DXInput);

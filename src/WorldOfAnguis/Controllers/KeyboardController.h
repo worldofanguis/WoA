@@ -22,16 +22,15 @@
 
 class KeyboardController
 {
-public:
-	static void Release();
 protected:
 	BYTE Keys[256];				// The keyboard state //
 	
 	KeyboardController() {}
-	virtual ~KeyboardController() {}
+	virtual ~KeyboardController() {Release();}
 	
 	void ReadKeyboard();
 private:	
+	void Release();
 	void InitController();
 	
 	static IDirectInput8* DXInput;

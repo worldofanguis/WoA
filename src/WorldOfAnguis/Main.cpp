@@ -28,7 +28,6 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLin
 	delete new GameController();		// Nice stuff ^^ //
 	
 	// Cleanup //
-	KeyboardController::Release();
 	sDXInterface->Cleanup();
 	
 	delete sDXInterface;
