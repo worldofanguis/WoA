@@ -19,6 +19,13 @@
 
 int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLine,int nCmdShow)
 {
+	if(OpenMutex(MUTEX_ALL_ACCESS,false,"WoA") != NULL)
+		{
+		MessageBox(HWND_DESKTOP,"Use the power of alt-tab","I'm already running...",MB_OK);
+		return 1;
+		}
+	HANDLE hMutex = CreateMutex(NULL,false,"WoA");
+	
 	if(FAILED(sDXInterface->Initialize(hInstance,true)))
 		{
 		MessageBox(HWND_DESKTOP,"U FAIL!",">_<",MB_OK);
@@ -31,6 +38,8 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLin
 	sDXInterface->Cleanup();
 	
 	delete sDXInterface;
+	
+	ReleaseMutex(hMutex);
 	
 #ifdef _DEBUG
 	_CrtDumpMemoryLeaks();

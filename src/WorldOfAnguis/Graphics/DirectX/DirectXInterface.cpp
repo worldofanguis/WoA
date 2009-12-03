@@ -21,14 +21,11 @@
 
 DirectXInterface::DirectXInterface()
 {
+	hwnd = NULL;
 	pD3D = NULL;
 	pD3DDevice = NULL;
 
 	ShowFPS = true;
-	
-	hwnd = NULL;
-	
-	ViewLeft=ViewTop=0;
 }
 
 DirectXInterface::~DirectXInterface()
@@ -141,72 +138,37 @@ void DirectXInterface::Cleanup()
 	SAFE_RELEASE(pD3D);
 }
 
-void DirectXInterface::Render()
+void DirectXInterface::BeginScene()
 {
-	MessagePump();
-	
+	MessagePump();		// Dont know where to put this :< //
 	if(pD3DDevice == NULL)
 		return;
-
 	pD3DDevice->Clear(0,NULL,D3DCLEAR_TARGET,D3DCOLOR_COLORVALUE(0.35f,0.53f,0.7f,1.0f),1.0f,0);	// If covering the whoe screen with pictures its not necceseary (not sure) ^^ //
 	pD3DDevice->BeginScene();
 	pSprite->Begin(D3DXSPRITE_ALPHABLEND);
-	
-	// Drawing the world //
-	sWorldView->Draw(ViewLeft,ViewTop,ViewWidth,ViewHeight);
+}
 
-	// Drawing the HUD //
-	sHudView->Draw();
-
-	// Drawing the Objects via the DrawMgr //	
-	sDrawMgr->Draw(ViewLeft,ViewTop);
-
-	// Display FPS counter //
-	if(ShowFPS)
-		{
-		if(PrevTickCount != TickCount)
-			{
-			sprintf_s(FPS,sizeof(FPS),"%d",1000/(TickCount-PrevTickCount));
-			pFont->DrawText(NULL,FPS,-1,NULL,DT_LEFT|DT_NOCLIP,0xFF0000FF);
-			}
-		}
-
+void DirectXInterface::EndScene()
+{
+	if(pD3DDevice == NULL)
+		return;
 	pSprite->End();
 	pD3DDevice->EndScene();
 	pD3DDevice->Present(NULL,NULL,NULL,NULL);		// TODO: check present paramters maybe there is a better on than just NULL-s //
-	PrevTickCount = TickCount;
-	TickCount = GetTickCount();
 }
 
-/* Maybe this functions should be moved to 2 (ScrollingVertical and ScrollingHorizontal) */
-void DirectXInterface::ScrollLeft(int Dist)
-{
-	if(ViewLeft-Dist > 0)
-		ViewLeft -= Dist;
-	else
-		ViewLeft = 0;
-}
-
-void DirectXInterface::ScrollRight(int Dist)
-{
-	if(ViewLeft+ViewWidth+Dist < sWorld->GetWidth())
-		ViewLeft += Dist;
-	else
-		ViewLeft = sWorld->GetWidth()-ViewWidth;
-}
-
-void DirectXInterface::ScrollUp(int Dist)
-{
-	if(ViewTop-Dist > 0)
-		ViewTop -= Dist;
-	else
-		ViewTop = 0;
-}
-
-void DirectXInterface::ScrollDown(int Dist)
-{
-	if(ViewTop+ViewHeight+Dist < sWorld->GetHeight())
-		ViewTop += Dist;
-	else
-		ViewTop = sWorld->GetHeight()-ViewHeight;
-}
+//void DirectXInterface::Render()
+//{
+//	// Display FPS counter //
+//	if(ShowFPS)
+//		{
+//		if(PrevTickCount != TickCount)
+//			{
+//			sprintf_s(FPS,sizeof(FPS),"%d",1000/(TickCount-PrevTickCount));
+//			pFont->DrawText(NULL,FPS,-1,NULL,DT_LEFT|DT_NOCLIP,0xFF0000FF);
+//			}
+//		}
+//
+//	PrevTickCount = TickCount;
+//	TickCount = GetTickCount();
+//}

@@ -23,4 +23,19 @@ public:
 	
 	void Run();
 private:
+	void Render();
+	
+	
+	void SetView(int Left,int Top) {ViewLeft = Left;ViewTop = Top;}		// Set the viewpoint //
+	void ScrollLeft(int Dist);			// Scrolling the screen left with dist //
+	void ScrollRight(int Dist);			// Scrolling the screen right with dist //
+	void ScrollUp(int Dist);			// Scrolling the screen up with dist //
+	void ScrollDown(int Dist);			// Scrolling the screen down with dist //
+
+
+	int ViewWidth;			// Screen width (BackBuffer width) //
+	int ViewHeight;			// Screen height (BackBuffer height) //
+	int ViewLeft;			// Left coord of the screen //
+	int ViewTop;			// Top coord of the screen //
+
 };

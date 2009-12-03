@@ -16,6 +16,10 @@
 
 GameController::GameController()
 {
+	ViewWidth = sDXInterface->GetViewWidth();
+	ViewHeight = sDXInterface->GetViewHeight();
+	
+	ViewLeft = ViewTop = 0;
 	Run();
 }
 
@@ -37,6 +41,55 @@ void GameController::Run()
 			break;
 
 		sObjMgr->Update();
-		sDXInterface->Render();
+		
+		Render();
 		}
+}
+
+void GameController::Render()
+{
+	DirectXInterface* DXI = sDXInterface;
+	DXI->BeginScene();
+
+	// Drawing the world //
+	sWorldView->Draw(ViewLeft,ViewTop,ViewWidth,ViewHeight);
+	// Drawing the HUD //
+	sHudView->Draw();
+	// Drawing the Objects via the DrawMgr //	
+	sDrawMgr->Draw(ViewLeft,ViewTop);
+
+	DXI->EndScene();	
+}
+
+/* Maybe this functions should be moved to 2 (ScrollingVertical and ScrollingHorizontal) */
+void GameController::ScrollLeft(int Dist)
+{
+	if(ViewLeft-Dist > 0)
+		ViewLeft -= Dist;
+	else
+		ViewLeft = 0;
+}
+
+void GameController::ScrollRight(int Dist)
+{
+	if(ViewLeft+ViewWidth+Dist < sWorld->GetWidth())
+		ViewLeft += Dist;
+	else
+		ViewLeft = sWorld->GetWidth()-ViewWidth;
+}
+
+void GameController::ScrollUp(int Dist)
+{
+	if(ViewTop-Dist > 0)
+		ViewTop -= Dist;
+	else
+		ViewTop = 0;
+}
+
+void GameController::ScrollDown(int Dist)
+{
+	if(ViewTop+ViewHeight+Dist < sWorld->GetHeight())
+		ViewTop += Dist;
+	else
+		ViewTop = sWorld->GetHeight()-ViewHeight;
 }

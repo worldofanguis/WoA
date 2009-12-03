@@ -28,15 +28,14 @@ public:
 	
 	HINSTANCE GetInstance() {return hInstance;}
 	HWND GetHwnd() {return hwnd;}
+	LPDIRECT3DDEVICE9 GetDevice() {return pD3DDevice;}
+	LPD3DXSPRITE GetSprite() {return pSprite;}
 	
-	void Render();						// Render the screen //
+	int GetViewWidth() {return ViewWidth;}
+	int GetViewHeight() {return ViewHeight;}
 	
-	void SetView(int Left,int Top) {ViewLeft = Left;ViewTop = Top;}		// Set the viewpoint //
-	void ScrollLeft(int Dist);			// Scrolling the screen left with dist //
-	void ScrollRight(int Dist);			// Scrolling the screen right with dist //
-	void ScrollUp(int Dist);			// Scrolling the screen up with dist //
-	void ScrollDown(int Dist);			// Scrolling the screen down with dist //
-	
+	void BeginScene();
+	void EndScene();	
 private:
 	bool CreateAppWindow();
 	void MessagePump();
@@ -46,18 +45,27 @@ private:
 	LPDIRECT3D9 pD3D;
 	LPDIRECT3DDEVICE9 pD3DDevice;		// D3DX Device //
 	LPD3DXSPRITE pSprite;				// Sprite for drawing images //
+
+	int ViewWidth,ViewHeight;
 	
-	int ViewWidth;			// Screen width (BackBuffer width) //
-	int ViewHeight;			// Screen height (BackBuffer height) //
-	int ViewLeft;			// Left coord of the screen //
-	int ViewTop;			// Top coord of the screen //
-	
-	LPD3DXFONT pFont;		// Font for drawing FPS //
+	LPD3DXFONT pFont;					// Font for drawing FPS //
 	bool ShowFPS;
-	char FPS[10];
-	DWORD TickCount,PrevTickCount;
+	//char FPS[10];
+	//DWORD TickCount,PrevTickCount;
 	
-	static LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {return DefWindowProc(hWnd,msg,wParam,lParam);}		// We dont want to do anything with window messages :< //
+	static LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+		{
+		if(msg == WM_SYSCOMMAND)
+			{
+			if(wParam == SC_CLOSE)
+				{
+				DirectXInterface::Instance()->Cleanup();
+				exit(0);
+				return 0;
+				}
+			}
+		return DefWindowProc(hWnd,msg,wParam,lParam);
+		}		// We dont want to do anything with window messages :< //
 };
 
 #define sDXInterface DirectXInterface::Instance()
