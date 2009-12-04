@@ -14,7 +14,7 @@
 
 ObjectMgr::ObjectMgr()
 {
-	Objects.clear();
+//	Objects.clear();
 }
 
 ObjectMgr::~ObjectMgr()
@@ -37,17 +37,32 @@ void ObjectMgr::Update()
 		{
 		if((*it)->IsActive())
 			{
-			(*it)->CollisionWorld();
-			
-			for(itc=Objects.begin();itc!=Objects.end();itc++)
-				(*it)->CollisionUnit(*itc);
-			
-			(*it)->Update();
+			if((*it)->GetType() == Unit::EXPLOSION)
+				{
+				sWorld->Explode(*it);
+				for(itc=Objects.begin();itc!=Objects.end();itc++)
+					if((*itc)->GetType() == Unit::PLAYER && (*itc)->IsActive())
+						(*itc)->Explode(*it);
+
+				(*it)->Deactivate();
+				}
+			else
+				{
+				(*it)->CollisionWorld();
+				
+				for(itc=Objects.begin();itc!=Objects.end();itc++)
+					{
+					if((*itc)->IsActive())
+						(*it)->CollisionUnit(*itc);
+					}
+				(*it)->Update();
+				}
 			}
 		else
 			{
 			sDrawMgr->UnRegisterUnit(*it);
-			delete *it;
+			//if((it = Objects.erase(it)) == Objects.end())
+			//	break;
 			}
 		}
 }

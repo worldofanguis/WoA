@@ -340,6 +340,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Explosion"
+				>
+				<File
+					RelativePath="..\..\src\WorldOfAnguis\Units\Explosion\Explosion.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\WorldOfAnguis\Units\Explosion\Explosion.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Controllers"

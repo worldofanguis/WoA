@@ -30,3 +30,25 @@ Player::~Player()
 {
 
 }
+
+//bool Player::CollideX(){
+//	if(!vY && vX){	//!JUMPING should go here
+//		int xf, yf;
+//		bool Collided = false;
+//		if(vX>0){
+//			Collided = CollidePlayerPoint(X+Width, Y+Height, &xf, &yf);
+//		}else
+//			Collided = CollidePlayerPoint(X, Y+Height, &xf, &yf);
+//		X=xf-Width; Y = yf-Height;
+//		return Collided;
+//	}
+//	else{
+//		return Unit::CollideX();
+//	}
+//
+//}
+bool Player::CollideX(){
+	return Unit::CollideX();
+}
+
+

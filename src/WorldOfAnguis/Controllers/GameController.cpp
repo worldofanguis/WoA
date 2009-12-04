@@ -13,6 +13,8 @@
 #include "GameController.h"
 #include "Units/ObjectMgr.h"
 #include "Graphics/DirectX/DirectXInterface.h"
+#include "Units/Explosion/Explosion.h"
+#include "World/World.h"
 
 GameController::GameController()
 {
@@ -31,16 +33,58 @@ GameController::~GameController()
 void GameController::Run()
 {
 	new Player(30,70,1);
-	new Player(30,150,1);
+	new Player(80,60,1);
 	
 	sObjMgr->CreateWorld();
 		
 	while(true)
 		{
+		Player* me = reinterpret_cast<Player*>(sObjMgr->Me());
 		ReadKeyboard();
 		if(KEY_DOWN(DIK_ESCAPE))
 			break;
+		if(KEY_DOWN(DIK_W))
+			me->SetYVelocity(-3);
+		if(KEY_DOWN(DIK_S))
+			me->SetYVelocity(3);
+		if(KEY_DOWN(DIK_A)){
+			me->SetXVelocity(-3);
+			if(KEY_DOWN(DIK_D)){
+				new Explosion(me->GetX()+4,me->GetY()+(me->GetHeight()/2),19,0);
+			}
+		}
+		if(KEY_DOWN(DIK_D)){
+			me->SetXVelocity(3);
+			if(KEY_DOWN(DIK_A)){
+				new Explosion(me->GetX()+me->GetWidth()-4,me->GetY()+(me->GetHeight()/2),19,0);
+			}
+		}
+		if(KEY_DOWN(DIK_R))
+			me->SetPos(30,70);
+			
+		if(KEY_DOWN(DIK_B))
+			new Explosion(80,60,15,30);
+		if(KEY_DOWN(DIK_N))
+			new Explosion(150,150,50,30);
+		if(KEY_DOWN(DIK_M))
+			 sWorld->PrintMap();
+			 
+		if(KEY_DOWN(DIK_LEFT))
+			ScrollLeft(5);
+		if(KEY_DOWN(DIK_RIGHT))
+			ScrollRight(5);
+		if(KEY_DOWN(DIK_UP))
+			ScrollUp(5);
+		if(KEY_DOWN(DIK_DOWN))
+			ScrollDown(5);
 
+
+			
+		if(KEY_DOWN(DIK_SPACE))
+			{
+			reinterpret_cast<Player*>(sObjMgr->Me())->SetXVelocity(0);
+			reinterpret_cast<Player*>(sObjMgr->Me())->SetYVelocity(0);
+			}
 		sObjMgr->Update();
 		
 		Render();

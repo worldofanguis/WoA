@@ -15,6 +15,8 @@
 #include "Unit.h"
 #include "Units/Player/HUD.h"
 #include "Graphics/DirectX/DrawMgr.h"
+#include "World/World.h"
+
 
 class ObjectMgr : public Singleton<ObjectMgr>
 {

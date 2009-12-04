@@ -11,21 +11,31 @@
  
 #pragma once
 #include "Common.h"
-#include "World/World.h"
 
 #define GRAVITY 2
 
 class Unit
 {
 public:
-	enum TYPES {PLAYER,BULLET,PICKUP,};
+	enum TYPES {PLAYER,BULLET,PICKUP,EXPLOSION};
 	
 	bool IsActive() {return Active;}
+	void Deactivate() {Active = false;}
+
 	/* Updates the Unit position should be called after collision detections */
 	virtual void Update();
 	
 	virtual bool CollisionWorld();
 	virtual bool CollisionUnit(Unit* unit);
+	
+	bool Collide();
+	virtual bool CollideX();
+	bool CollideY();
+	bool CollidePlayerPoint(int x, int y, int* xf, int* yf);
+	bool CollidePoint(int x_rel, int y_rel, int* xf, int* yf);
+	bool HitTest(int x, int y);
+	bool HitTestBorder(int x, int y, bool right, bool down);
+
 	
 	int GetWidth() {return Width;}
 	int GetHeight() {return Height;}
@@ -33,6 +43,8 @@ public:
 	TYPES GetType() {return Type;}
 	int GetX() {return X;}
 	int GetY() {return Y;}
+	
+	virtual void Explode(Unit* explosion) {}
 	
 	virtual ~Unit();
 protected:

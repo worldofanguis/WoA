@@ -56,14 +56,14 @@ void DXWorldView::UpdateSurface(char *Map,int MapWidth,int PPHM)
 		for(int w=0;w<SurfaceWidth;w++)
 			{
 			if(Map[(((int)(h/PPHM))*MapWidth)+((int)(w/PPHM))])		// There is something on the map there //
-				{
 				*(DWORD*)Dest = *(DWORD*)Source;				// Copy 1 pixel from the source to the destination //
-				}
+			else
+				*(DWORD*)Dest =	0;
 			Dest+=4;				// Move the pointer with 4 bytes (1 pixel (ARGB))
 			Source+=4;
 			}
 		}
-	pDisplaySurface->UnlockRect(0);					// Unlock the surfaces //
+	pWorkSurface->UnlockRect(0);					// Unlock the surfaces //
 	pOriginalSurface->UnlockRect(0);
 
 	/* Update the DisplaySurface */

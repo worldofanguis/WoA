@@ -12,6 +12,7 @@
 #pragma once
 #include "Common.h"
 #include "Singleton.h"
+#include "Units/Unit.h"
 #include "Graphics/DirectX/World/DXWorldView.h"
 
 class World : public Singleton<World>
@@ -31,6 +32,10 @@ public:
 	
 	int GetWidth() {return Width*PPHM;}
 	int GetHeight() {return Height*PPHM;}
+
+	void Explode(Unit* explosion);
+	
+	void PrintMap();
 
 private:
 	char *Map;				// HitMap //

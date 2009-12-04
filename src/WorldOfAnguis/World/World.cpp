@@ -11,6 +11,7 @@
  
 
 #include "World.h"
+#include "Units/Explosion/Explosion.h"
 
 World::World()
 {
@@ -90,4 +91,33 @@ bool World::LoadMaps(char *MapName)
 	// Update our display surface //
 	sWorldView->UpdateSurface(Map,Width,PPHM);
 return true;
+}
+
+void World::Explode(Unit* explosion)
+{
+ 	Explosion* e = (Explosion*)explosion;
+	char* emap = e->GetExplosionMap();
+	int R = e->GetRadius();
+	int X= e->GetX();
+	int Y= e->GetY();
+		
+	for(int i=0; i<2*R;i++)
+		for(int j=0; j<2*R;j++)
+			if(emap[i*2*R+j])
+				Map[(Y/PPHM+i)*Width+(X/PPHM+j)]=0;
+
+	sWorldView->UpdateSurface(Map,Width,PPHM);
+}
+
+void World::PrintMap()
+{
+	FILE* f = fopen("mememememe.txt", "w");
+
+	for(int i=0;i<Height;i++)
+		{
+		for(int j=0;j<Width;j++)
+			fprintf(f,"%d",Map[i*Width+j]);
+		fprintf(f,"\n");
+		}
+	fclose(f);
 }
