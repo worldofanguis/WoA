@@ -37,8 +37,8 @@ public:
 	virtual ~Unit();
 protected:
 	/* We dont want this class to be created */
-	Unit(TYPES Type);
-
+	Unit(int X,int Y,TYPES Type);
+	
 	int X,Y;		// Position //
 	int vX,vY;		// Velocity //
 
@@ -46,8 +46,7 @@ protected:
 	int Height;
 	
 	bool FaceRight;
-	
-	bool Active;
+	bool Active;	
 private:
 	TYPES Type;
 };

@@ -16,7 +16,7 @@
 class Player : public Unit
 {
 public:
-	Player(int X = 0,int Y = 0);
+	Player(int X,int Y,int SkinID);
 	~Player();
 
 	int GetLife() {return Life;}

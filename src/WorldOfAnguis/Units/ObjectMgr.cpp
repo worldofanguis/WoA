@@ -52,18 +52,18 @@ void ObjectMgr::Update()
 		}
 }
 
-void RegisterUnit(Unit* unit)
+void ObjectMgr::RegisterUnit(Unit* unit)
 {
-
+	Objects.push_back(unit);
 }
 
 void ObjectMgr::AddPlayer(int X,int Y,int TextureNumber)
 {
-	Unit* unit = new Player(X,Y);
-	Objects.push_back(unit);
-	char PlayerTexture[MAX_PATH];
-	sprintf_s(PlayerTexture,sizeof(PlayerTexture),"..\\..\\pic\\Player\\Player%d.bmp",TextureNumber);
-	sDrawMgr->RegisterUnit(unit,PlayerTexture);
+	//Unit* unit = new Player(X,Y);
+	//Objects.push_back(unit);
+	//char PlayerTexture[MAX_PATH];
+	//sprintf_s(PlayerTexture,sizeof(PlayerTexture),"..\\..\\pic\\Player\\Player%d.bmp",TextureNumber);
+	//sDrawMgr->RegisterUnit(unit,PlayerTexture);
 }
 
 void ObjectMgr::CreateWorld()

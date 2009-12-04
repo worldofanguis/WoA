@@ -11,19 +11,23 @@
 
 
 #include "Unit.h"
+#include "Units/ObjectMgr.h"
 
-Unit::Unit(TYPES Type)
+Unit::Unit(int X,int Y,TYPES Type)
 {
-	X = Y = 0;
+	this->X = X;
+	this->Y = Y;
+	this->Type = Type;
+	
 	vX = vY = 0;
-
 	Width = Height = 0;
 	
-	this->Type = Type;
+	sObjMgr->RegisterUnit(this);
 }
 
 Unit::~Unit()
 {
+	Active = false;
 }
 
 void Unit::Update()

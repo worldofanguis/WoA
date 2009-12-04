@@ -30,10 +30,11 @@ GameController::~GameController()
 
 void GameController::Run()
 {
-	sObjMgr->AddPlayer(30,70,1);
-	sObjMgr->AddPlayer(30,150,1);
+	new Player(30,70,1);
+	new Player(30,150,1);
+	
 	sObjMgr->CreateWorld();
-
+		
 	while(true)
 		{
 		ReadKeyboard();
@@ -55,7 +56,7 @@ void GameController::Render()
 	sWorldView->Draw(ViewLeft,ViewTop,ViewWidth,ViewHeight);
 	// Drawing the HUD //
 	sHudView->Draw();
-	// Drawing the Objects via the DrawMgr //	
+	// Drawing the Objects via the DrawMgr //
 	sDrawMgr->Draw(ViewLeft,ViewTop);
 
 	DXI->EndScene();	
