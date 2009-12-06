@@ -64,11 +64,11 @@ bool Unit::CollisionWorld()
 	/*Its important that the collision detection on Y run first
 	 *because it may set vY to zero before X movement is tested.
 	 *This way moving on a horizontal surface will test only on the X axis
-	*/
+	 */
 
 
 	if(CollideY()){
-		Collided = true;	
+		Collided = true;
 		vY=0;
 	}
 	if(CollideX()){

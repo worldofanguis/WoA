@@ -40,6 +40,8 @@ char* Explosion::GetExplosionMap()
 	int y0=radius;
 
 	for(int i=x0-radius; i<x0+radius; i++){
+		if(radius*2*y+i < 0 || radius*2*y+i > 4*radius*radius)
+			continue;
 		Map[radius*2*y+i]=1;
 	}
 
@@ -59,22 +61,32 @@ char* Explosion::GetExplosionMap()
 		}
 		x++;
 		ddF_x += 2;
-		f += ddF_x;    
+		f += ddF_x;
+		
 		for(int i=x0-x; i<x0+x; i++){
+			if(radius*2*(y0+y)+i < 0 || radius*2*(y0+y)+i > 4*radius*radius)
+				continue;
 			Map[radius*2*(y0+y)+i]=1;
 		}
+
 		for(int i=x0-x; i<x0+x; i++){
+			if(radius*2*(y0-y)+i < 0 || radius*2*(y0-y)+i > 4*radius*radius)
+				continue;
 			Map[radius*2*(y0-y)+i]=1;
 		}
 
 		for(int i=x0-y; i<x0+y; i++){
+			if(radius*2*(y0+x)+i < 0 || radius*2*(y0+x)+i > 4*radius*radius)
+				continue;
 			Map[radius*2*(y0+x)+i]=1;
 		}
+
 		for(int i=x0-y; i<x0+y; i++){
+			if(radius*2*(y0-x)+i < 0 || radius*2*(y0-x)+i > 4*radius*radius)
+				continue;
 			Map[radius*2*(y0-x)+i]=1;
 		}
 	}
 
-
-	return Map;
+return Map;
 }

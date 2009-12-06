@@ -111,7 +111,7 @@ void World::Explode(Unit* explosion)
 
 void World::PrintMap()
 {
-	FILE* f = fopen("mememememe.txt", "w");
+	FILE* f = fopen("Map.txt", "w");
 
 	for(int i=0;i<Height;i++)
 		{

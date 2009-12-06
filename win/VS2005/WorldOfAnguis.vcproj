@@ -186,6 +186,10 @@
 				RelativePath="..\..\src\Shared\Singleton.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\Shared\Time.h"
+				>
+			</File>
 			<Filter
 				Name="Network"
 				>

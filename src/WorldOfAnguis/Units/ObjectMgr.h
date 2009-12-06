@@ -13,6 +13,7 @@
 #include "Common.h"
 #include "Singleton.h"
 #include "Unit.h"
+#include "Units/Player/Player.h"
 #include "Units/Player/HUD.h"
 #include "Graphics/DirectX/DrawMgr.h"
 #include "World/World.h"
@@ -25,10 +26,10 @@ public:
 	~ObjectMgr();
 	
 	void RegisterUnit(Unit* unit);
-	void AddPlayer(int X,int Y,int TextureNumber);
+
 	void CreateWorld();
 	
-	Unit* Me() {return Objects.front();}
+	Player* Me() {return (Player*)Objects.front();}
 
 	void Update();
 private:

@@ -15,6 +15,7 @@
 #include "Graphics/DirectX/DirectXInterface.h"
 #include "Units/Explosion/Explosion.h"
 #include "World/World.h"
+#include "Time.h"
 
 GameController::GameController()
 {
@@ -36,10 +37,19 @@ void GameController::Run()
 	new Player(80,60,1);
 	
 	sObjMgr->CreateWorld();
+
+    DWORD realCurrTime = 0;
+    DWORD realPrevTime = getMSTime();
+
+    DWORD prevSleepTime = 0;                               // used for balanced full tick time length near SLEEP_CONS	
+	DWORD diff;
 		
 	while(true)
 		{
-		Player* me = reinterpret_cast<Player*>(sObjMgr->Me());
+        realCurrTime = getMSTime();
+		diff = getMSTimeDiff(realPrevTime,realCurrTime);
+
+		Player* me = sObjMgr->Me();
 		ReadKeyboard();
 		if(KEY_DOWN(DIK_ESCAPE))
 			break;
@@ -66,6 +76,7 @@ void GameController::Run()
 			new Explosion(80,60,15,30);
 		if(KEY_DOWN(DIK_N))
 			new Explosion(150,150,50,30);
+			
 		if(KEY_DOWN(DIK_M))
 			 sWorld->PrintMap();
 			 
@@ -78,16 +89,23 @@ void GameController::Run()
 		if(KEY_DOWN(DIK_DOWN))
 			ScrollDown(5);
 
-
-			
 		if(KEY_DOWN(DIK_SPACE))
 			{
-			reinterpret_cast<Player*>(sObjMgr->Me())->SetXVelocity(0);
-			reinterpret_cast<Player*>(sObjMgr->Me())->SetYVelocity(0);
+			me->SetXVelocity(0);
+			me->SetYVelocity(0);
 			}
-		sObjMgr->Update();
-		
+
+		sObjMgr->Update();	
 		Render();
+		
+		realPrevTime = realCurrTime;
+		if (diff <= SLEEP_CONST+prevSleepTime)
+			{
+			prevSleepTime = SLEEP_CONST+prevSleepTime-diff;
+			Sleep(prevSleepTime);
+			}
+		else
+			prevSleepTime = 0;
 		}
 }
 

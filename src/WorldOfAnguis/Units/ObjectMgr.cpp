@@ -14,7 +14,7 @@
 
 ObjectMgr::ObjectMgr()
 {
-//	Objects.clear();
+	Objects.clear();
 }
 
 ObjectMgr::~ObjectMgr()
@@ -61,8 +61,10 @@ void ObjectMgr::Update()
 		else
 			{
 			sDrawMgr->UnRegisterUnit(*it);
-			//if((it = Objects.erase(it)) == Objects.end())
-			//	break;
+			delete *it;
+			it = Objects.erase(it);
+			if(it == Objects.end())
+				break;
 			}
 		}
 }
@@ -70,15 +72,6 @@ void ObjectMgr::Update()
 void ObjectMgr::RegisterUnit(Unit* unit)
 {
 	Objects.push_back(unit);
-}
-
-void ObjectMgr::AddPlayer(int X,int Y,int TextureNumber)
-{
-	//Unit* unit = new Player(X,Y);
-	//Objects.push_back(unit);
-	//char PlayerTexture[MAX_PATH];
-	//sprintf_s(PlayerTexture,sizeof(PlayerTexture),"..\\..\\pic\\Player\\Player%d.bmp",TextureNumber);
-	//sDrawMgr->RegisterUnit(unit,PlayerTexture);
 }
 
 void ObjectMgr::CreateWorld()
