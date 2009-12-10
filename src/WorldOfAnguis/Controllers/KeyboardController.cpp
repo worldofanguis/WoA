@@ -17,6 +17,11 @@
 IDirectInputDevice8* KeyboardController::DXKeyboardDevice = NULL;
 IDirectInput8* KeyboardController::DXInput = NULL;
 
+KeyboardController::KeyboardController()
+{
+	ZeroMemory(Keys,256);
+}
+
 void KeyboardController::InitController()
 {
 	DirectInput8Create(GetModuleHandle(NULL),DIRECTINPUT_VERSION,IID_IDirectInput8,(void**)&DXInput,NULL);
@@ -31,7 +36,8 @@ void KeyboardController::ReadKeyboard()
 		InitController();
 		
 	DXKeyboardDevice->Acquire();
-	
+
+	memcpy(PrevKeys,Keys,256);
 	ZeroMemory(Keys,sizeof(Keys));
 	DXKeyboardDevice->GetDeviceState(sizeof(Keys),Keys);
 }

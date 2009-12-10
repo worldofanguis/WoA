@@ -336,6 +336,14 @@
 				Name="Weapon"
 				>
 				<File
+					RelativePath="..\..\src\WorldOfAnguis\Units\Weapon\Bullet.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\WorldOfAnguis\Units\Weapon\Bullet.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\WorldOfAnguis\Units\Weapon\Weapon.cpp"
 					>
 				</File>

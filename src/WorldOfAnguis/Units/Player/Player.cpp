@@ -28,7 +28,11 @@ Player::Player(int X,int Y,int SkinID) : Unit(X,Y,PLAYER)
 
 Player::~Player()
 {
+}
 
+void Player::Fire()
+{
+	new Bullet(X+Width/2,Y+Height/2,Angle,Bullet::DEF);
 }
 
 //bool Player::CollideX(){

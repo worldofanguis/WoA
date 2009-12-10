@@ -15,6 +15,7 @@
 ObjectMgr::ObjectMgr()
 {
 	Objects.clear();
+	ToPushBack.clear();
 }
 
 ObjectMgr::~ObjectMgr()
@@ -50,11 +51,11 @@ void ObjectMgr::Update()
 				{
 				(*it)->CollisionWorld();
 				
-				for(itc=Objects.begin();itc!=Objects.end();itc++)
-					{
-					if((*itc)->IsActive())
-						(*it)->CollisionUnit(*itc);
-					}
+				//for(itc=Objects.begin();itc!=Objects.end();itc++)
+				//	{
+				//	if((*itc)->IsActive())
+				//		(*it)->CollisionUnit(*itc);
+				//	}
 				(*it)->Update();
 				}
 			}
@@ -67,11 +68,19 @@ void ObjectMgr::Update()
 				break;
 			}
 		}
+		
+	if(!ToPushBack.empty())
+		{
+		for(std::vector<Unit*>::iterator itp=ToPushBack.begin();itp!=ToPushBack.end();itp++)
+			Objects.push_back(*itp);
+		
+		ToPushBack.clear();
+		}
 }
 
 void ObjectMgr::RegisterUnit(Unit* unit)
 {
-	Objects.push_back(unit);
+	ToPushBack.push_back(unit);
 }
 
 void ObjectMgr::CreateWorld()

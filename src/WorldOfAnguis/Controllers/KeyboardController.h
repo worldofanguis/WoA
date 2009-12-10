@@ -18,14 +18,17 @@
 #include "Common.h"
 
 #define KEY_DOWN(key) (Keys[key] & 0x80)
+#define KEY_PRESSED(key) ((Keys[key] & 0x80) && !PrevKeys[key])
+#define KEY_RELEASED(key) (!Keys[key] && (PrevKeys[key] & 0x80))
 
 
 class KeyboardController
 {
 protected:
 	BYTE Keys[256];				// The keyboard state //
+	BYTE PrevKeys[256];
 	
-	KeyboardController() {}
+	KeyboardController();
 	virtual ~KeyboardController() {Release();}
 	
 	void ReadKeyboard();

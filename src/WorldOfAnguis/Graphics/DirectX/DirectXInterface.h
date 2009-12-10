@@ -30,6 +30,8 @@ public:
 	HWND GetHwnd() {return hwnd;}
 	LPDIRECT3DDEVICE9 GetDevice() {return pD3DDevice;}
 	LPD3DXSPRITE GetSprite() {return pSprite;}
+	LPD3DXFONT GetFont() {return pFont;}
+	
 	
 	int GetViewWidth() {return ViewWidth;}
 	int GetViewHeight() {return ViewHeight;}

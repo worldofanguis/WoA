@@ -37,6 +37,7 @@ void GameController::Run()
 	new Player(80,60,1);
 	
 	sObjMgr->CreateWorld();
+	sObjMgr->Update();
 
     DWORD realCurrTime = 0;
     DWORD realPrevTime = getMSTime();
@@ -51,6 +52,10 @@ void GameController::Run()
 
 		Player* me = sObjMgr->Me();
 		ReadKeyboard();
+		
+		if(KEY_PRESSED(DIK_F))
+			me->Fire();
+		
 		if(KEY_DOWN(DIK_ESCAPE))
 			break;
 		if(KEY_DOWN(DIK_W))
@@ -71,10 +76,16 @@ void GameController::Run()
 		}
 		if(KEY_DOWN(DIK_R))
 			me->SetPos(30,70);
-			
-		if(KEY_DOWN(DIK_B))
+		
+		if(KEY_DOWN(DIK_Q))
+			me->SetAngle(me->GetAngle()+0.1f);
+
+		if(KEY_DOWN(DIK_E))
+			me->SetAngle(me->GetAngle()-0.1f);
+		
+		if(KEY_PRESSED(DIK_B))
 			new Explosion(80,60,15,30);
-		if(KEY_DOWN(DIK_N))
+		if(KEY_PRESSED(DIK_N))
 			new Explosion(150,150,50,30);
 			
 		if(KEY_DOWN(DIK_M))
@@ -96,20 +107,21 @@ void GameController::Run()
 			}
 
 		sObjMgr->Update();	
-		Render();
+		Render(diff);
+		
 		
 		realPrevTime = realCurrTime;
-		if (diff <= SLEEP_CONST+prevSleepTime)
-			{
-			prevSleepTime = SLEEP_CONST+prevSleepTime-diff;
-			Sleep(prevSleepTime);
-			}
-		else
-			prevSleepTime = 0;
+		//if (diff <= SLEEP_CONST+prevSleepTime)
+		//	{
+		//	prevSleepTime = SLEEP_CONST+prevSleepTime-diff;
+		//	Sleep(prevSleepTime);
+		//	}
+		//else
+		//	prevSleepTime = 0;
 		}
 }
 
-void GameController::Render()
+void GameController::Render(DWORD diff)
 {
 	DirectXInterface* DXI = sDXInterface;
 	DXI->BeginScene();
@@ -120,7 +132,12 @@ void GameController::Render()
 	sHudView->Draw();
 	// Drawing the Objects via the DrawMgr //
 	sDrawMgr->Draw(ViewLeft,ViewTop);
-
+	
+	char FPS[30];
+//	sprintf_s(FPS,sizeof(FPS),"%f",sObjMgr->Me()->GetAngle());
+	sprintf_s(FPS,sizeof(FPS),"%u",diff);
+	DXI->GetFont()->DrawText(NULL,FPS,-1,NULL,DT_LEFT|DT_NOCLIP,0xFF0000FF);
+	
 	DXI->EndScene();	
 }
 

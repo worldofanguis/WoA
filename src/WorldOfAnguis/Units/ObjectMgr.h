@@ -14,6 +14,7 @@
 #include "Singleton.h"
 #include "Unit.h"
 #include "Units/Player/Player.h"
+#include "Units/Weapon/Bullet.h"
 #include "Units/Player/HUD.h"
 #include "Graphics/DirectX/DrawMgr.h"
 #include "World/World.h"
@@ -34,8 +35,12 @@ public:
 	void Update();
 private:
 	std::vector<Unit*> Objects;
+	std::vector<Unit*> ToPushBack;
+	
 	std::vector<Unit*>::iterator it;
 	std::vector<Unit*>::iterator itc;
+	
+	bool Iteration;
 };
 
 #define sObjMgr ObjectMgr::Instance()

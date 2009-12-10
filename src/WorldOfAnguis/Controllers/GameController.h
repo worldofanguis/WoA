@@ -23,7 +23,7 @@ public:
 	
 	void Run();
 private:
-	void Render();
+	void Render(DWORD diff);
 	
 	
 	void SetView(int Left,int Top) {ViewLeft = Left;ViewTop = Top;}		// Set the viewpoint //

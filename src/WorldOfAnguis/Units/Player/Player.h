@@ -29,10 +29,12 @@ public:
 	void SetYVelocity(int v) {vY=v;}
 	
 	void SetPos(int X,int Y) {this->X = X; this->Y = Y;}
+	void SetAngle(float Angle) {this->Angle = Angle;}
 	
 	float GetAngle() {return Angle;}
 	bool GetJumping() {return Jumping;}
 	
+	void Fire();
 	
 private:
 	float Angle;

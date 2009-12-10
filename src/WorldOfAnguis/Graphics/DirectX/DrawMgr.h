@@ -13,6 +13,7 @@
 #include "Common.h"
 #include "Singleton.h"
 #include "Units/Unit.h"
+#include "Units/Weapon/Bullet.h"
 #include "Units/Player/Player.h"
 #include "Units/UnitDrawInfo.h"
 
@@ -23,7 +24,7 @@ public:
 	DrawMgr();
 	~DrawMgr();
 	
-	void Setup(LPDIRECT3DDEVICE9 pDevice,LPD3DXSPRITE pSprite,int Width,int Height) {this->pDevice = pDevice; this->pSprite=pSprite; ViewWidth = Width; ViewHeight = Height;}
+	void Setup(LPDIRECT3DDEVICE9 pDevice,LPD3DXSPRITE pSprite,int Width,int Height);
 	
 	void RegisterUnit(Unit* unit,char* TextureFileName);
 	void UnRegisterUnit(Unit* unit);
@@ -31,6 +32,8 @@ public:
 	void Draw(int ViewLeft,int ViewTop);
 	
 	void DrawPlayer(Player* player,UnitDrawInfo* unitinfo,int ViewLeft,int ViewTop);
+	void DrawBullet(Bullet* bullet,UnitDrawInfo* unitinfo,int ViewLeft,int ViewTop);
+
 private:
 	bool InSight(Unit* unit,int ViewLeft,int ViewTop);
 
@@ -39,6 +42,8 @@ private:
 	
 	int ViewWidth;
 	int ViewHeight;
+	
+	UnitDrawInfo* Crosshair;
 	
 	LPD3DXSPRITE pSprite;
 	LPDIRECT3DDEVICE9 pDevice;

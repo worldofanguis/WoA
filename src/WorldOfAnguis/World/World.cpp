@@ -100,11 +100,16 @@ void World::Explode(Unit* explosion)
 	int R = e->GetRadius();
 	int X= e->GetX();
 	int Y= e->GetY();
-		
+
 	for(int i=0; i<2*R;i++)
 		for(int j=0; j<2*R;j++)
+			{
+			if((Y/PPHM+i)*Width+(X/PPHM+j) < 0 || (Y/PPHM+i)*Width+(X/PPHM+j) > MapSize)
+				continue;
 			if(emap[i*2*R+j])
-				Map[(Y/PPHM+i)*Width+(X/PPHM+j)]=0;
+				if(Map[(Y/PPHM+i)*Width+(X/PPHM+j)] == 1)
+					Map[(Y/PPHM+i)*Width+(X/PPHM+j)]=0;
+			}
 
 	sWorldView->UpdateSurface(Map,Width,PPHM);
 }
