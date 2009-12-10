@@ -8,11 +8,18 @@
  *                    World Of Anguis
  *
  */
+
  
 #pragma once
 #include "Common.h"
 
-#define SLEEP_CONST 5
+inline DWORD GetMSTime() {return GetTickCount();}
 
-inline DWORD getMSTime() {return GetTickCount();}
-inline DWORD getMSTimeDiff(DWORD t1,DWORD t2) {return t2-t1;}
+inline DWORD GetMSTimeDiff(DWORD oldMSTime, DWORD newMSTime)
+{
+    // GetMSTime() have limited data range and this is case when it overflow in this tick
+    if(oldMSTime > newMSTime)
+        return (0xFFFFFFFF - oldMSTime) + newMSTime;
+    else
+        return newMSTime - oldMSTime;
+}

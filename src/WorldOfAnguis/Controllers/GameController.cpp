@@ -40,15 +40,14 @@ void GameController::Run()
 	sObjMgr->Update();
 
     DWORD realCurrTime = 0;
-    DWORD realPrevTime = getMSTime();
+    DWORD realPrevTime = GetMSTime();
 
-    DWORD prevSleepTime = 0;                               // used for balanced full tick time length near SLEEP_CONS	
 	DWORD diff;
 		
 	while(true)
 		{
-        realCurrTime = getMSTime();
-		diff = getMSTimeDiff(realPrevTime,realCurrTime);
+        realCurrTime = GetMSTime();
+		diff = GetMSTimeDiff(realPrevTime,realCurrTime);
 
 		Player* me = sObjMgr->Me();
 		ReadKeyboard();
@@ -108,16 +107,8 @@ void GameController::Run()
 
 		sObjMgr->Update();	
 		Render(diff);
-		
-		
+
 		realPrevTime = realCurrTime;
-		//if (diff <= SLEEP_CONST+prevSleepTime)
-		//	{
-		//	prevSleepTime = SLEEP_CONST+prevSleepTime-diff;
-		//	Sleep(prevSleepTime);
-		//	}
-		//else
-		//	prevSleepTime = 0;
 		}
 }
 
