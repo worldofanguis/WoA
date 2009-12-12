@@ -60,9 +60,6 @@ return false;
 
 bool Unit::CollisionWorld()
 {	
-	if(vYd<1)vYd+=GRAVITY;
-	else vYd=0.0;
-	vY+=(int)vYd;
 
 	if(vX == 0 && vY == 0)		// We dont move since we dont have any velocity //
 		return false;

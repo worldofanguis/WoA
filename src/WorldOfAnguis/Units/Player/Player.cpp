@@ -61,7 +61,7 @@ bool Player::CollisionWorld(){
 
 	if(vYd<1)vYd+=GRAVITY;
 	else vYd=0.0;
-	//vY+=(int)vYd;
+	vY+=(int)vYd;
 
 	if(vX == 0 && vY == 0)		// We dont move since we dont have any velocity //
 		return false;
@@ -88,15 +88,16 @@ bool Player::CollisionWorld(){
 		
 		
 	}
+	
 	else if(vY>2 || vY<-2)
 		Jumping=true;
-
+	Y=yf;
 	if(CollideX(&xf)){
 		Collided = true;
 		vX=0;
 	}
 	X=xf;
-	Y=yf;
+	
 
 	return Collided;
 	
@@ -126,7 +127,7 @@ bool Player::CollidePlayerPoint(int x, int y, int* xf, int* yf){
 			xt+=dx;
 			yt=y_final;
 			if(HitTest(xt, yt)){
-				for(int i=MAXSTEEP; i>0; i--){ //instead of 3 there should be MAXSTEEP defined in UNIT.h
+				for(int i=MAXSTEEP; i>0; i--){
 					if(!HitTest(xt,yt-i) && !HitTestBorder(vX>0?xt-Width:xt, yt-i-Height, false, false) && !HitTestBorder(vX>0?xt-Width:xt, yt-i-Height, true, true))
 							y_final=yt-i;
 					else{
