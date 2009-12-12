@@ -16,6 +16,7 @@
 #include "Graphics/DirectX/DrawMgr.h"
 #include "Graphics/DirectX/World/DXWorldView.h"
 #include "Graphics/DirectX/HUD/DXHUDView.h"
+#include "Graphics/DirectX/Log/ScreenLog.h"
 
 class DirectXInterface : public Singleton<DirectXInterface>
 {
@@ -30,8 +31,6 @@ public:
 	HWND GetHwnd() {return hwnd;}
 	LPDIRECT3DDEVICE9 GetDevice() {return pD3DDevice;}
 	LPD3DXSPRITE GetSprite() {return pSprite;}
-	LPD3DXFONT GetFont() {return pFont;}
-	
 	
 	int GetViewWidth() {return ViewWidth;}
 	int GetViewHeight() {return ViewHeight;}
@@ -49,11 +48,6 @@ private:
 	LPD3DXSPRITE pSprite;				// Sprite for drawing images //
 
 	int ViewWidth,ViewHeight;
-	
-	LPD3DXFONT pFont;					// Font for drawing FPS //
-	bool ShowFPS;
-	//char FPS[10];
-	//DWORD TickCount,PrevTickCount;
 	
 	static LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		{

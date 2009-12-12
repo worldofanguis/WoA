@@ -24,8 +24,6 @@ DirectXInterface::DirectXInterface()
 	hwnd = NULL;
 	pD3D = NULL;
 	pD3DDevice = NULL;
-
-	ShowFPS = true;
 }
 
 DirectXInterface::~DirectXInterface()
@@ -110,8 +108,6 @@ HRESULT DirectXInterface::Initialize(HINSTANCE hInstance,bool Windowed)
 	if(FAILED(pD3D->CreateDevice(D3DADAPTER_DEFAULT,D3DDEVTYPE_HAL,hwnd,D3DCREATE_HARDWARE_VERTEXPROCESSING,&d3dpp,&pD3DDevice)))
         return E_FAIL;
 
-	D3DXCreateFont(pD3DDevice,21,0,FW_BOLD,1,false,DEFAULT_CHARSET,OUT_DEFAULT_PRECIS,ANTIALIASED_QUALITY,DEFAULT_PITCH|FF_DONTCARE,"Arial",&pFont);
-
 	pD3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 	pD3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 
@@ -122,6 +118,7 @@ HRESULT DirectXInterface::Initialize(HINSTANCE hInstance,bool Windowed)
 	sDrawMgr->Setup(pD3DDevice,pSprite,ViewWidth,ViewHeight);
 	sWorldView->Setup(pD3DDevice,pSprite);
 	sHudView->Setup(pD3DDevice,pSprite);
+	sScreenLog->Setup(pD3DDevice);
 
 return S_OK;
 }
@@ -131,9 +128,9 @@ void DirectXInterface::Cleanup()
 	delete sHudView;
 	delete sDrawMgr;
 	delete sWorldView;
+	delete sScreenLog;
 
 	SAFE_RELEASE(pSprite);
-	SAFE_RELEASE(pFont);
 	SAFE_RELEASE(pD3DDevice);
 	SAFE_RELEASE(pD3D);
 }
@@ -152,23 +149,9 @@ void DirectXInterface::EndScene()
 {
 	if(pD3DDevice == NULL)
 		return;
+
+	sScreenLog->Draw();
 	pSprite->End();
 	pD3DDevice->EndScene();
 	pD3DDevice->Present(NULL,NULL,NULL,NULL);		// TODO: check present paramters maybe there is a better on than just NULL-s //
 }
-
-//void DirectXInterface::Render()
-//{
-//	// Display FPS counter //
-//	if(ShowFPS)
-//		{
-//		if(PrevTickCount != TickCount)
-//			{
-//			sprintf_s(FPS,sizeof(FPS),"%d",1000/(TickCount-PrevTickCount));
-//			pFont->DrawText(NULL,FPS,-1,NULL,DT_LEFT|DT_NOCLIP,0xFF0000FF);
-//			}
-//		}
-//
-//	PrevTickCount = TickCount;
-//	TickCount = GetTickCount();
-//}

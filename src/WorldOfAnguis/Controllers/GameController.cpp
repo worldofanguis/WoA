@@ -43,7 +43,10 @@ void GameController::Run()
     DWORD realPrevTime = GetMSTime();
 
 	DWORD diff;
-		
+	
+	/* Example for using the sScreenLog class */
+	sScreenLog->AddTrack(&diff,ScreenLog::Track::UINT,20,30,0xFFFF0000);
+	
 	while(true)
 		{
         realCurrTime = GetMSTime();
@@ -124,10 +127,8 @@ void GameController::Render(DWORD diff)
 	// Drawing the Objects via the DrawMgr //
 	sDrawMgr->Draw(ViewLeft,ViewTop);
 	
-	char FPS[30];
-//	sprintf_s(FPS,sizeof(FPS),"%f",sObjMgr->Me()->GetAngle());
-	sprintf_s(FPS,sizeof(FPS),"%u",diff);
-	DXI->GetFont()->DrawText(NULL,FPS,-1,NULL,DT_LEFT|DT_NOCLIP,0xFF0000FF);
+	/* Example for using the sSceenLog class */
+//	sScreenLog->DrawNow(&diff,ScreenLog::Track::UINT,20,30,0xFFFF0000);
 	
 	DXI->EndScene();	
 }

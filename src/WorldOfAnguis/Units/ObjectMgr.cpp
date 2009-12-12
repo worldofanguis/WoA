@@ -51,11 +51,11 @@ void ObjectMgr::Update()
 				{
 				(*it)->CollisionWorld();
 				
-				//for(itc=Objects.begin();itc!=Objects.end();itc++)
-				//	{
-				//	if((*itc)->IsActive())
-				//		(*it)->CollisionUnit(*itc);
-				//	}
+				for(itc=Objects.begin();itc!=Objects.end();itc++)
+					{
+					if((*itc)->IsActive())
+						(*it)->CollisionUnit(*itc);
+					}
 				(*it)->Update();
 				}
 			}

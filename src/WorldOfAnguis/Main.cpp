@@ -11,7 +11,7 @@
 
 
 #define __SHOW_STUPID_WARNINGS__		// Debug //
- 
+
 #include "Common.h"
 #include "Graphics/DirectX/DirectXInterface.h"
 #include "Controllers/GameController.h"
