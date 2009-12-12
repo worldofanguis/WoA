@@ -43,6 +43,9 @@ void ScreenLog::Draw()
 			case Track::CHAR:
 				sprintf_s(Text,sizeof(Text),"%c",*(char*)Current->Data);
 				break;
+			case Track::BOOL:
+				sprintf_s(Text,sizeof(Text),"%d",*(bool*)Current->Data);
+				break;
 			case Track::TEXT:
 				sprintf_s(Text,sizeof(Text),"%s",*(char*)Current->Data);
 				break;
@@ -73,6 +76,9 @@ void ScreenLog::DrawNow(void* Data,Track::TYPES Type,int X,int Y,COLORREF Color)
 		{
 		case Track::CHAR:
 			sprintf_s(Text,sizeof(Text),"%c",*(char*)Data);
+			break;
+		case Track::BOOL:
+			sprintf_s(Text,sizeof(Text),"%d",*(bool*)Data);
 			break;
 		case Track::TEXT:
 			sprintf_s(Text,sizeof(Text),"%s",*(char*)Data);

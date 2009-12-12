@@ -22,7 +22,7 @@ public:
 	/* Struct for holding the informations */
 	struct Track
 	{
-		enum TYPES {TEXT,CHAR,FLOAT,INT,UINT};		// Types we can track - Use: ScreenLog::Track::<TYPE> //
+		enum TYPES {TEXT,CHAR,BOOL,FLOAT,INT,UINT};		// Types we can track - Use: ScreenLog::Track::<TYPE> //
 
 		Track(void* data,TYPES type,int x,int y,COLORREF color)
 		{
