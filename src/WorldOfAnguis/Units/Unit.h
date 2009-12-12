@@ -12,7 +12,8 @@
 #pragma once
 #include "Common.h"
 
-#define GRAVITY 2
+#define GRAVITY 0.4
+#define MAXSTEEP 4
 
 class Unit
 {
@@ -23,14 +24,14 @@ public:
 	void Deactivate() {Active = false;}
 
 	/* Updates the Unit position should be called after collision detections */
-	virtual void Update();
+	void Update();
 	
 	virtual bool CollisionWorld();
 	virtual bool CollisionUnit(Unit* unit);
 	
 	bool Collide();
-	virtual bool CollideX();
-	bool CollideY();
+	virtual bool CollideX(int* xreturn);
+	bool CollideY(int* yreturn);
 	bool CollidePlayerPoint(int x, int y, int* xf, int* yf);
 	bool CollidePoint(int x_rel, int y_rel, int* xf, int* yf);
 	bool HitTest(int x, int y);
@@ -53,6 +54,7 @@ protected:
 	
 	int X,Y;		// Position //
 	int vX,vY;		// Velocity //
+	double vXd, vYd; //Double type Velocity//
 
 	int Width;		// Size of the Unit //
 	int Height;

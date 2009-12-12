@@ -18,7 +18,10 @@ class Player : public Unit
 public:
 	Player(int X,int Y,int SkinID);
 	~Player();
-	bool CollideX();
+	bool CollideX(int* xreturn);
+	//bool CollideY();
+	bool CollisionWorld();
+	bool CollidePlayerPoint(int x, int y, int* xf, int* yf);
 
 	int GetLife() {return Life;}
 	void DecreaseLife(int Damage) {if(Life >= Damage) {Life-=Damage;} else {Life = 0;}}
@@ -33,11 +36,14 @@ public:
 	
 	float GetAngle() {return Angle;}
 	bool GetJumping() {return Jumping;}
+
+	int GetVX(){return vX;}
+	int GetVY(){return vY;}
 	
 	void Fire();
-	
 private:
 	float Angle;
 	int Life;
 	bool Jumping;
+	
 };

@@ -13,6 +13,8 @@
 #include "Unit.h"
 #include "Units/ObjectMgr.h"
 
+
+
 Unit::Unit(int X,int Y,TYPES Type)
 {
 	this->X = X;
@@ -20,6 +22,7 @@ Unit::Unit(int X,int Y,TYPES Type)
 	this->Type = Type;
 	
 	vX = vY = 0;
+	vXd = vYd = 0.0;
 	Width = Height = 0;
 	
 	sObjMgr->RegisterUnit(this);
@@ -57,26 +60,29 @@ return false;
 
 bool Unit::CollisionWorld()
 {	
-	//vY+=1;
+
 	if(vX == 0 && vY == 0)		// We dont move since we dont have any velocity //
 		return false;
 	bool Collided = false;
 	/*Its important that the collision detection on Y run first
 	 *because it may set vY to zero before X movement is tested.
 	 *This way moving on a horizontal surface will test only on the X axis
-	 */
+	*/
 
+	int xf, yf;
 
-	if(CollideY()){
+	if(CollideY(&yf)){
 		Collided = true;
+		vYd=0;
 		vY=0;
 	}
-	if(CollideX()){
+	if(CollideX(&xf)){
 		Collided = true;
 		vX=0;
 	}
-	//X += vX;
-	//Y += vY;
+
+	X=xf;
+	Y=yf;
 	
 
 return Collided;
@@ -146,48 +152,7 @@ bool Unit::CollidePoint(int x_rel, int y_rel, int* xf, int* yf){
 		return Collided;
 }
 
-bool Unit::CollidePlayerPoint(int x, int y, int* xf, int* yf){
-	bool hit=false;
-	int xt, yt, dx;
-	int x_final, y_final;
-	x_final=x+vX;
-	y_final=y;
 
-	if(!vY && vX){	//JUMPING attribute should go here (if there's no vX no testing is required)
-		
-		if(vX>0){
-			dx=1;
-		}
-		else{
-			dx=-1;
-		}
-		xt=x;
-
-		while(xt!=x+vX){
-			
-			xt+=dx;
-			yt=y_final;
-			if(HitTest(xt, yt)){
-				for(int i=3; i>0; i--){ //instead of 3 there should be MAXSTEEP defined in UNIT.h
-					if(!HitTest(xt,yt-i) && !HitTestBorder(xt-Width, yt-i-Height, false, false) && !HitTestBorder(xt-Width, yt-i-Height, true, true))
-							y_final=yt-i;
-					else{
-						hit=true; break;
-					}
-					
-				}
-			}
-			if(hit){
-				break;
-				x_final=xt-dx;
-			}
-		}
-	}
-	*xf=x_final;
-	*yf=y_final;
-	return hit;
-
-}
 
 bool Unit::HitTest(int x, int y){
 	char* Map = sWorld->GetHitMap();
@@ -209,13 +174,13 @@ bool Unit::HitTest(int x, int y){
 
 bool Unit::HitTestBorder(int x, int y, bool right, bool down){
 	for(int y0=0;y0<=Height;y0++){
-		if(HitTest(x+(int)right*Width,y0)){
+		if(HitTest(x+(int)right*Width,y+y0)){
 			return true;
 		}
 	}
 
 	for(int x0=0;x0<=Width;x0++){
-		if(HitTest(x0,y+int(down)*Height)){
+		if(HitTest(x+x0,y+int(down)*Height)){
 			return true;		
 		}		
 	}
@@ -274,18 +239,17 @@ bool Unit::Collide(){
 	return Collided;
 }
 
-bool Unit::CollideX(){
+bool Unit::CollideX(int* xreturn){
 	bool Collided=false;
 	/*The point to be tested relative to position*/
-	int xt,yt;
+	int xt;
 	if(vX>0)xt=Width;
 	else xt=0;
 
-	if(vY>0)yt=Height;
-	else yt=0;
 
 	/*where can we go??*/
-	int xf, yf, x_final=X+vX, y_final=Y+vY;
+	int xf,  x_final=X+vX;
+	int yf;
 	if(vX!=0)
 	for(int y0=0;y0<=Height;y0++){
 		if(CollidePoint(xt,y0,&xf,&yf)){
@@ -300,56 +264,23 @@ bool Unit::CollideX(){
 			
 		}
 	}
-	
-
-	if(vY!=0)
-	for(int x0=0;x0<=Width;x0++){
-		if(CollidePoint(x0,yt,&xf,&yf)){
-			//Collided=true;
-			if(vY>0){	//going down - 
-				//we have to take the minimum of the possible y values
-				if(y_final>yf-Height)y_final=yf-Height;
-			}
-			else{
-				if(y_final<yf)y_final=yf;	//maximum of the possible y values
-			}
-			
-		}
-		
-	}
-	
-	X=x_final;
-	//Y=y_final;
+	*xreturn=x_final;
 	
 	return Collided;
 }
 
-bool Unit::CollideY(){
+bool Unit::CollideY(int* yreturn){
 	bool Collided=false;
 	/*The point to be tested relative to position*/
-	int xt,yt;
-	if(vX>0)xt=Width;
-	else xt=0;
+	//int xt;
+	int yt;
 
 	if(vY>0)yt=Height;
 	else yt=0;
 
 	/*where can we go??*/
-	int xf, yf, x_final=X+vX, y_final=Y+vY;
-	if(vX!=0)
-	for(int y0=0;y0<=Height;y0++){
-		if(CollidePoint(xt,y0,&xf,&yf)){
-			//Collided=true;
-			if(vX>0){	//going to the right - 
-				//we have to take the minimum of the possible x values
-				if(x_final>xf-Width)x_final=xf-Width;
-			}
-			else{
-				if(x_final<xf)x_final=xf;	//maximum of the possible x values
-			}
-			
-		}
-	}
+	int xf, yf, y_final=Y+vY;
+	
 	
 
 	if(vY!=0)
@@ -367,9 +298,7 @@ bool Unit::CollideY(){
 		}
 		
 	}
-	
-	//X=x_final;
-	Y=y_final;
+	*yreturn=y_final;
 	
 	return Collided;
 }
