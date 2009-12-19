@@ -93,14 +93,14 @@ void GameController::Run()
 		if(KEY_DOWN(DIK_M))
 			 sWorld->PrintMap();
 			 
-		if(KEY_DOWN(DIK_LEFT))
+		/*if(KEY_DOWN(DIK_LEFT))
 			ScrollLeft(5);
 		if(KEY_DOWN(DIK_RIGHT))
 			ScrollRight(5);
 		if(KEY_DOWN(DIK_UP))
 			ScrollUp(5);
 		if(KEY_DOWN(DIK_DOWN))
-			ScrollDown(5);
+			ScrollDown(5);*/
 
 		if(KEY_DOWN(DIK_SPACE))
 			{
@@ -108,7 +108,8 @@ void GameController::Run()
 			me->SetYVelocity(0);
 			}
 
-		sObjMgr->Update();	
+		sObjMgr->Update();
+		FollowPlayer(me);
 		Render(diff);
 
 		realPrevTime = realCurrTime;
@@ -164,4 +165,28 @@ void GameController::ScrollDown(int Dist)
 		ViewTop += Dist;
 	else
 		ViewTop = sWorld->GetHeight()-ViewHeight;
+}
+
+void GameController::FollowPlayer(Player *p) 
+{
+	int x = p->GetX();
+	int y = p->GetY();
+	int h = sWorld->GetHeight();
+	int w = sWorld->GetWidth();
+	
+	// ViewLeft 
+	if ( x - ViewWidth/2 < 0 )
+		ViewLeft = 0;
+	else if ( x + ViewWidth/2 > w )
+		ViewLeft = w - ViewWidth;
+	else
+		ViewLeft = x - ViewWidth/2;
+
+	// ViewTop
+	if ( y - ViewHeight/2 < 0 )
+		ViewTop = 0;
+	else if ( y + ViewHeight/2 > h)
+		ViewTop = h - ViewHeight;
+	else
+		ViewTop = y - ViewHeight/2;
 }

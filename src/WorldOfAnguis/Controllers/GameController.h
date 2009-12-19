@@ -13,6 +13,7 @@
 #pragma once
 #include "Common.h"
 #include "KeyboardController.h"
+#include "Units/Player/Player.h"
 
 
 class GameController : KeyboardController
@@ -31,7 +32,7 @@ private:
 	void ScrollRight(int Dist);			// Scrolling the screen right with dist //
 	void ScrollUp(int Dist);			// Scrolling the screen up with dist //
 	void ScrollDown(int Dist);			// Scrolling the screen down with dist //
-
+	void FollowPlayer(Player * p);
 
 	int ViewWidth;			// Screen width (BackBuffer width) //
 	int ViewHeight;			// Screen height (BackBuffer height) //
