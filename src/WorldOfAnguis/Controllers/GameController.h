@@ -13,8 +13,7 @@
 #pragma once
 #include "Common.h"
 #include "KeyboardController.h"
-#include "Units/Player/Player.h"
-
+#include "Units/Unit.h"
 
 class GameController : KeyboardController
 {
@@ -25,14 +24,10 @@ public:
 	void Run();
 private:
 	void Render(DWORD diff);
-	
-	
+
 	void SetView(int Left,int Top) {ViewLeft = Left;ViewTop = Top;}		// Set the viewpoint //
-	void ScrollLeft(int Dist);			// Scrolling the screen left with dist //
-	void ScrollRight(int Dist);			// Scrolling the screen right with dist //
-	void ScrollUp(int Dist);			// Scrolling the screen up with dist //
-	void ScrollDown(int Dist);			// Scrolling the screen down with dist //
-	void FollowPlayer(Player * p);
+
+	void FollowUnit(Unit *unit);			// Follows the specified unit with the camera //
 
 	int ViewWidth;			// Screen width (BackBuffer width) //
 	int ViewHeight;			// Screen height (BackBuffer height) //

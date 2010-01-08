@@ -76,6 +76,14 @@ void GameController::Run()
 				new Explosion(me->GetX()+me->GetWidth()-4,me->GetY()+(me->GetHeight()/2),19,0);
 			}
 		}
+		
+		/* Oops :< */
+		//if(KEY_UP(DIK_W) && KEY_UP(DIK_A) && KEY_UP(DIK_S) && KEY_UP(DIK_D))
+		//	{
+		//	me->SetXVelocity(0);
+		//	me->SetYVelocity(0);
+		//	}
+
 		if(KEY_DOWN(DIK_R))
 			me->SetPos(30,70);
 		
@@ -92,15 +100,6 @@ void GameController::Run()
 			
 		if(KEY_DOWN(DIK_M))
 			 sWorld->PrintMap();
-			 
-		/*if(KEY_DOWN(DIK_LEFT))
-			ScrollLeft(5);
-		if(KEY_DOWN(DIK_RIGHT))
-			ScrollRight(5);
-		if(KEY_DOWN(DIK_UP))
-			ScrollUp(5);
-		if(KEY_DOWN(DIK_DOWN))
-			ScrollDown(5);*/
 
 		if(KEY_DOWN(DIK_SPACE))
 			{
@@ -109,7 +108,7 @@ void GameController::Run()
 			}
 
 		sObjMgr->Update();
-		FollowPlayer(me);
+		FollowUnit(me);
 		Render(diff);
 
 		realPrevTime = realCurrTime;
@@ -131,46 +130,16 @@ void GameController::Render(DWORD diff)
 	/* Example for using the sSceenLog class */
 //	sScreenLog->DrawNow(&diff,ScreenLog::Track::UINT,20,30,0xFFFF0000);
 	
-	DXI->EndScene();	
+	DXI->EndScene();
 }
 
-/* Maybe this functions should be moved to 2 (ScrollingVertical and ScrollingHorizontal) */
-void GameController::ScrollLeft(int Dist)
+/* NOTE: I modified the fuction (sry) cause this way it can be used to 
+ *		 follow bullets too (like contollable missiles etc)
+ */
+void GameController::FollowUnit(Unit *unit) 
 {
-	if(ViewLeft-Dist > 0)
-		ViewLeft -= Dist;
-	else
-		ViewLeft = 0;
-}
-
-void GameController::ScrollRight(int Dist)
-{
-	if(ViewLeft+ViewWidth+Dist < sWorld->GetWidth())
-		ViewLeft += Dist;
-	else
-		ViewLeft = sWorld->GetWidth()-ViewWidth;
-}
-
-void GameController::ScrollUp(int Dist)
-{
-	if(ViewTop-Dist > 0)
-		ViewTop -= Dist;
-	else
-		ViewTop = 0;
-}
-
-void GameController::ScrollDown(int Dist)
-{
-	if(ViewTop+ViewHeight+Dist < sWorld->GetHeight())
-		ViewTop += Dist;
-	else
-		ViewTop = sWorld->GetHeight()-ViewHeight;
-}
-
-void GameController::FollowPlayer(Player *p) 
-{
-	int x = p->GetX();
-	int y = p->GetY();
+	int x = unit->GetX();
+	int y = unit->GetY();
 	int h = sWorld->GetHeight();
 	int w = sWorld->GetWidth();
 	

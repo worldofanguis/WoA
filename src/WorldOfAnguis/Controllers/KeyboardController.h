@@ -17,9 +17,10 @@
 
 #include "Common.h"
 
-#define KEY_DOWN(key) (Keys[key] & 0x80)
-#define KEY_PRESSED(key) ((Keys[key] & 0x80) && !PrevKeys[key])
-#define KEY_RELEASED(key) (!Keys[key] && (PrevKeys[key] & 0x80))
+#define KEY_DOWN(key)		(Keys[key] & 0x80)
+#define KEY_UP(key)			(!(Keys[key] & 0x80))
+#define KEY_PRESSED(key)	((Keys[key] & 0x80) && !PrevKeys[key])
+#define KEY_RELEASED(key)	(!Keys[key] && (PrevKeys[key] & 0x80))
 
 
 class KeyboardController

@@ -28,7 +28,7 @@ Explosion::~Explosion()
 {
 	delete[] Map;
 }
-
+/* TODO: FIX ME PLZ!!! */
 char* Explosion::GetExplosionMap()
 {
 	int f = 1 - radius;
