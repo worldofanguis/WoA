@@ -44,7 +44,7 @@ bool Bullet::CollisionWorld()
 	if(Unit::CollisionWorld())
 		{
 		new Explosion(X,Y,R,Damage);
-		Active = false;
+		Deactivate();
 		}
 
 return false;

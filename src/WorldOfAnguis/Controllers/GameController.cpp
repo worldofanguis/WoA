@@ -49,10 +49,11 @@ void GameController::Run()
 	
 	while(true)
 		{
-        realCurrTime = GetMSTime();
+		realCurrTime = GetMSTime();
 		diff = GetMSTimeDiff(realPrevTime,realCurrTime);
 
 		Player* me = sObjMgr->Me();
+
 		ReadKeyboard();
 		
 		if(KEY_PRESSED(DIK_F))
@@ -138,6 +139,9 @@ void GameController::Render(DWORD diff)
  */
 void GameController::FollowUnit(Unit *unit) 
 {
+	if(unit == NULL)
+		return;
+
 	int x = unit->GetX();
 	int y = unit->GetY();
 	int h = sWorld->GetHeight();

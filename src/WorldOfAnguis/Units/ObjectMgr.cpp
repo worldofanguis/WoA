@@ -25,7 +25,7 @@ ObjectMgr::~ObjectMgr()
 		sDrawMgr->UnRegisterUnit(*it);
 		delete *it;
 		}
-	
+
 	Objects.clear();
 	
 	delete sHud;
@@ -86,4 +86,12 @@ void ObjectMgr::RegisterUnit(Unit* unit)
 void ObjectMgr::CreateWorld()
 {
 	sWorld->LoadMaps("..\\..\\pic\\Map\\Map1");
+}
+
+Player* ObjectMgr::Me()
+{
+	if(Objects.empty())
+		return NULL;
+
+return (Player*)Objects.front();
 }

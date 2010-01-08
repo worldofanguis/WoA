@@ -25,12 +25,12 @@ class ObjectMgr : public Singleton<ObjectMgr>
 public:
 	ObjectMgr();
 	~ObjectMgr();
-	
+
+	Player* Me();
+
 	void RegisterUnit(Unit* unit);
 
 	void CreateWorld();
-	
-	Player* Me() {return (Player*)Objects.front();}
 
 	void Update();
 private:

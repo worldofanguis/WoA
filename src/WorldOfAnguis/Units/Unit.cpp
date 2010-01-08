@@ -13,8 +13,6 @@
 #include "Unit.h"
 #include "Units/ObjectMgr.h"
 
-
-
 Unit::Unit(int X,int Y,TYPES Type)
 {
 	this->X = X;
@@ -24,6 +22,8 @@ Unit::Unit(int X,int Y,TYPES Type)
 	vX = vY = 0;
 	vXd = vYd = 0.0;
 	Width = Height = 0;
+	
+	Active = true;
 	
 	sObjMgr->RegisterUnit(this);
 }
