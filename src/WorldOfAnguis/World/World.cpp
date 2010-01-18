@@ -89,7 +89,7 @@ bool World::LoadMaps(char *MapName)
 		return false;
 
 	// Update our display surface //
-	sWorldView->UpdateSurface(Map,Width,PPHM);
+	sWorldView->UpdateSurface(Map,Width,PPHM,NULL);
 return true;
 }
 
@@ -101,17 +101,19 @@ void World::Explode(Unit* explosion)
 	int X= e->GetX();
 	int Y= e->GetY();
 
-	for(int i=0; i<2*R;i++)
+	RECT DirtyRegion = {X,Y,2*R,2*R};
+
+	for(int i=0; i<2*R;i++)			// Iterators for the ExplosionMap
 		for(int j=0; j<2*R;j++)
 			{
 			if((Y/PPHM+i)*Width+(X/PPHM+j) < 0 || (Y/PPHM+i)*Width+(X/PPHM+j) > MapSize)
-				continue;
+				continue;		// TODO: FIX ME 
 			if(emap[i*2*R+j])
 				if(Map[(Y/PPHM+i)*Width+(X/PPHM+j)] == 1)
 					Map[(Y/PPHM+i)*Width+(X/PPHM+j)]=0;
 			}
-
-	sWorldView->UpdateSurface(Map,Width,PPHM);
+	
+	sWorldView->UpdateSurface(Map,Width,PPHM,&DirtyRegion);
 }
 
 void World::PrintMap()

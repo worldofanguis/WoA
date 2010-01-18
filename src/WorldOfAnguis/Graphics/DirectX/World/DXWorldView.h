@@ -28,7 +28,7 @@ public:
 	/* Copy the pSurface (Terrain) to the BackBuffer */
 	void Draw(int Left,int Top,int Width,int Height);
 	/* Updates the pSurface (Terrain), should be called after exlosions */ 
-	void UpdateSurface(char *Map,int MapWidth,int PixelPerHitMap);
+	void UpdateSurface(char *Map,int MapWidth,int PixelPerHitMap,RECT* DirtyRegion);
 
 	void Setup(LPDIRECT3DDEVICE9 pDevice,LPD3DXSPRITE pSprite) {this->pDevice = pDevice; this->pSprite = pSprite;}
 private:

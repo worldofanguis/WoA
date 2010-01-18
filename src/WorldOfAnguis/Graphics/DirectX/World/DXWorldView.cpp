@@ -17,9 +17,9 @@ DXWorldView::DXWorldView()
 	pDevice = NULL;
 	pSprite = NULL;
 	
-	pDisplaySurface = NULL;
-	pWorkSurface = NULL;
-	pOriginalSurface = NULL;
+	pDisplaySurface = NULL;		// Main texture surface | Locaton: video card memory //
+	pWorkSurface = NULL;		// Surface used for creating the new masked landscape | Location: comp memory //
+	pOriginalSurface = NULL;	// Surface used to hold the original landscape | Location: comp memory //
 }
 
 DXWorldView::~DXWorldView()
@@ -39,30 +39,51 @@ void DXWorldView::Draw(int Left,int Top,int Width,int Height)
 }
 
 /* NOTE: To speed things up we can do a dirty region only update */
-void DXWorldView::UpdateSurface(char *Map,int MapWidth,int PPHM)
+/* TODO: We HAVE to speed things up cause this function cause fps lag */
+void DXWorldView::UpdateSurface(char *Map,int MapWidth,int PPHM,RECT* DirtyRegion)
 {
 	D3DLOCKED_RECT SurfaceRect;
 	D3DLOCKED_RECT OriginalRect;
 	
-	/* NOTE: We are working in the WorkSurface because we cant access directly the DisplaySurface */
-	pWorkSurface->LockRect(0,&SurfaceRect,NULL,0);			// Lock the surfaces for manipulation //
-	pOriginalSurface->LockRect(0,&OriginalRect,NULL,D3DLOCK_READONLY);
-	
-	BYTE* Dest = (BYTE*)SurfaceRect.pBits;				// Get the pointer to the surface //
-	BYTE* Source = (BYTE*)OriginalRect.pBits;			// We want a byte - byte copy //
-		
-	for(int h=0;h<SurfaceHeight;h++)
+	RECT WholeSurface = {0,0,SurfaceWidth,SurfaceHeight};
+	bool TrackDirty = true;
+	if(DirtyRegion == NULL)
 		{
-		for(int w=0;w<SurfaceWidth;w++)
-			{
-			if(Map[(((int)(h/PPHM))*MapWidth)+((int)(w/PPHM))])		// There is something on the map there //
-				*(DWORD*)Dest = *(DWORD*)Source;				// Copy 1 pixel from the source to the destination //
-			else
-				*(DWORD*)Dest =	0;
-			Dest+=4;				// Move the pointer with 4 bytes (1 pixel (ARGB))
-			Source+=4;
-			}
+		DirtyRegion = &WholeSurface;
+		TrackDirty = false;
 		}
+
+	/* NOTE: We are working in the WorkSurface because we cant access directly the DisplaySurface */
+
+	/* NOTE: If the DirtyRegion is specified in the LockRect parameter list
+	 * the returned memory address will be the beginning of the dirtyregion
+	 */
+	pWorkSurface->LockRect(0,&SurfaceRect,DirtyRegion,0);			// Lock the surfaces for manipulation //
+	pOriginalSurface->LockRect(0,&OriginalRect,DirtyRegion,D3DLOCK_READONLY);	// We use the same dirtyregion to avoid memory address conversion //
+
+	BYTE* Dest = (BYTE*)SurfaceRect.pBits;				// Get the pointer to the surface memory //
+	BYTE* Source = (BYTE*)OriginalRect.pBits;
+
+	for(int h=0;h<DirtyRegion->bottom-DirtyRegion->top;h++)		// Copy height: bottom-top //
+		{
+		for(int w=0;w<DirtyRegion->right-DirtyRegion->left;w++)	// Copy width: right-left //
+			{
+			if(TrackDirty)
+				*(DWORD*)Dest =	0xffff0000;
+			else
+				{
+				if(Map[(((int)(h/PPHM))*MapWidth)+((int)(w/PPHM))])		// There is something on the map there //
+					*(DWORD*)Dest = *(DWORD*)Source;				// Copy 1 pixel from the source to the destination //
+				else
+					*(DWORD*)Dest =	0;
+				}
+			Dest   +=4;				// Move the pointer with 4 bytes (1 pixel (ARGB))
+			Source +=4;
+			}
+		Dest   += SurfaceRect.Pitch-(DirtyRegion->right*4) /*NextLine*/ + (DirtyRegion->left*4); /*DirtyRegionStart */
+		Source += SurfaceRect.Pitch-(DirtyRegion->right*4) /*NextLine*/ + (DirtyRegion->left*4); /*DirtyRegionStart */
+		}
+
 	pWorkSurface->UnlockRect(0);					// Unlock the surfaces //
 	pOriginalSurface->UnlockRect(0);
 

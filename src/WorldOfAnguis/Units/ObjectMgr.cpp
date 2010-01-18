@@ -50,12 +50,25 @@ void ObjectMgr::Update()
 			else
 				{
 				(*it)->CollisionWorld();
-				
-				//for(itc=Objects.begin();itc!=Objects.end();itc++)
-				//	{
-				//	if((*itc)->IsActive())
-				//		(*it)->CollisionUnit(*itc);
-				//	}
+/*
+				if((*it)->GetType() == Unit::PLAYER)
+					{
+					for(itc=Objects.begin();itc!=Objects.end();itc++)
+						{
+						if((*itc)->IsActive())
+							(*it)->CollisionUnit(*itc);
+						}
+					}
+
+				if((*it)->GetType() == Unit::BULLET)
+					{
+					for(itc=Objects.begin();itc!=Objects.end();itc++)
+						{
+						if((*itc)->IsActive() && (*itc)->GetType() != Unit::BULLET)
+							(*it)->CollisionUnit(*itc);
+						}
+					}
+*/
 				(*it)->Update();
 				}
 			}
