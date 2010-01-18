@@ -46,12 +46,8 @@ void DXWorldView::UpdateSurface(char *Map,int MapWidth,int PPHM,RECT* DirtyRegio
 	D3DLOCKED_RECT OriginalRect;
 	
 	RECT WholeSurface = {0,0,SurfaceWidth,SurfaceHeight};
-	bool TrackDirty = true;
 	if(DirtyRegion == NULL)
-		{
 		DirtyRegion = &WholeSurface;
-		TrackDirty = false;
-		}
 
 	/* NOTE: We are working in the WorkSurface because we cant access directly the DisplaySurface */
 
@@ -68,15 +64,11 @@ void DXWorldView::UpdateSurface(char *Map,int MapWidth,int PPHM,RECT* DirtyRegio
 		{
 		for(int w=0;w<DirtyRegion->right-DirtyRegion->left;w++)	// Copy width: right-left //
 			{
-			if(TrackDirty)
-				*(DWORD*)Dest =	0xffff0000;
+			if(Map[(((int)((h+DirtyRegion->top)/PPHM))*MapWidth)+((int)((w+DirtyRegion->left)/PPHM))])		// There is something on the map there //
+				*(DWORD*)Dest = *(DWORD*)Source;				// Copy 1 pixel from the source to the destination //
 			else
-				{
-				if(Map[(((int)(h/PPHM))*MapWidth)+((int)(w/PPHM))])		// There is something on the map there //
-					*(DWORD*)Dest = *(DWORD*)Source;				// Copy 1 pixel from the source to the destination //
-				else
-					*(DWORD*)Dest =	0;
-				}
+				*(DWORD*)Dest =	0;
+
 			Dest   +=4;				// Move the pointer with 4 bytes (1 pixel (ARGB))
 			Source +=4;
 			}

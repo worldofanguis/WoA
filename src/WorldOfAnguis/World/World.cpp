@@ -16,7 +16,7 @@
 World::World()
 {
 	Map = NULL;
-	PPHM = 2;				// PixelPerHitMap (2 means 2x2 pixel is 1 entry in the hit map) // dont think we should go higher than 2 //
+	PPHM = 1;				// PixelPerHitMap (2 means 2x2 pixel is 1 entry in the hit map) // dont think we should go higher than 2 //
 }
 
 World::~World()
@@ -97,22 +97,25 @@ void World::Explode(Unit* explosion)
 {
  	Explosion* e = (Explosion*)explosion;
 	char* emap = e->GetExplosionMap();
-	int R = e->GetRadius();
+	int R = 2*e->GetRadius();
 	int X= e->GetX();
 	int Y= e->GetY();
+	
+	int MaxXR = (X+R>Width) ?R-(X+R-Width) :R;
+	int MaxYR = (Y+R>Height)?R-(Y+R-Height):R;
 
-	RECT DirtyRegion = {X,Y,2*R,2*R};
-
-	for(int i=0; i<2*R;i++)			// Iterators for the ExplosionMap
-		for(int j=0; j<2*R;j++)
+	for(int i=0; i<R;i++)			// Iterators for the ExplosionMap
+		for(int j=0; j<R;j++)
 			{
 			if((Y/PPHM+i)*Width+(X/PPHM+j) < 0 || (Y/PPHM+i)*Width+(X/PPHM+j) > MapSize)
-				continue;		// TODO: FIX ME 
-			if(emap[i*2*R+j])
+				continue;
+
+			if(emap[i*R+j])
 				if(Map[(Y/PPHM+i)*Width+(X/PPHM+j)] == 1)
-					Map[(Y/PPHM+i)*Width+(X/PPHM+j)]=0;
+					Map[(Y/PPHM+i)*Width+(X/PPHM+j)] = 0;
 			}
-	
+
+	RECT DirtyRegion = {X<0?0:X,Y<0?0:Y,X+MaxXR,Y+MaxYR};
 	sWorldView->UpdateSurface(Map,Width,PPHM,&DirtyRegion);
 }
 

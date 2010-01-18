@@ -20,7 +20,6 @@ Explosion::Explosion(int X,int Y,int R,int Damage) : Unit(X-R,Y-R,EXPLOSION)
 	Width = Height = radius*2;
 	
 	Map = new char[4*radius*radius];
-	
 	ZeroMemory(Map,4*radius*radius);
 }
 

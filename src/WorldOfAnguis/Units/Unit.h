@@ -48,11 +48,11 @@ public:
 	virtual void Explode(Unit* explosion) {}
 	
 	virtual ~Unit();
+	int X,Y;		// Position //
 protected:
 	/* We dont want this class to be created */
 	Unit(int X,int Y,TYPES Type);
 	
-	int X,Y;		// Position //
 	int vX,vY;		// Velocity //
 	double vXd, vYd; //Double type Velocity//
 
