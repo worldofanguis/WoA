@@ -16,7 +16,7 @@
 World::World()
 {
 	Map = NULL;
-	PPHM = 1;				// PixelPerHitMap (2 means 2x2 pixel is 1 entry in the hit map) // dont think we should go higher than 2 //
+	PPHM = 2;				// PixelPerHitMap (2 means 2x2 pixel is 1 entry in the hit map) // dont think we should go higher than 2 //
 }
 
 World::~World()
@@ -101,18 +101,22 @@ void World::Explode(Unit* explosion)
 	int X= e->GetX();
 	int Y= e->GetY();
 
+	int MapAddr;
+
 	for(int i=0; i<R;i++)			// Iterators for the ExplosionMap
 		for(int j=0; j<R;j++)
 			{
-			if((Y/PPHM+i)*Width+(X/PPHM+j) < 0 || (Y/PPHM+i)*Width+(X/PPHM+j) > MapSize)
+			MapAddr = (Y/PPHM+i)*Width+(X/PPHM+j);		// just to avoid calculating this address 4times / cycle
+
+			if(MapAddr < 0 || MapAddr > MapSize)
 				continue;
 
 			if(emap[i*R+j])
-				if(Map[(Y/PPHM+i)*Width+(X/PPHM+j)] == 1)
-					Map[(Y/PPHM+i)*Width+(X/PPHM+j)] = 0;
+				if(Map[MapAddr] == 1)
+					Map[MapAddr] = 0;
 			}
 
-	RECT DirtyRegion = {X,Y,X+R,Y+R};
+	RECT DirtyRegion = {X,Y,X+(R*PPHM),Y+(R*PPHM)};
 	sWorldView->UpdateSurface(Map,Width,PPHM,&DirtyRegion);
 }
 

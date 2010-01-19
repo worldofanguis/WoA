@@ -19,8 +19,8 @@ Explosion::Explosion(int X,int Y,int R,int Damage) : Unit(X-R,Y-R,EXPLOSION)
 	this->Damage = Damage;
 	Width = Height = radius*2;
 	
-	Map = new char[4*radius*radius];
-	ZeroMemory(Map,4*radius*radius);
+	Map = new char[Height*Width];
+	ZeroMemory(Map,Height*Width);
 }
 
 Explosion::~Explosion()
