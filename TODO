@@ -10,10 +10,29 @@
 ==			    ToDo			  ==
 ====================================
 
-General:
-	* Aiming isnt too correct
-	* Player movement (stop when key released)
+
+=========== Things to add ==========
+	* Jumping
+	* Weapons, weapons, weapons
+	* Rope
+	* Worldmap
+	* Damage for the explosions
+	* Scorelist
 	* 
 
 
+=============== Bugs ===============
+Important:
+	* Explosions on one side affects the other side too (to check it disable dirtyregion update)
+	* Aiming
+	*
+Notimportant:
+	* Player movement (stop when key released)
+	* Digging
+	* Improved explosions
+	*
 
+
+========== Documentation ===========
+	* the whole thing is missing ;)
+	*
