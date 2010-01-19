@@ -11,6 +11,7 @@
 
 
 #include "DXHUDView.h"
+#include "../DirectXInterface.h"
 
 DXHUDView::DXHUDView()
 {
@@ -35,7 +36,7 @@ void DXHUDView::LoadTexture()
 	D3DXCreateTextureFromFileEx(DXHUDView::pDevice,				// Device
 								"..\\..\\pic\\HUD\\HUD.bmp",
 								1024,								// Width
-								150,								// Height
+								125,								// Height
 								1,
 								D3DPOOL_DEFAULT,
 								D3DFMT_A8R8G8B8,
@@ -68,9 +69,9 @@ void DXHUDView::Draw()
 	if(pHUD == NULL || pSprite == NULL)
 		return;
 
-	D3DXVECTOR3 v(0,618,0);
+	D3DXVECTOR3 v(0,sDXInterface->GetViewHeight(),0);
 	pSprite->Draw(pHUD,NULL,NULL,&v,0xFFFFFFFF);
-	v = D3DXVECTOR3(49,618+30,0);
+	v = D3DXVECTOR3(49,v.y+24,0);
 	pSprite->Draw(pLifeBar,&rLifeBar,NULL,&v,0xFFFFFFFF);	
 }
 

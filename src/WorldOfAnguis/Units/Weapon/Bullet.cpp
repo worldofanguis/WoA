@@ -20,7 +20,7 @@ Bullet::Bullet(int X,int Y,float Angle,TYPES Type) : Unit(X,Y,BULLET)
 	
 	switch(BType)
 		{
-		case DEF:
+		case DEFAULT:
 			vX = cos(Angle)*3;
 			vY = -sin(Angle)*3;
 			

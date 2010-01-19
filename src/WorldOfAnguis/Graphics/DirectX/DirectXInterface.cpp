@@ -112,7 +112,7 @@ HRESULT DirectXInterface::Initialize(HINSTANCE hInstance,bool Windowed)
 	pD3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 
 	ViewWidth = d3dpp.BackBufferWidth;
-	ViewHeight = d3dpp.BackBufferHeight-100;		// Space for the HUD //
+	ViewHeight = d3dpp.BackBufferHeight-125;		// Space for the HUD //
 	D3DXCreateSprite(pD3DDevice,&pSprite);
 
 	sDrawMgr->Setup(pD3DDevice,pSprite,ViewWidth,ViewHeight);

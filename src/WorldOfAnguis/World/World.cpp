@@ -100,9 +100,6 @@ void World::Explode(Unit* explosion)
 	int R = 2*e->GetRadius();
 	int X= e->GetX();
 	int Y= e->GetY();
-	
-	int MaxXR = (X+R>Width) ?R-(X+R-Width) :R;
-	int MaxYR = (Y+R>Height)?R-(Y+R-Height):R;
 
 	for(int i=0; i<R;i++)			// Iterators for the ExplosionMap
 		for(int j=0; j<R;j++)
@@ -115,7 +112,7 @@ void World::Explode(Unit* explosion)
 					Map[(Y/PPHM+i)*Width+(X/PPHM+j)] = 0;
 			}
 
-	RECT DirtyRegion = {X<0?0:X,Y<0?0:Y,X+MaxXR,Y+MaxYR};
+	RECT DirtyRegion = {X,Y,X+R,Y+R};
 	sWorldView->UpdateSurface(Map,Width,PPHM,&DirtyRegion);
 }
 

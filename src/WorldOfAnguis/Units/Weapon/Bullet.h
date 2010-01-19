@@ -16,7 +16,7 @@
 class Bullet : public Unit
 {
 public:
-	enum TYPES {DEF};
+	enum TYPES {DEFAULT};
 	Bullet(int X,int Y,float Angle,TYPES Type);
 	~Bullet();
 	

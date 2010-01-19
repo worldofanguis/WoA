@@ -33,7 +33,7 @@ Player::~Player()
 
 void Player::Fire()
 {
-	new Bullet(X+Width/2,Y+Height/2,Angle,Bullet::DEF);
+	new Bullet(X+Width/2,Y+Height/2,Angle,Bullet::DEFAULT);
 }
 
 bool Player::CollideX(int* xreturn){

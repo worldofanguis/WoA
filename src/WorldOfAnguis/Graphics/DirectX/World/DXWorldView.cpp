@@ -48,6 +48,14 @@ void DXWorldView::UpdateSurface(char *Map,int MapWidth,int PPHM,RECT* DirtyRegio
 	RECT WholeSurface = {0,0,SurfaceWidth,SurfaceHeight};
 	if(DirtyRegion == NULL)
 		DirtyRegion = &WholeSurface;
+	else
+		{
+		if(DirtyRegion->top  < 0) DirtyRegion->top  = 0;
+		if(DirtyRegion->left < 0) DirtyRegion->left = 0;
+
+		if(DirtyRegion->bottom > SurfaceHeight) DirtyRegion->bottom = SurfaceHeight;
+		if(DirtyRegion->right  > SurfaceWidth)  DirtyRegion->right  = SurfaceWidth;
+		}
 
 	/* NOTE: We are working in the WorkSurface because we cant access directly the DisplaySurface */
 
