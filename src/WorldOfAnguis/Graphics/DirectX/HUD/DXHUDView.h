@@ -10,6 +10,18 @@
  */
 
 
+/* Class: DXHUDView
+ * Description: this class handles the drawing of the HUD
+ *
+ * Functions: Setup(...)
+ *				setup the class with the drawing devices
+ *			  Draw()
+ *				draw the HUD on the screen buffer
+ *			  Update(...)
+ *				we have to call this function if something changes on the HUD (like life or weapon)
+ */
+
+
 #pragma once
 #include "Common.h"
 #include "Singleton.h"

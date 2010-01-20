@@ -9,6 +9,21 @@
  *
  */
  
+
+/* Class: DirectXInterface
+ * Description: Doing all the drawing stuff, creating the window, the directx devices for drawing
+ *				initializing the Draw classes with the resolution and the used devices
+ *
+ * Functions: Initialize(...)
+ *				create the drawing resources
+ *			  Cleanup()
+ *				free the resources
+ *			  BeginScene()
+ *				initialize the drawing - should be called before we tell the Draw classes to do the drawing
+ *			  EndScene()
+ *				display the screen buffer
+ */
+ 
  
 #pragma once
 #include "Common.h"
@@ -25,7 +40,7 @@ public:
 	~DirectXInterface();
 	
 	HRESULT Initialize(HINSTANCE hInstance,bool Windowed);			// Initializes DirectX //
-	void Cleanup();								// Cleanup DirectX //
+	void Cleanup();													// Cleanup DirectX //
 	
 	HINSTANCE GetInstance() {return hInstance;}
 	HWND GetHwnd() {return hwnd;}

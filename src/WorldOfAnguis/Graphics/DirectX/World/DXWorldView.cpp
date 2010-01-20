@@ -38,8 +38,6 @@ void DXWorldView::Draw(int Left,int Top,int Width,int Height)
 	pSprite->Draw(pDisplaySurface,&r,NULL,NULL,0xFFFFFFFF);
 }
 
-/* NOTE: To speed things up we can do a dirty region only update */
-/* TODO: We HAVE to speed things up cause this function cause fps lag */
 void DXWorldView::UpdateSurface(char *Map,int MapWidth,int PPHM,RECT* DirtyRegion)
 {
 	D3DLOCKED_RECT SurfaceRect;

@@ -8,7 +8,22 @@
  *                    World Of Anguis
  *
  */
- 
+
+
+/* Class: DrawMgr
+ * Description: This class holds all the drawing infos for our objects (players, bullets, pickups, etc)
+ *
+ * Functions: Setup(...)
+ *				setup the class with the drawing devices
+ *			  RegisterUnit(...)
+ *				this function is called if we created an unit which needs drawing
+ *			  UnregisterUnit(...)
+ *				if the drawing is no longer needed (the unit is destroyed)
+ *			  Draw(...)
+ *				the function that draws all InSight object on the screen buffer
+ */
+
+		
 #pragma once
 #include "Common.h"
 #include "Singleton.h"
@@ -31,11 +46,12 @@ public:
 	
 	void Draw(int ViewLeft,int ViewTop);
 	
-	void DrawPlayer(Player* player,UnitDrawInfo* unitinfo,int ViewLeft,int ViewTop);
-	void DrawBullet(Bullet* bullet,UnitDrawInfo* unitinfo,int ViewLeft,int ViewTop);
 
 private:
 	bool InSight(Unit* unit,int ViewLeft,int ViewTop);
+
+	void DrawPlayer(Player* player,UnitDrawInfo* unitinfo,int ViewLeft,int ViewTop);
+	void DrawBullet(Bullet* bullet,UnitDrawInfo* unitinfo,int ViewLeft,int ViewTop);
 
 	std::vector<UnitInfo> Objects;
 	std::vector<UnitInfo>::iterator it;

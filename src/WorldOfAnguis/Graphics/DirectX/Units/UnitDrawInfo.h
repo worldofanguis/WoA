@@ -8,24 +8,32 @@
  *                    World Of Anguis
  *
  */
- 
+
+
+/* Class: UnitDrawInfo
+ * Description: This class holds the drawing infos for each unit in the DrawMgr
+ *				these infos are: Texture and current AnimationFrame
+ *
+ * Functions: Constructor
+ *				creates the infoclass
+ */
+
+
 #pragma once
 #include "Common.h"
 
 class UnitDrawInfo
 {
+	friend class DrawMgr;		// to access private elements //
 public:
 	UnitDrawInfo(LPDIRECT3DDEVICE9 pDevice,char* FileName);
 	~UnitDrawInfo();
-	bool LoadTexture(LPDIRECT3DDEVICE9 pDevice,char* FileName);
 	
-	LPDIRECT3DTEXTURE9 GetTexture() {return pTexture;}
-	int GetWidth() {return Width;}
-	int GetHeight() {return Height;}
-	
-	int AnimationFrame;
 private:
+	bool LoadTexture(LPDIRECT3DDEVICE9 pDevice,char* FileName);
+
 	int Width;
 	int Height;
 	LPDIRECT3DTEXTURE9 pTexture;
+	int AnimationFrame;
 };

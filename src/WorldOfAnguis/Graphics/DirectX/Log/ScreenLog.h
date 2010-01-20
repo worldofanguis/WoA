@@ -8,7 +8,27 @@
  *                    World Of Anguis
  *
  */
- 
+
+
+/* Class: ScreenLog
+ * Description: With this class we can draw the value of many variables
+ *				on the screen with a specified color and location
+ *
+ * Functions: Setup(...)
+ *				setup the class with the drawing devices
+ *			  AddTrack(...)
+ *				we can add a variable to the tracklist to make it shown on every frame
+ *				NOTE1: we can use this only for variables that are on a fixed location in the memory
+ *				NOTE2: this function should be called only once (not in every frame)
+ *			  DrawNow(...)
+ *				draw a variable on the screen without the tracklist
+ *				NOTE1: this function can be used for variables that may change its location in the memory
+ *				NOTE2: this call must be placed after the DXI->BeginScene() call
+ *			  Draw()
+ *				draws the variables which are on the tracklist, this function is called from the DXI->EndScene()
+ */
+
+
 #pragma once
 #include "Common.h"
 #include "Singleton.h"

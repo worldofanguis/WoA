@@ -86,15 +86,15 @@ void DrawMgr::Draw(int ViewLeft,int ViewTop)
 void DrawMgr::DrawPlayer(Player* player,UnitDrawInfo* unitinfo,int ViewLeft,int ViewTop)
 {
 	D3DXVECTOR3 v(player->GetX()-ViewLeft,player->GetY()-ViewTop,0);
-	pSprite->Draw(unitinfo->GetTexture(),NULL,NULL,&v,0xFFFFFFFF);
+	pSprite->Draw(unitinfo->pTexture,NULL,NULL,&v,0xFFFFFFFF);
 	
 	v.x = player->GetX()-ViewLeft+player->GetWidth()/2+cos(player->GetAngle())*50;
 	v.y = player->GetY()-ViewTop+player->GetHeight()/2-sin(player->GetAngle())*50;
-	pSprite->Draw(Crosshair->GetTexture(),NULL,NULL,&v,0xFFFFFFFF);
+	pSprite->Draw(Crosshair->pTexture,NULL,NULL,&v,0xFFFFFFFF);
 }
 
 void DrawMgr::DrawBullet(Bullet* bullet,UnitDrawInfo* unitinfo,int ViewLeft,int ViewTop)
 {
 	D3DXVECTOR3 v(bullet->GetX()-ViewLeft,bullet->GetY()-ViewTop,0);
-	pSprite->Draw(unitinfo->GetTexture(),NULL,NULL,&v,0xFFFFFFFF);
+	pSprite->Draw(unitinfo->pTexture,NULL,NULL,&v,0xFFFFFFFF);
 }

@@ -7,7 +7,7 @@
      \___/\___/ |___|/__/    \__\
                     World Of Anguis
 ====================================
-==			    ToDo			  ==
+==              ToDo              ==
 ====================================
 
 
@@ -29,10 +29,12 @@ Important:
 Notimportant:
 	* Player movement (stop when key released)
 	* Digging
-	* Improved explosions
+	* Fix explosion-circle algorithm
+	* Improved explosions (non-destroyable terran & destroyable)
 	*
 
 
 ========== Documentation ===========
-	* the whole thing is missing ;)
+	* Controllers and Graphics are 'done' or at least there is something, check out the header files
+	* Still missing: Shared/Units/World/Network
 	*

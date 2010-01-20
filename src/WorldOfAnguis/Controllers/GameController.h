@@ -10,6 +10,17 @@
  */
 
 
+/* Class: GameController
+ * Description: This class is dedicated to handle all 'ingame' events
+ *				like initializing the world, players
+ *				reading the keyboard, moving the camera, etc.
+ *				So its the main loop of the program while 'ingame'.
+ *
+ * Functions: The only public function is the constructor,
+ *			  so all we have to do is creating the object if we want to start he game
+ */
+
+
 #pragma once
 #include "Common.h"
 #include "KeyboardController.h"
@@ -21,11 +32,9 @@ public:
 	GameController();
 	~GameController();
 	
-	void Run();
 private:
+	void Run();
 	void Render(DWORD diff);
-
-	void SetView(int Left,int Top) {ViewLeft = Left;ViewTop = Top;}		// Set the viewpoint //
 
 	void FollowUnit(Unit *unit);			// Follows the specified unit with the camera //
 

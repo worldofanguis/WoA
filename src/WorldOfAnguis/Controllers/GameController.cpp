@@ -19,16 +19,16 @@
 
 GameController::GameController()
 {
-	ViewWidth = sDXInterface->GetViewWidth();
+	ViewWidth = sDXInterface->GetViewWidth();		// Getting resolution parameters //
 	ViewHeight = sDXInterface->GetViewHeight();
 	
 	ViewLeft = ViewTop = 0;
-	Run();
+	Run();						// Starts the main loop //
 }
 
 GameController::~GameController()
 {
-	delete sObjMgr;
+	delete sObjMgr;				// Destroying the only object we created //
 }
 
 void GameController::Run()
@@ -120,15 +120,15 @@ void GameController::Run()
 
 void GameController::Render(DWORD diff)
 {
-	DirectXInterface* DXI = sDXInterface;
+	DirectXInterface* DXI = sDXInterface;		// Retrieve the Interface we use for drawing //
 	DXI->BeginScene();
 
 	// Drawing the world //
-	sWorldView->Draw(ViewLeft,ViewTop,ViewWidth,ViewHeight);
+	sWorldView->Draw(ViewLeft,ViewTop,ViewWidth,ViewHeight);		// Render the world //
 	// Drawing the HUD //
-	sHudView->Draw();
+	sHudView->Draw();												// the hud //
 	// Drawing the Objects via the DrawMgr //
-	sDrawMgr->Draw(ViewLeft,ViewTop);
+	sDrawMgr->Draw(ViewLeft,ViewTop);								// and the objects //
 	
 	/* Example for using the sSceenLog class */
 //	sScreenLog->DrawNow(&diff,ScreenLog::Track::UINT,20,30,0xFFFF0000);
