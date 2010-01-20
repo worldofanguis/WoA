@@ -50,3 +50,14 @@ bool Bullet::CollisionWorld()
 
 return false;
 }
+
+bool Bullet::CollisionUnit(Unit* unit)
+{
+	if(Unit::CollisionUnit(unit))
+		{
+		new Explosion(Creator,X,Y,R,Damage);
+		Deactivate();		
+		}
+
+return false;
+}

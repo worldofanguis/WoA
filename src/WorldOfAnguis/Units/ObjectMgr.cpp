@@ -59,6 +59,7 @@ void ObjectMgr::Update()
 							(*it)->CollisionUnit(*itc);
 						}
 					}
+*/
 
 				if((*it)->GetType() == Unit::BULLET)
 					{
@@ -68,7 +69,7 @@ void ObjectMgr::Update()
 							(*it)->CollisionUnit(*itc);
 						}
 					}
-*/
+
 				(*it)->Update();
 				}
 			}

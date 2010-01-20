@@ -21,6 +21,7 @@ public:
 	bool CollideX(int* xreturn);
 	//bool CollideY();
 	bool CollisionWorld();
+	bool CollisionUnit(Unit* unit);
 	bool CollidePlayerPoint(int x, int y, int* xf, int* yf);
 
 	int GetLife() {return Life;}

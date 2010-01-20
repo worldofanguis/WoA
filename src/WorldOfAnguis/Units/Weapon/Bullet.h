@@ -22,6 +22,7 @@ public:
 	~Bullet();
 	
 	bool CollisionWorld();
+	bool CollisionUnit(Unit* unit);
 private:
 	TYPES BType;
 	

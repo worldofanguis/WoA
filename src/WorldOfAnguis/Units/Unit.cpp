@@ -49,11 +49,7 @@ bool Unit::CollisionUnit(Unit* unit)
 	UnitCX = unit->X+(unit->Width/2);
 	UnitCY = unit->Y+(unit->Height/2);
 	if((abs(SelfCX-UnitCX) < max(Width,unit->Width)) && abs(SelfCY-UnitCY) < max(Height,unit->Height))
-		{
-		vX = vXd = 0;			// Stop the target (at least for now) //
-		vY = vYd = 0;
 		return true;
-		}
 
 return false;
 }

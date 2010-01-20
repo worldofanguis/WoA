@@ -37,7 +37,7 @@ Player::~Player()
 
 void Player::Fire()
 {
-	new Bullet(this,X+Width/2,Y+Height/2,Angle,Bullet::DEFAULT);
+	new Bullet(this,(X+(Width/2))+cos(Angle)*35,(Y+(Height/2))-sin(Angle)*35,Angle,Bullet::DEFAULT);
 }
 
 bool Player::CollideX(int* xreturn){
@@ -58,7 +58,6 @@ bool Player::CollideX(int* xreturn){
 	else{
 		return Unit::CollideX(xreturn);
 	}
-
 }
 
 bool Player::CollisionWorld(){
@@ -104,7 +103,6 @@ bool Player::CollisionWorld(){
 	
 
 	return Collided;
-	
 }
 
 
@@ -169,7 +167,16 @@ bool Player::CollidePlayerPoint(int x, int y, int* xf, int* yf){
 	*xf=x_final;
 	*yf=y_final;
 	return hit;
+}
 
+bool Player::CollisionUnit(Unit* unit)
+{
+	if(Unit::CollisionUnit(unit))
+		{	// we collided with the unit, stop ourselves //
+		vX = vY = 0;
+		}
+
+return false;	// whatever, it doesnt matter //
 }
 
 void Player::Explode(Unit* explosion)
