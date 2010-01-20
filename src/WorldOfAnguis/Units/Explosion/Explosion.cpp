@@ -13,8 +13,9 @@
 #include "Explosion.h"
 #include "World/World.h"
 
-Explosion::Explosion(int X,int Y,int R,int Damage) : Unit(X-R,Y-R,EXPLOSION)
+Explosion::Explosion(Player* Creator,int X,int Y,int R,int Damage) : Unit(X-R,Y-R,EXPLOSION)
 {
+	this->Creator = Creator;
 	this->radius = R/sWorld->GetPixelPerHitMap();
 	this->Damage = Damage;
 	Width = Height = radius*2;

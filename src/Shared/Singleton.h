@@ -8,8 +8,17 @@
  *                    World Of Anguis
  *
  */
- 
- 
+
+
+/* Class: Singleton
+ * Description: this is a template class for inheritance
+ *				used to make the access easy to those classes which are created only once
+ *
+ * Functions: Instance()
+ *				used to retrieve the pointer to the class
+ */
+
+
 #pragma once
  
 template<class T> 

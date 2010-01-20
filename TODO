@@ -35,6 +35,6 @@ Notimportant:
 
 
 ========== Documentation ===========
-	* Controllers and Graphics are 'done' or at least there is something, check out the header files
-	* Still missing: Shared/Units/World/Network
+	* Still missing: Units
+	* Make it a little more specific?
 	*

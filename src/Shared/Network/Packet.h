@@ -10,6 +10,11 @@
  */
 
 
+/* Class: Packet
+ * Description: This class is a holder for the info sent over the network
+ */
+
+
 /*          PACKET STRUCT 
  *	BYTE	-	Packet size		) Msg Header
  *	BYTE	-	Msg type		/

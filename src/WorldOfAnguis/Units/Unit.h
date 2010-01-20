@@ -60,7 +60,8 @@ protected:
 	int Height;
 	
 	bool FaceRight;
-	bool Active;	
+	bool Active;
+
 private:
 	TYPES Type;
 };

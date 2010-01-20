@@ -11,6 +11,8 @@
 
 
 #include "Player.h"
+#include "Units/ObjectMgr.h"
+#include "Units/Explosion/Explosion.h"
 #include "Graphics/DirectX/DirectXInterface.h"
 
 Player::Player(int X,int Y,int SkinID) : Unit(X,Y,PLAYER)
@@ -20,6 +22,8 @@ Player::Player(int X,int Y,int SkinID) : Unit(X,Y,PLAYER)
 	Life = 100;
 	Angle = 0;
 	Jumping = false;
+	
+	Score = 0;
 	
 	char PlayerTexture[MAX_PATH];
 	sprintf_s(PlayerTexture,sizeof(PlayerTexture),"..\\..\\pic\\Player\\Player%d.bmp",SkinID);
@@ -33,7 +37,7 @@ Player::~Player()
 
 void Player::Fire()
 {
-	new Bullet(X+Width/2,Y+Height/2,Angle,Bullet::DEFAULT);
+	new Bullet(this,X+Width/2,Y+Height/2,Angle,Bullet::DEFAULT);
 }
 
 bool Player::CollideX(int* xreturn){
@@ -168,4 +172,33 @@ bool Player::CollidePlayerPoint(int x, int y, int* xf, int* yf){
 
 }
 
+void Player::Explode(Unit* explosion)
+{
+	int SelfCX = X+(Width/2);
+	int SelfCY = Y+(Height/2);
+	int ExpCX = explosion->GetX()+(explosion->GetWidth()/2);
+	int ExpCY = explosion->GetY()+(explosion->GetHeight()/2);
 
+	if((abs(SelfCX-ExpCX) < max(Width,explosion->GetWidth())) && abs(SelfCY-ExpCY) < max(Height,explosion->GetHeight()))
+		{		// We are in the range of an explosion //
+		if(reinterpret_cast<Explosion*>(explosion)->GetDamage() == 0)
+			return;		// Nothing to do with explosions that do no damage //
+
+//		float Distance = sqrt(float(((SelfCX-ExpCX)*(SelfCX-ExpCX)) + ((SelfCY-ExpCY)*(SelfCY-ExpCY))));
+		int DamageDone = reinterpret_cast<Explosion*>(explosion)->GetDamage();		// (reinterpret_cast<Explosion*>(explosion)->GetDamage() / Distance) + 1;
+		
+		Life-=DamageDone;
+		if(Life <= 0)
+			{		// We've just died :( //
+			if(reinterpret_cast<Explosion*>(explosion)->GetCreator() == this)
+				{		// Omg we killed ourselves ... //
+				SetScore(-1);		// We deserve it //
+				}
+			else
+				reinterpret_cast<Explosion*>(explosion)->GetCreator()->SetScore(+1);
+			Life = 100;		// Respawn
+			}
+		if(this == sObjMgr->Me())
+			sHudView->Update(DXHUDView::HUD_LIFE,Life);		// Update our hud //
+		}
+}

@@ -98,7 +98,7 @@ void ObjectMgr::RegisterUnit(Unit* unit)
 
 void ObjectMgr::CreateWorld()
 {
-	sWorld->LoadMaps("..\\..\\pic\\Map\\Map1");
+	sWorld->LoadMap("..\\..\\pic\\Map\\Map1");
 }
 
 Player* ObjectMgr::Me()

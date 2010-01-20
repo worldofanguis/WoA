@@ -27,7 +27,7 @@ World::~World()
 /* NOTE: Not working with maps which are not divisible with PPHM! << only for 24bit BMP-s >>
  *  TODO: Fix this (but its not that important)
  */
-bool World::LoadMaps(char *MapName)
+bool World::LoadMap(char *MapName)
 {
 	FILE *FKez;
 	char FileName[MAX_PATH];

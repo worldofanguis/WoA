@@ -39,11 +39,16 @@ public:
 
 	int GetVX(){return vX;}
 	int GetVY(){return vY;}
-	
+
+	void Explode(Unit* Explosion);
+
+	void SetScore(int ModValue) {Score+=ModValue;}
+
 	void Fire();
 private:
 	float Angle;
 	int Life;
 	bool Jumping;
 	
+	int Score;
 };

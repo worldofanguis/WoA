@@ -70,13 +70,13 @@ void GameController::Run()
 		if(KEY_DOWN(DIK_A)){
 			me->SetXVelocity(-3);
 			if(KEY_DOWN(DIK_D)){
-				new Explosion(me->GetX()+4,me->GetY()+(me->GetHeight()/2),19,0);
+				new Explosion(me,me->GetX()+4,me->GetY()+(me->GetHeight()/2),19,0);
 			}
 		}
 		if(KEY_DOWN(DIK_D)){
 			me->SetXVelocity(3);
 			if(KEY_DOWN(DIK_A)){
-				new Explosion(me->GetX()+me->GetWidth()-4,me->GetY()+(me->GetHeight()/2),19,0);
+				new Explosion(me,me->GetX()+me->GetWidth()-4,me->GetY()+(me->GetHeight()/2),19,0);
 			}
 		}
 		
@@ -95,11 +95,6 @@ void GameController::Run()
 
 		if(KEY_DOWN(DIK_E))
 			me->SetAngle(me->GetAngle()-0.1f);
-		
-		if(KEY_PRESSED(DIK_B))
-			new Explosion(80,60,15,30);
-		if(KEY_PRESSED(DIK_N))
-			new Explosion(150,150,50,30);
 			
 		if(KEY_DOWN(DIK_M))
 			 sWorld->PrintMap();
@@ -110,15 +105,15 @@ void GameController::Run()
 			me->SetYVelocity(0);
 			}
 
-		sObjMgr->Update();
+		sObjMgr->Update(/* diff */);
 		FollowUnit(me);
-		Render(diff);
+		Render();
 
 		realPrevTime = realCurrTime;
 		}
 }
 
-void GameController::Render(DWORD diff)
+void GameController::Render()
 {
 	DirectXInterface* DXI = sDXInterface;		// Retrieve the Interface we use for drawing //
 	DXI->BeginScene();

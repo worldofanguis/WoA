@@ -11,13 +11,14 @@
 
 
 #pragma once
-#include "../Unit.h"
+#include "Units/Unit.h"
+#include "Units/Player/Player.h"
 
 class Bullet : public Unit
 {
 public:
 	enum TYPES {DEFAULT};
-	Bullet(int X,int Y,float Angle,TYPES Type);
+	Bullet(Player* Creator,int X,int Y,float Angle,TYPES Type);
 	~Bullet();
 	
 	bool CollisionWorld();
@@ -26,4 +27,6 @@ private:
 	
 	int Damage;
 	int R;
+	
+	Player* Creator;
 };

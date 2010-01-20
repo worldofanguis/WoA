@@ -34,7 +34,7 @@ public:
 	
 private:
 	void Run();
-	void Render(DWORD diff);
+	void Render();
 
 	void FollowUnit(Unit *unit);			// Follows the specified unit with the camera //
 

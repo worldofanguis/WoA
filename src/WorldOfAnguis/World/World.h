@@ -8,7 +8,17 @@
  *                    World Of Anguis
  *
  */
- 
+
+
+/* Class: World
+ * Description: This class handles the hitmap (the surface - world)
+ *
+ * Functions: LoadMap(...)
+ *				creates the hitmap from a bmp
+ *			  Explode(...)
+ *				this function alters the hitmap with the explosion in the parameter, and calls the UpdateSurface function
+ */
+
 #pragma once
 #include "Common.h"
 #include "Singleton.h"
@@ -22,7 +32,7 @@ public:
 	~World();
 	
 	/* Load the Map for the hittest and the Map with the texture (maybe this could be done from 1 map?) */
-	bool LoadMaps(char *HitMap);
+	bool LoadMap(char *HitMap);
 	
 	/* Get map infos */
 	char* GetHitMap() {return Map;}

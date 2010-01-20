@@ -14,8 +14,9 @@
 #include "Units/Explosion/Explosion.h"
 #include "Graphics/DirectX/DirectXInterface.h"
 
-Bullet::Bullet(int X,int Y,float Angle,TYPES Type) : Unit(X,Y,BULLET)
+Bullet::Bullet(Player* Creator,int X,int Y,float Angle,TYPES Type) : Unit(X,Y,BULLET)
 {
+	this->Creator = Creator;
 	BType = Type;
 	
 	switch(BType)
@@ -43,7 +44,7 @@ bool Bullet::CollisionWorld()
 {
 	if(Unit::CollisionWorld())
 		{
-		new Explosion(X,Y,R,Damage);
+		new Explosion(Creator,X,Y,R,Damage);
 		Deactivate();
 		}
 
