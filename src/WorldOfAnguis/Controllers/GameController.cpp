@@ -47,8 +47,8 @@ void GameController::Run()
 	/* Example for using the sScreenLog class */
 	sScreenLog->AddTrack(&diff,ScreenLog::Track::UINT,20,30,0xFFFF0000);
 	
-	sScreenLog->AddTrack(&me->X,ScreenLog::Track::UINT,20,50,0xFFFF0000);
-	sScreenLog->AddTrack(&me->Y,ScreenLog::Track::UINT,20,70,0xFFFF0000);
+	sScreenLog->AddTrack(&me->X,ScreenLog::Track::INT,20,50,0xFFFF0000);
+	sScreenLog->AddTrack(&me->Y,ScreenLog::Track::INT,20,70,0xFFFF0000);
 	while(true)
 		{
 		realCurrTime = GetMSTime();

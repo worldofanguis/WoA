@@ -87,10 +87,10 @@ HRESULT DirectXInterface::Initialize(HINSTANCE hInstance,bool Windowed)
 		if(FAILED( pD3D->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &d3ddm)))
 			return E_FAIL;
 
-		d3dpp.Windowed = TRUE;
-		d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
-		d3dpp.BackBufferFormat = d3ddm.Format;				// D3DFMT_X8R8G8B8 !!! // 
-		d3dpp.Flags = D3DPRESENT_INTERVAL_ONE;				// D3DPRESENTFLAG_LOCKABLE_BACKBUFFER;	// D3DPRESENT_INTERVAL_IMMEDIATE // We want to be able to directly write to backbuffer memory
+		d3dpp.Windowed				= TRUE;
+		d3dpp.SwapEffect			= D3DSWAPEFFECT_DISCARD;
+		d3dpp.BackBufferFormat		= d3ddm.Format;									// D3DFMT_X8R8G8B8 !!! // 
+		d3dpp.PresentationInterval	= D3DPRESENT_INTERVAL_IMMEDIATE;				// D3DPRESENT_INTERVAL_ONE
 		}
 	else
 		{
@@ -99,7 +99,7 @@ HRESULT DirectXInterface::Initialize(HINSTANCE hInstance,bool Windowed)
 		d3dpp.BackBufferWidth        = 1024;
 		d3dpp.BackBufferHeight       = 768;
 		d3dpp.BackBufferFormat       = D3DFMT_X8R8G8B8;
-		d3dpp.PresentationInterval   = D3DPRESENT_INTERVAL_ONE;		// This is what we need ? //
+		d3dpp.PresentationInterval   = D3DPRESENT_INTERVAL_IMMEDIATE;
 		
 		ShowCursor(false);		 		// Hide cursor //
 		}
