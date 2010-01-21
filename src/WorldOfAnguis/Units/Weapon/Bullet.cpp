@@ -53,7 +53,7 @@ return false;
 
 bool Bullet::CollisionUnit(Unit* unit)
 {
-	if(Unit::CollisionUnit(unit))
+	if(Unit::CollisionUnit(unit) && unit->GetType() != Unit::EXPLOSION)		// Bullet<->Explosion collision disabled //
 		{
 		new Explosion(Creator,X,Y,R,Damage);
 		Deactivate();		
