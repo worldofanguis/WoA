@@ -12,6 +12,7 @@
 
 #include "Explosion.h"
 #include "World/World.h"
+#include "Graphics/DirectX/DrawMgr.h"
 
 Explosion::Explosion(Player* Creator,int X,int Y,int R,int Damage) : Unit(X-R,Y-R,EXPLOSION)
 {
@@ -22,6 +23,8 @@ Explosion::Explosion(Player* Creator,int X,int Y,int R,int Damage) : Unit(X-R,Y-
 	
 	Map = new char[Height*Width];
 	ZeroMemory(Map,Height*Width);
+	
+	sDrawMgr->RegisterUnit((Unit*)this,"..\\..\\pic\\Bullet\\Explosion.bmp");
 }
 
 Explosion::~Explosion()

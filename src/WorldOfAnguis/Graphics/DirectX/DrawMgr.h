@@ -30,6 +30,7 @@
 #include "Units/Unit.h"
 #include "Units/Weapon/Bullet.h"
 #include "Units/Player/Player.h"
+#include "Units/Explosion/Explosion.h"
 #include "Units/UnitDrawInfo.h"
 
 typedef std::pair<Unit*,UnitDrawInfo*> UnitInfo;
@@ -52,6 +53,7 @@ private:
 
 	void DrawPlayer(Player* player,UnitDrawInfo* unitinfo,int ViewLeft,int ViewTop);
 	void DrawBullet(Bullet* bullet,UnitDrawInfo* unitinfo,int ViewLeft,int ViewTop);
+	void DrawExplosion(Explosion* explosion,UnitDrawInfo* unitinfo,int ViewLeft,int ViewTop);
 
 	std::vector<UnitInfo> Objects;
 	std::vector<UnitInfo>::iterator it;

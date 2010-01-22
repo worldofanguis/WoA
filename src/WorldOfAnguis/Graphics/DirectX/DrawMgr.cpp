@@ -78,6 +78,10 @@ void DrawMgr::Draw(int ViewLeft,int ViewTop)
 					break;
 				case Unit::BULLET:
 					DrawBullet(reinterpret_cast<Bullet*>(it->first),it->second,ViewLeft,ViewTop);
+					break;
+				case Unit::EXPLOSION:
+					DrawExplosion(reinterpret_cast<Explosion*>(it->first),it->second,ViewLeft,ViewTop);
+					break;
 				}
 			}
 		}
@@ -96,5 +100,11 @@ void DrawMgr::DrawPlayer(Player* player,UnitDrawInfo* unitinfo,int ViewLeft,int 
 void DrawMgr::DrawBullet(Bullet* bullet,UnitDrawInfo* unitinfo,int ViewLeft,int ViewTop)
 {
 	D3DXVECTOR3 v(bullet->GetX()-ViewLeft,bullet->GetY()-ViewTop,0);
+	pSprite->Draw(unitinfo->pTexture,NULL,NULL,&v,0xFFFFFFFF);
+}
+
+void DrawMgr::DrawExplosion(Explosion* explosion,UnitDrawInfo* unitinfo,int ViewLeft,int ViewTop)
+{
+	D3DXVECTOR3 v(explosion->GetX()-ViewLeft,explosion->GetY()-ViewTop,0);
 	pSprite->Draw(unitinfo->pTexture,NULL,NULL,&v,0xFFFFFFFF);
 }
