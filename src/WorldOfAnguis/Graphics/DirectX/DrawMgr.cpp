@@ -37,6 +37,7 @@ void DrawMgr::Setup(LPDIRECT3DDEVICE9 pDevice,LPD3DXSPRITE pSprite,int Width,int
 	ViewWidth = Width;
 	ViewHeight = Height;
 	
+	/* Players crosshair */
 	Crosshair = new UnitDrawInfo(pDevice,"..\\..\\pic\\Weapon\\Crosshair.bmp",UnitDrawInfo::REMOVE_NEVER);
 }
 
@@ -71,18 +72,20 @@ void DrawMgr::Draw(int ViewLeft,int ViewTop)
 	CurrentTime = GetMSTime();
 	for(it=Objects.begin();it!=Objects.end();it++)
 		{
+		if(it->second->Flag == UnitDrawInfo::INVISIBLE)
+			continue;		// Invisible objects are ignored //
+
 		if(GetMSTimeDiff(it->second->AnimationFrameLastUpdateTime,CurrentTime) > it->second->AnimationSpeed)
-			{
+			{		// Time to change the animation frame //
 			it->second->AnimationFrameLastUpdateTime = CurrentTime;
 			if(++it->second->AnimationFrame == it->second->LastAnimationFrame)
-				{
+				{	// Reached the last animation frame, remove the object, or start again //
 				if(it->second->Flag == UnitDrawInfo::REMOVE_AT_LAST_FRAME)
 					it->first->SetState(Unit::STATE_INACTIVE);
 				else
 					it->second->AnimationFrame = 0;
 				}
 			}
-		
 		if(InSight(it->first,ViewLeft,ViewTop))
 			{
 			switch(it->first->GetType())
@@ -119,6 +122,7 @@ void DrawMgr::DrawBullet(Bullet* bullet,UnitDrawInfo* unitinfo,int ViewLeft,int 
 
 void DrawMgr::DrawExplosion(Explosion* explosion,UnitDrawInfo* unitinfo,int ViewLeft,int ViewTop)
 {
-	D3DXVECTOR3 v(explosion->GetX()-ViewLeft,explosion->GetY()-ViewTop,0);
-	pSprite->Draw(unitinfo->pTexture,NULL,NULL,&v,0xFFFFFFFF);
+	D3DXVECTOR3 v(explosion->GetX()-ViewLeft-10,explosion->GetY()-ViewTop-10,0);	// -10 is because the explosion animation is bigger than the real explosion
+	RECT SrcRect = {unitinfo->AnimationFrame*(explosion->GetWidth()+20),0,unitinfo->AnimationFrame*(explosion->GetWidth()+20)+(explosion->GetWidth()+20),explosion->GetHeight()+20};
+	pSprite->Draw(unitinfo->pTexture,&SrcRect,NULL,&v,0xFFFFFFFF);
 }

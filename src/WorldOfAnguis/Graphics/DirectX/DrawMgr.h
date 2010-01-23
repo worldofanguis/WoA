@@ -46,8 +46,6 @@ public:
 	void UnRegisterUnit(Unit* unit);
 	
 	void Draw(int ViewLeft,int ViewTop);
-	
-
 private:
 	bool InSight(Unit* unit,int ViewLeft,int ViewTop);
 

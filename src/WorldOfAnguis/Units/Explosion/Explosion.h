@@ -18,9 +18,10 @@
 class Explosion : public Unit
 {
 public:
-	Explosion(Player* Creator,int X,int Y,int R,int Damage);
+	Explosion(Player* Creator,int X,int Y,int R,int Damage,bool Visible = true);
 	~Explosion();
 	
+	bool IsVisible() {return Visible;}
 	char* GetExplosionMap();
 	int GetRadius() {return radius;}
 	int GetDamage() {return Damage;}
@@ -30,5 +31,6 @@ private:
 	int Damage;
 	char* Map;
 	
+	bool Visible;
 	Player* Creator;
 };

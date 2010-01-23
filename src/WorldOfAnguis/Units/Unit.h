@@ -19,13 +19,16 @@ class Unit
 {
 public:
 	enum TYPES {PLAYER,BULLET,PICKUP,EXPLOSION};
-	enum STATE {STATE_ACTIVE,STATE_GRAPHICS_ONLY,STATE_INACTIVE};
+
+	enum STATE {STATE_ACTIVE,						// STATE_ACTIVE: The object interaction is active (collision)
+				STATE_GRAPHICS_ONLY,				// STATE_GRAPHICS_ONLY: The object is only drawn (no collision)
+				STATE_INACTIVE						// STATE_INACTIVE: The object will be deleted in the next frame
+			   };
 	
 	STATE GetState() {return State;}
 	void SetState(STATE state) {State = state;}
 
-	/* Updates the Unit position should be called after collision detections */
-	void Update();
+	void Update();		// Atm useless //
 	
 	virtual bool CollisionWorld();
 	virtual bool CollisionUnit(Unit* unit);

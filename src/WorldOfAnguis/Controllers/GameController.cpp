@@ -70,13 +70,13 @@ void GameController::Run()
 		if(KEY_DOWN(DIK_A)){
 			me->SetXVelocity(-3);
 			if(KEY_DOWN(DIK_D)){
-				new Explosion(me,me->GetX()+4,me->GetY()+(me->GetHeight()/2),19,0);
+				new Explosion(me,me->GetX()+4,me->GetY()+(me->GetHeight()/2),19,0,false);
 			}
 		}
 		if(KEY_DOWN(DIK_D)){
 			me->SetXVelocity(3);
 			if(KEY_DOWN(DIK_A)){
-				new Explosion(me,me->GetX()+me->GetWidth()-4,me->GetY()+(me->GetHeight()/2),19,0);
+				new Explosion(me,me->GetX()+me->GetWidth()-4,me->GetY()+(me->GetHeight()/2),19,0,false);
 			}
 		}
 		

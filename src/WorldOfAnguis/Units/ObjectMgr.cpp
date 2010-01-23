@@ -45,7 +45,10 @@ void ObjectMgr::Update()
 					if((*itc)->GetType() == Unit::PLAYER && (*itc)->GetState() == Unit::STATE_ACTIVE)
 						(*itc)->Explode(*it);
 
-				(*it)->SetState(Unit::STATE_GRAPHICS_ONLY);		// Graphics only units will be removed if the DrawMgr wants them removed //
+				if(reinterpret_cast<Explosion*>((*it))->IsVisible())
+					(*it)->SetState(Unit::STATE_GRAPHICS_ONLY);		// Graphics only units will be removed if the DrawMgr wants them removed //
+				else
+					(*it)->SetState(Unit::STATE_INACTIVE);
 				}
 			else
 				{

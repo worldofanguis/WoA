@@ -13,9 +13,9 @@
 
 UnitDrawInfo::UnitDrawInfo(LPDIRECT3DDEVICE9 pDevice,char* TextureFileName,FLAGS Flag)
 {
-	AnimationFrame = 0;
-	LastAnimationFrame = 10;
-	AnimationSpeed = 100;		// Framechange delay //
+	AnimationFrame = -1;
+	LastAnimationFrame = 20;
+	AnimationSpeed = 25;		// Framechange delay //
 
 	this->Flag = Flag;
 	pTexture = NULL;
@@ -30,6 +30,9 @@ UnitDrawInfo::~UnitDrawInfo()
 
 bool UnitDrawInfo::LoadTexture(LPDIRECT3DDEVICE9 pDevice,char* FileName)
 {
+	if(Flag == UnitDrawInfo::INVISIBLE)
+		return true;
+
 	FILE* FKez;
 	BITMAPFILEHEADER bmfh;
 	BITMAPINFOHEADER bmih;

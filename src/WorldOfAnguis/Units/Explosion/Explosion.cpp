@@ -14,8 +14,9 @@
 #include "World/World.h"
 #include "Graphics/DirectX/DrawMgr.h"
 
-Explosion::Explosion(Player* Creator,int X,int Y,int R,int Damage) : Unit(X-R,Y-R,EXPLOSION)
+Explosion::Explosion(Player* Creator,int X,int Y,int R,int Damage,bool Visible) : Unit(X-R,Y-R,EXPLOSION)
 {
+	this->Visible = Visible;
 	this->Creator = Creator;
 	this->radius = R/sWorld->GetPixelPerHitMap();
 	this->Damage = Damage;
@@ -24,7 +25,10 @@ Explosion::Explosion(Player* Creator,int X,int Y,int R,int Damage) : Unit(X-R,Y-
 	Map = new char[4*radius*radius];
 	ZeroMemory(Map,4*radius*radius);
 	
-	sDrawMgr->RegisterUnit((Unit*)this,"..\\..\\pic\\Bullet\\Explosion.bmp",UnitDrawInfo::REMOVE_AT_LAST_FRAME);
+	if(Visible)
+		sDrawMgr->RegisterUnit((Unit*)this,"..\\..\\pic\\Bullet\\Explosion.bmp",UnitDrawInfo::REMOVE_AT_LAST_FRAME);
+	else
+		sDrawMgr->RegisterUnit((Unit*)this,NULL,UnitDrawInfo::INVISIBLE);
 }
 
 Explosion::~Explosion()
