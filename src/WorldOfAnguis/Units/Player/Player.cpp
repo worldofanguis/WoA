@@ -19,6 +19,7 @@ Player::Player(int X,int Y,int SkinID) : Unit(X,Y,PLAYER)
 {
 	Width = 20;
 	Height = 30;
+
 	Life = 100;
 	Angle = 0;
 	Jumping = false;
@@ -27,7 +28,7 @@ Player::Player(int X,int Y,int SkinID) : Unit(X,Y,PLAYER)
 	
 	char PlayerTexture[MAX_PATH];
 	sprintf_s(PlayerTexture,sizeof(PlayerTexture),"..\\..\\pic\\Player\\Player%d.bmp",SkinID);
-	sDrawMgr->RegisterUnit((Unit*)this,PlayerTexture);
+	sDrawMgr->RegisterUnit((Unit*)this,PlayerTexture,UnitDrawInfo::REMOVE_NEVER);
 }
 
 Player::~Player()
@@ -186,7 +187,7 @@ void Player::Explode(Unit* explosion)
 	int ExpCX = explosion->GetX()+(explosion->GetWidth()/2);
 	int ExpCY = explosion->GetY()+(explosion->GetHeight()/2);
 
-	if((abs(SelfCX-ExpCX) < max(Width,explosion->GetWidth())) && abs(SelfCY-ExpCY) < max(Height,explosion->GetHeight()))
+	if((abs(SelfCX-ExpCX) <= max(Width/2,explosion->GetWidth()/2)) && abs(SelfCY-ExpCY) <= max(Height/2,explosion->GetHeight()/2))
 		{		// We are in the range of an explosion //
 		if(reinterpret_cast<Explosion*>(explosion)->GetDamage() == 0)
 			return;		// Nothing to do with explosions that do no damage //

@@ -36,16 +36,16 @@ void ObjectMgr::Update()
 {
 	for(it=Objects.begin();it!=Objects.end();it++)
 		{
-		if((*it)->IsActive())
+		if((*it)->GetState() == Unit::STATE_ACTIVE)
 			{
 			if((*it)->GetType() == Unit::EXPLOSION)
 				{
 				sWorld->Explode(*it);
 				for(itc=Objects.begin();itc!=Objects.end();itc++)
-					if((*itc)->GetType() == Unit::PLAYER && (*itc)->IsActive())
+					if((*itc)->GetType() == Unit::PLAYER && (*itc)->GetState() == Unit::STATE_ACTIVE)
 						(*itc)->Explode(*it);
 
-				(*it)->Deactivate();
+				(*it)->SetState(Unit::STATE_GRAPHICS_ONLY);		// Graphics only units will be removed if the DrawMgr wants them removed //
 				}
 			else
 				{
@@ -65,7 +65,7 @@ void ObjectMgr::Update()
 					{
 					for(itc=Objects.begin();itc!=Objects.end();itc++)
 						{
-						if((*itc)->IsActive() && (*itc)->GetType() != Unit::BULLET)
+						if((*itc)->GetState() == Unit::STATE_ACTIVE && (*itc)->GetType() != Unit::BULLET)
 							(*it)->CollisionUnit(*itc);
 						}
 					}
@@ -73,13 +73,16 @@ void ObjectMgr::Update()
 				(*it)->Update();
 				}
 			}
-		else
+		else if((*it)->GetState() == Unit::STATE_INACTIVE)
 			{
 			sDrawMgr->UnRegisterUnit(*it);
 			delete *it;
 			it = Objects.erase(it);
 			if(it == Objects.end())
 				break;
+			}
+		else if((*it)->GetState() == Unit::STATE_GRAPHICS_ONLY)
+			{
 			}
 		}
 		

@@ -11,9 +11,13 @@
  
 #include "UnitDrawInfo.h"
 
-UnitDrawInfo::UnitDrawInfo(LPDIRECT3DDEVICE9 pDevice,char* TextureFileName)
+UnitDrawInfo::UnitDrawInfo(LPDIRECT3DDEVICE9 pDevice,char* TextureFileName,FLAGS Flag)
 {
 	AnimationFrame = 0;
+	LastAnimationFrame = 10;
+	AnimationSpeed = 100;		// Framechange delay //
+
+	this->Flag = Flag;
 	pTexture = NULL;
 	if(!LoadTexture(pDevice,TextureFileName))
 		throw "o.O";

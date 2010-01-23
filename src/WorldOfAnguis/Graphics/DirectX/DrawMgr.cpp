@@ -11,6 +11,7 @@
  
 
 #include "DrawMgr.h"
+#include "Time.h"
 
 DrawMgr::DrawMgr()
 {
@@ -36,13 +37,13 @@ void DrawMgr::Setup(LPDIRECT3DDEVICE9 pDevice,LPD3DXSPRITE pSprite,int Width,int
 	ViewWidth = Width;
 	ViewHeight = Height;
 	
-	Crosshair = new UnitDrawInfo(pDevice,"..\\..\\pic\\Weapon\\Crosshair.bmp");
+	Crosshair = new UnitDrawInfo(pDevice,"..\\..\\pic\\Weapon\\Crosshair.bmp",UnitDrawInfo::REMOVE_NEVER);
 }
 
 
-void DrawMgr::RegisterUnit(Unit* unit,char* TextureFileName)
+void DrawMgr::RegisterUnit(Unit* unit,char* TextureFileName,UnitDrawInfo::FLAGS Flag)
 {
-	Objects.push_back(UnitInfo(unit,new UnitDrawInfo(pDevice,TextureFileName)));
+	Objects.push_back(UnitInfo(unit,new UnitDrawInfo(pDevice,TextureFileName,Flag)));
 }
 
 void DrawMgr::UnRegisterUnit(Unit* unit)
@@ -67,8 +68,21 @@ return false;
 
 void DrawMgr::Draw(int ViewLeft,int ViewTop)
 {
+	CurrentTime = GetMSTime();
 	for(it=Objects.begin();it!=Objects.end();it++)
 		{
+		if(GetMSTimeDiff(it->second->AnimationFrameLastUpdateTime,CurrentTime) > it->second->AnimationSpeed)
+			{
+			it->second->AnimationFrameLastUpdateTime = CurrentTime;
+			if(++it->second->AnimationFrame == it->second->LastAnimationFrame)
+				{
+				if(it->second->Flag == UnitDrawInfo::REMOVE_AT_LAST_FRAME)
+					it->first->SetState(Unit::STATE_INACTIVE);
+				else
+					it->second->AnimationFrame = 0;
+				}
+			}
+		
 		if(InSight(it->first,ViewLeft,ViewTop))
 			{
 			switch(it->first->GetType())

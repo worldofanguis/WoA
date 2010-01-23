@@ -30,7 +30,7 @@ Bullet::Bullet(Player* Creator,int X,int Y,float Angle,TYPES Type) : Unit(X,Y,BU
 			Damage = 2;
 			R = 50;
 		
-			sDrawMgr->RegisterUnit((Unit*)this,"..\\..\\pic\\Bullet\\Def.bmp");
+			sDrawMgr->RegisterUnit((Unit*)this,"..\\..\\pic\\Bullet\\Def.bmp",UnitDrawInfo::REMOVE_NEVER);
 			break;
 		}
 	
@@ -45,7 +45,7 @@ bool Bullet::CollisionWorld()
 	if(Unit::CollisionWorld())
 		{
 		new Explosion(Creator,X,Y,R,Damage);
-		Deactivate();
+		SetState(Unit::STATE_INACTIVE);		// Inactive means, ready to be removed at next frame //
 		}
 
 return false;
@@ -56,7 +56,7 @@ bool Bullet::CollisionUnit(Unit* unit)
 	if(Unit::CollisionUnit(unit) && unit->GetType() != Unit::EXPLOSION)		// Bullet<->Explosion collision disabled //
 		{
 		new Explosion(Creator,X,Y,R,Damage);
-		Deactivate();		
+		SetState(Unit::STATE_INACTIVE);
 		}
 
 return false;

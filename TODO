@@ -24,6 +24,7 @@
 Important:
 	* Explosions on one side affects the other side too (to check it disable dirtyregion update)
 	* Aiming
+	* Unit<->Unit collision, needs a little correction
 	*
 Notimportant:
 	* Player movement (stop when key released)

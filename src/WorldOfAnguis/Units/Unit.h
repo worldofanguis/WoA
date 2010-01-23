@@ -19,9 +19,10 @@ class Unit
 {
 public:
 	enum TYPES {PLAYER,BULLET,PICKUP,EXPLOSION};
+	enum STATE {STATE_ACTIVE,STATE_GRAPHICS_ONLY,STATE_INACTIVE};
 	
-	bool IsActive() {return Active;}
-	void Deactivate() {Active = false;}
+	STATE GetState() {return State;}
+	void SetState(STATE state) {State = state;}
 
 	/* Updates the Unit position should be called after collision detections */
 	void Update();
@@ -48,11 +49,11 @@ public:
 	virtual void Explode(Unit* explosion) {}
 	
 	virtual ~Unit();
-	int X,Y;		// Position //
 protected:
 	/* We dont want this class to be created */
 	Unit(int X,int Y,TYPES Type);
 	
+	int X,Y;		// Position //
 	int vX,vY;		// Velocity //
 	double vXd, vYd; //Double type Velocity//
 
@@ -60,9 +61,8 @@ protected:
 	int Height;
 	
 	bool FaceRight;
-	bool Active;
-
 private:
 	TYPES Type;
+	STATE State;
 };
 

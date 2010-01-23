@@ -42,7 +42,7 @@ public:
 	
 	void Setup(LPDIRECT3DDEVICE9 pDevice,LPD3DXSPRITE pSprite,int Width,int Height);
 	
-	void RegisterUnit(Unit* unit,char* TextureFileName);
+	void RegisterUnit(Unit* unit,char* TextureFileName,UnitDrawInfo::FLAGS Flag);
 	void UnRegisterUnit(Unit* unit);
 	
 	void Draw(int ViewLeft,int ViewTop);
@@ -60,6 +60,8 @@ private:
 	
 	int ViewWidth;
 	int ViewHeight;
+	
+	DWORD CurrentTime;
 	
 	UnitDrawInfo* Crosshair;
 	

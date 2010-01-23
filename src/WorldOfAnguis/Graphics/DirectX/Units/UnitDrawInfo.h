@@ -26,7 +26,9 @@ class UnitDrawInfo
 {
 	friend class DrawMgr;		// to access private elements //
 public:
-	UnitDrawInfo(LPDIRECT3DDEVICE9 pDevice,char* FileName);
+	enum FLAGS {REMOVE_NEVER,REMOVE_AT_LAST_FRAME};
+	
+	UnitDrawInfo(LPDIRECT3DDEVICE9 pDevice,char* FileName,FLAGS Flag);
 	~UnitDrawInfo();
 	
 private:
@@ -35,5 +37,11 @@ private:
 	int Width;
 	int Height;
 	LPDIRECT3DTEXTURE9 pTexture;
+	
+	int AnimationSpeed;
+	DWORD AnimationFrameLastUpdateTime;
 	int AnimationFrame;
+	int LastAnimationFrame;
+
+	FLAGS Flag;
 };

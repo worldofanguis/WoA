@@ -19,12 +19,12 @@ Explosion::Explosion(Player* Creator,int X,int Y,int R,int Damage) : Unit(X-R,Y-
 	this->Creator = Creator;
 	this->radius = R/sWorld->GetPixelPerHitMap();
 	this->Damage = Damage;
-	Width = Height = radius*2;
+	Width = Height = R*2;
 	
-	Map = new char[Height*Width];
-	ZeroMemory(Map,Height*Width);
+	Map = new char[4*radius*radius];
+	ZeroMemory(Map,4*radius*radius);
 	
-	sDrawMgr->RegisterUnit((Unit*)this,"..\\..\\pic\\Bullet\\Explosion.bmp");
+	sDrawMgr->RegisterUnit((Unit*)this,"..\\..\\pic\\Bullet\\Explosion.bmp",UnitDrawInfo::REMOVE_AT_LAST_FRAME);
 }
 
 Explosion::~Explosion()

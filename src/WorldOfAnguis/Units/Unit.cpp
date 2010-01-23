@@ -23,7 +23,7 @@ Unit::Unit(int X,int Y,TYPES Type)
 	vXd = vYd = 0.0;
 	Width = Height = 0;
 	
-	Active = true;
+	State = STATE_ACTIVE;
 	
 	sObjMgr->RegisterUnit(this);
 }
