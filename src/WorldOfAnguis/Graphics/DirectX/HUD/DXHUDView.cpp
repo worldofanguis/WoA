@@ -11,6 +11,7 @@
 
 
 #include "DXHUDView.h"
+#include "Units/ObjectMgr.h"
 #include "../DirectXInterface.h"
 
 DXHUDView::DXHUDView()
@@ -27,6 +28,16 @@ DXHUDView::DXHUDView()
 
 DXHUDView::~DXHUDView()
 {
+}
+
+void DXHUDView::Setup(LPDIRECT3DDEVICE9 pDevice,LPD3DXSPRITE pSprite)
+{
+	this->pDevice = pDevice;
+	this->pSprite = pSprite;
+	
+	D3DXCreateFont(pDevice,21,0,FW_BOLD,1,false,DEFAULT_CHARSET,OUT_DEFAULT_PRECIS,ANTIALIASED_QUALITY,DEFAULT_PITCH|FF_DONTCARE,"Arial",&pFont);
+
+	LoadTexture();
 }
 
 void DXHUDView::LoadTexture()
@@ -72,7 +83,11 @@ void DXHUDView::Draw()
 	D3DXVECTOR3 v(0,sDXInterface->GetViewHeight(),0);
 	pSprite->Draw(pHUD,NULL,NULL,&v,0xFFFFFFFF);
 	v = D3DXVECTOR3(49,v.y+24,0);
-	pSprite->Draw(pLifeBar,&rLifeBar,NULL,&v,0xFFFFFFFF);	
+	pSprite->Draw(pLifeBar,&rLifeBar,NULL,&v,0xFFFFFFFF);
+	
+	RECT r = {70,sDXInterface->GetViewHeight()+95,0,0};
+	sprintf_s(ScoreText,sizeof(ScoreText),"%d",sObjMgr->Me()->GetScore());
+	pFont->DrawText(NULL,ScoreText,-1,&r,DT_LEFT|DT_NOCLIP,0xFF000000);
 }
 
 void DXHUDView::Update(HUD_PART Part,int Data)

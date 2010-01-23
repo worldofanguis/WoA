@@ -120,10 +120,10 @@ void GameController::Render()
 
 	// Drawing the world //
 	sWorldView->Draw(ViewLeft,ViewTop,ViewWidth,ViewHeight);		// Render the world //
-	// Drawing the HUD //
-	sHudView->Draw();												// the hud //
 	// Drawing the Objects via the DrawMgr //
-	sDrawMgr->Draw(ViewLeft,ViewTop);								// and the objects //
+	sDrawMgr->Draw(ViewLeft,ViewTop);								// the objects //
+	// Drawing the HUD //
+	sHudView->Draw();												// and the hud //
 	
 	/* Example for using the sSceenLog class */
 //	sScreenLog->DrawNow(&diff,ScreenLog::Track::UINT,20,30,0xFFFF0000);

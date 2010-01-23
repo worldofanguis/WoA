@@ -34,7 +34,7 @@ public:
 	DXHUDView();
 	~DXHUDView();
 	
-	void Setup(LPDIRECT3DDEVICE9 pDevice,LPD3DXSPRITE pSprite) {this->pDevice = pDevice; this->pSprite = pSprite; LoadTexture();}
+	void Setup(LPDIRECT3DDEVICE9 pDevice,LPD3DXSPRITE pSprite);
 
 	void Draw();
 	void Update(HUD_PART Part,int Data);
@@ -46,9 +46,12 @@ private:
 	/* Texture for the life bar */
 	LPDIRECT3DTEXTURE9 pLifeBar;
 	RECT rLifeBar;
+	
+	char ScoreText[10];
 
 	LPDIRECT3DDEVICE9 pDevice;
 	LPD3DXSPRITE pSprite;
+	LPD3DXFONT pFont;
 };
 
 #define sHudView DXHUDView::Instance()

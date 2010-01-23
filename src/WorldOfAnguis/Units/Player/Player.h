@@ -44,6 +44,7 @@ public:
 	void Explode(Unit* Explosion);
 
 	void SetScore(int ModValue) {Score+=ModValue;}
+	int GetScore() {return Score;}
 
 	void Fire();
 private:
