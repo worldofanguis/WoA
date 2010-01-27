@@ -30,21 +30,30 @@ public:
 				REMOVE_AT_LAST_FRAME,	// REMOVE_AT_LAST_FRAME: if this flag is set, the object will be removed if the animation reaches its end. Good for STATE_GRAPHICS_ONLY units [for now its used for the delayed remove of the explosions]
 				INVISIBLE				// INVISIBLE: the object will be ignored in the DrawMgr. [used for digging]
 			   };
-	
-	UnitDrawInfo(LPDIRECT3DDEVICE9 pDevice,char* FileName,FLAGS Flag);
+
+	UnitDrawInfo(char* TextureName,FLAGS Flag);
 	~UnitDrawInfo();
+
+	static bool PreloadTextures(LPDIRECT3DDEVICE9 pDevice);
+	static void UnloadTextures();
 	
 private:
-	bool LoadTexture(LPDIRECT3DDEVICE9 pDevice,char* FileName);
+	struct STextureInfo
+	{
+		LPDIRECT3DTEXTURE9 pTexture;
+		int Width;
+		int Height;
+		int AnimationSpeed;
+		int AnimationLastFrame;
+	};
 
-	int Width;
-	int Height;
-	LPDIRECT3DTEXTURE9 pTexture;
-	
-	int AnimationSpeed;
+	STextureInfo *TextureInfo;
+
 	DWORD AnimationFrameLastUpdateTime;
-	int AnimationFrame;
-	int LastAnimationFrame;
+	int AnimationCurrentFrame;
 
 	FLAGS Flag;
+	
+	static STextureInfo* LoadTexture(LPDIRECT3DDEVICE9 pDevice,char* FileName);
+	static std::map<const char*,STextureInfo*> Textures;
 };

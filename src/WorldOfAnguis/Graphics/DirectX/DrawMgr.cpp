@@ -24,27 +24,29 @@ DrawMgr::~DrawMgr()
 {
 	for(it=Objects.begin();it!=Objects.end();it++)
 		delete it->second;
-	
+
 	delete Crosshair;
-	
+
+	UnitDrawInfo::UnloadTextures();
 	Objects.clear();
 }
 
 void DrawMgr::Setup(LPDIRECT3DDEVICE9 pDevice,LPD3DXSPRITE pSprite,int Width,int Height)
 {
-	this->pDevice = pDevice;
-	this->pSprite=pSprite;
+	this->pSprite = pSprite;
 	ViewWidth = Width;
 	ViewHeight = Height;
 	
-	/* Players crosshair */
-	Crosshair = new UnitDrawInfo(pDevice,"..\\..\\pic\\Weapon\\Crosshair.bmp",UnitDrawInfo::REMOVE_NEVER);
+	if(!UnitDrawInfo::PreloadTextures(pDevice))
+		throw "Phail!";
+	
+	Crosshair = new UnitDrawInfo("Crosshair",UnitDrawInfo::REMOVE_NEVER);
 }
 
 
-void DrawMgr::RegisterUnit(Unit* unit,char* TextureFileName,UnitDrawInfo::FLAGS Flag)
+void DrawMgr::RegisterUnit(Unit* unit,char* TextureName,UnitDrawInfo::FLAGS Flag)
 {
-	Objects.push_back(UnitInfo(unit,new UnitDrawInfo(pDevice,TextureFileName,Flag)));
+	Objects.push_back(UnitInfo(unit,new UnitDrawInfo(TextureName,Flag)));
 }
 
 void DrawMgr::UnRegisterUnit(Unit* unit)
@@ -75,15 +77,15 @@ void DrawMgr::Draw(int ViewLeft,int ViewTop)
 		if(it->second->Flag == UnitDrawInfo::INVISIBLE)
 			continue;		// Invisible objects are ignored //
 
-		if(GetMSTimeDiff(it->second->AnimationFrameLastUpdateTime,CurrentTime) > it->second->AnimationSpeed)
+		if(GetMSTimeDiff(it->second->AnimationFrameLastUpdateTime,CurrentTime) > it->second->TextureInfo->AnimationSpeed)
 			{		// Time to change the animation frame //
 			it->second->AnimationFrameLastUpdateTime = CurrentTime;
-			if(++it->second->AnimationFrame == it->second->LastAnimationFrame)
+			if(++(it->second->AnimationCurrentFrame) == it->second->TextureInfo->AnimationLastFrame)
 				{	// Reached the last animation frame, remove the object, or start again //
 				if(it->second->Flag == UnitDrawInfo::REMOVE_AT_LAST_FRAME)
 					it->first->SetState(Unit::STATE_INACTIVE);
 				else
-					it->second->AnimationFrame = 0;
+					it->second->AnimationCurrentFrame = 0;
 				}
 			}
 		if(InSight(it->first,ViewLeft,ViewTop))
@@ -107,22 +109,22 @@ void DrawMgr::Draw(int ViewLeft,int ViewTop)
 void DrawMgr::DrawPlayer(Player* player,UnitDrawInfo* unitinfo,int ViewLeft,int ViewTop)
 {
 	D3DXVECTOR3 v(player->GetX()-ViewLeft,player->GetY()-ViewTop,0);
-	pSprite->Draw(unitinfo->pTexture,NULL,NULL,&v,0xFFFFFFFF);
+	pSprite->Draw(unitinfo->TextureInfo->pTexture,NULL,NULL,&v,0xFFFFFFFF);
 	
 	v.x = player->GetX()-ViewLeft+player->GetWidth()/2+cos(player->GetAngle())*50;
 	v.y = player->GetY()-ViewTop+player->GetHeight()/2-sin(player->GetAngle())*50;
-	pSprite->Draw(Crosshair->pTexture,NULL,NULL,&v,0xFFFFFFFF);
+	pSprite->Draw(Crosshair->TextureInfo->pTexture,NULL,NULL,&v,0xFFFFFFFF);
 }
 
 void DrawMgr::DrawBullet(Bullet* bullet,UnitDrawInfo* unitinfo,int ViewLeft,int ViewTop)
 {
 	D3DXVECTOR3 v(bullet->GetX()-ViewLeft,bullet->GetY()-ViewTop,0);
-	pSprite->Draw(unitinfo->pTexture,NULL,NULL,&v,0xFFFFFFFF);
+	pSprite->Draw(unitinfo->TextureInfo->pTexture,NULL,NULL,&v,0xFFFFFFFF);
 }
 
 void DrawMgr::DrawExplosion(Explosion* explosion,UnitDrawInfo* unitinfo,int ViewLeft,int ViewTop)
 {
 	D3DXVECTOR3 v(explosion->GetX()-ViewLeft-10,explosion->GetY()-ViewTop-10,0);	// -10 is because the explosion animation is bigger than the real explosion
-	RECT SrcRect = {unitinfo->AnimationFrame*(explosion->GetWidth()+20),0,unitinfo->AnimationFrame*(explosion->GetWidth()+20)+(explosion->GetWidth()+20),explosion->GetHeight()+20};
-	pSprite->Draw(unitinfo->pTexture,&SrcRect,NULL,&v,0xFFFFFFFF);
+	RECT SrcRect = {unitinfo->AnimationCurrentFrame*(explosion->GetWidth()+20),0,unitinfo->AnimationCurrentFrame*(explosion->GetWidth()+20)+(explosion->GetWidth()+20),explosion->GetHeight()+20};
+	pSprite->Draw(unitinfo->TextureInfo->pTexture,&SrcRect,NULL,&v,0xFFFFFFFF);
 }

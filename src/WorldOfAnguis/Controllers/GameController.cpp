@@ -35,7 +35,7 @@ void GameController::Run()
 {
 	Player* me = new Player(0,0,1);
 	new Player(80,60,1);
-	
+
 	sObjMgr->CreateWorld();
 	sObjMgr->Update();
 
@@ -43,7 +43,7 @@ void GameController::Run()
     DWORD realPrevTime = GetMSTime();
 
 	DWORD diff;
-	
+
 	/* Example for using the sScreenLog class */
 	sScreenLog->AddTrack(&diff,ScreenLog::Track::UINT,20,30,0xFFFF0000);
 	
@@ -57,10 +57,10 @@ void GameController::Run()
 		Player* me = sObjMgr->Me();
 
 		ReadKeyboard();
-		
+
 		if(KEY_PRESSED(DIK_F))
 			me->Fire();
-		
+
 		if(KEY_DOWN(DIK_ESCAPE))
 			break;
 		if(KEY_DOWN(DIK_W))
@@ -79,7 +79,7 @@ void GameController::Run()
 				new Explosion(me,me->GetX()+me->GetWidth()-4,me->GetY()+(me->GetHeight()/2),19,0,false);
 			}
 		}
-		
+
 		/* Oops :< */
 		//if(KEY_UP(DIK_W) && KEY_UP(DIK_A) && KEY_UP(DIK_S) && KEY_UP(DIK_D))
 		//	{
@@ -89,13 +89,13 @@ void GameController::Run()
 
 		if(KEY_DOWN(DIK_R))
 			me->SetPos(30,70);
-		
+
 		if(KEY_DOWN(DIK_Q))
 			me->SetAngle(me->GetAngle()+0.1f);
 
 		if(KEY_DOWN(DIK_E))
 			me->SetAngle(me->GetAngle()-0.1f);
-			
+
 		if(KEY_DOWN(DIK_M))
 			 sWorld->PrintMap();
 
@@ -124,7 +124,7 @@ void GameController::Render()
 	sDrawMgr->Draw(ViewLeft,ViewTop);								// the objects //
 	// Drawing the HUD //
 	sHudView->Draw();												// and the hud //
-	
+
 	/* Example for using the sSceenLog class */
 //	sScreenLog->DrawNow(&diff,ScreenLog::Track::UINT,20,30,0xFFFF0000);
 	
@@ -143,7 +143,7 @@ void GameController::FollowUnit(Unit *unit)
 	int y = unit->GetY();
 	int h = sWorld->GetHeight();
 	int w = sWorld->GetWidth();
-	
+
 	// ViewLeft 
 	if ( x - ViewWidth/2 < 0 )
 		ViewLeft = 0;

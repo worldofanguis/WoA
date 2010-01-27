@@ -27,7 +27,7 @@ Player::Player(int X,int Y,int SkinID) : Unit(X,Y,PLAYER)
 	Score = 0;
 	
 	char PlayerTexture[MAX_PATH];
-	sprintf_s(PlayerTexture,sizeof(PlayerTexture),"..\\..\\pic\\Player\\Player%d.bmp",SkinID);
+	sprintf_s(PlayerTexture,sizeof(PlayerTexture),"Player_%d",SkinID);
 	sDrawMgr->RegisterUnit((Unit*)this,PlayerTexture,UnitDrawInfo::REMOVE_NEVER);
 }
 

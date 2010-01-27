@@ -11,28 +11,58 @@
  
 #include "UnitDrawInfo.h"
 
-UnitDrawInfo::UnitDrawInfo(LPDIRECT3DDEVICE9 pDevice,char* TextureFileName,FLAGS Flag)
-{
-	AnimationFrame = -1;
-	LastAnimationFrame = 20;
-	AnimationSpeed = 25;		// Framechange delay //
+std::map<const char*,UnitDrawInfo::STextureInfo*> UnitDrawInfo::Textures;		// Static initialization o.O //
 
+UnitDrawInfo::UnitDrawInfo(char* TextureName,FLAGS Flag)
+{
 	this->Flag = Flag;
-	pTexture = NULL;
-	if(!LoadTexture(pDevice,TextureFileName))
-		throw "o.O";
+	AnimationCurrentFrame = -1;
+
+	if(Flag == INVISIBLE)
+		{
+		TextureInfo = NULL;
+		return;
+		}
+
+	for(std::map<const char*,UnitDrawInfo::STextureInfo*>::iterator it=Textures.begin();it!=Textures.end();it++)
+		{
+		if(strcmp(it->first,TextureName) == NULL)
+			{
+			TextureInfo = it->second;
+			return;
+			}
+		}
+	throw "CantFindTheTexture";
 }
 
 UnitDrawInfo::~UnitDrawInfo()
 {
-	SAFE_RELEASE(pTexture);
 }
 
-bool UnitDrawInfo::LoadTexture(LPDIRECT3DDEVICE9 pDevice,char* FileName)
+bool UnitDrawInfo::PreloadTextures(LPDIRECT3DDEVICE9 pDevice)
 {
-	if(Flag == UnitDrawInfo::INVISIBLE)
-		return true;
+	Textures.clear();
+	STextureInfo* TInfo;
 
+	if((TInfo = LoadTexture(pDevice,"..\\..\\pic\\Player\\Player1.bmp")) != NULL)		Textures["Player_1"] = TInfo; else return false;
+	if((TInfo = LoadTexture(pDevice,"..\\..\\pic\\Bullet\\Explosion.bmp")) != NULL)		Textures["Explosion"] = TInfo; else return false;
+	if((TInfo = LoadTexture(pDevice,"..\\..\\pic\\Bullet\\Def.bmp")) != NULL)			Textures["Bullet_Def"] = TInfo; else return false;
+	if((TInfo = LoadTexture(pDevice,"..\\..\\pic\\Weapon\\Crosshair.bmp")) != NULL)		Textures["Crosshair"] = TInfo; else return false;
+
+return true;
+}
+
+void UnitDrawInfo::UnloadTextures()
+{
+	for(std::map<const char*,UnitDrawInfo::STextureInfo*>::iterator it=Textures.begin();it!=Textures.end();it++)
+		{
+		SAFE_RELEASE(it->second->pTexture);
+		delete it->second;
+		}
+}
+
+UnitDrawInfo::STextureInfo* UnitDrawInfo::LoadTexture(LPDIRECT3DDEVICE9 pDevice,char* FileName)
+{
 	FILE* FKez;
 	BITMAPFILEHEADER bmfh;
 	BITMAPINFOHEADER bmih;
@@ -42,14 +72,19 @@ bool UnitDrawInfo::LoadTexture(LPDIRECT3DDEVICE9 pDevice,char* FileName)
 	if(bmfh.bfType != 0x4D42)		// check if its a BMP (BM flag) //
 		{
 		fclose(FKez);
-		return false;
+		return NULL;
 		}
 
 	fread(&bmih,sizeof(BITMAPINFOHEADER),1,FKez);
 	fclose(FKez);
-
-	Width = bmih.biWidth;
-	Height = bmih.biHeight;
+	
+	STextureInfo *TInfo = new STextureInfo;
+	TInfo->Width = bmih.biWidth;
+	TInfo->Height = bmih.biHeight;
+	
+	/* This must be read from a file */
+	TInfo->AnimationLastFrame = 20;
+	TInfo->AnimationSpeed = 25;		// Framechange delay //
 
 	D3DXCreateTextureFromFileEx(pDevice,						// Device
 								FileName,
@@ -64,6 +99,7 @@ bool UnitDrawInfo::LoadTexture(LPDIRECT3DDEVICE9 pDevice,char* FileName)
 								D3DCOLOR_XRGB(255,0,255),		// pink = transparent
 								NULL,
 								NULL,
-								&pTexture);
-return true;
+								&(TInfo->pTexture));
+
+return TInfo;
 }
