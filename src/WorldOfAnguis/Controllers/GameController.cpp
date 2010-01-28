@@ -34,7 +34,6 @@ GameController::~GameController()
 void GameController::Run()
 {
 	Player* me = new Player(0,0,1);
-	new Player(80,60,1);
 
 	sObjMgr->CreateWorld();
 	sObjMgr->Update();

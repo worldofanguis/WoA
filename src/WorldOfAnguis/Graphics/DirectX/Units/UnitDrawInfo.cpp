@@ -45,8 +45,8 @@ bool UnitDrawInfo::PreloadTextures(LPDIRECT3DDEVICE9 pDevice)
 	STextureInfo* TInfo;
 
 	if((TInfo = LoadTexture(pDevice,"..\\..\\pic\\Player\\Player1.bmp")) != NULL)		Textures["Player_1"] = TInfo; else return false;
-	if((TInfo = LoadTexture(pDevice,"..\\..\\pic\\Bullet\\Explosion.bmp")) != NULL)		Textures["Explosion"] = TInfo; else return false;
-	if((TInfo = LoadTexture(pDevice,"..\\..\\pic\\Bullet\\Def.bmp")) != NULL)			Textures["Bullet_Def"] = TInfo; else return false;
+//	if((TInfo = LoadTexture(pDevice,"..\\..\\pic\\Bullet\\Explosion.bmp")) != NULL)		Textures["Explosion"] = TInfo; else return false;
+//	if((TInfo = LoadTexture(pDevice,"..\\..\\pic\\Bullet\\Def.bmp")) != NULL)			Textures["Bullet_Def"] = TInfo; else return false;
 	if((TInfo = LoadTexture(pDevice,"..\\..\\pic\\Weapon\\Crosshair.bmp")) != NULL)		Textures["Crosshair"] = TInfo; else return false;
 
 return true;
@@ -59,6 +59,7 @@ void UnitDrawInfo::UnloadTextures()
 		SAFE_RELEASE(it->second->pTexture);
 		delete it->second;
 		}
+	Textures.clear();
 }
 
 UnitDrawInfo::STextureInfo* UnitDrawInfo::LoadTexture(LPDIRECT3DDEVICE9 pDevice,char* FileName)

@@ -28,6 +28,9 @@ DXHUDView::DXHUDView()
 
 DXHUDView::~DXHUDView()
 {
+	SAFE_RELEASE(pFont);
+	SAFE_RELEASE(pHUD);
+	SAFE_RELEASE(pLifeBar);
 }
 
 void DXHUDView::Setup(LPDIRECT3DDEVICE9 pDevice,LPD3DXSPRITE pSprite)

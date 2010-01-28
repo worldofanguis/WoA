@@ -16,7 +16,6 @@
 #include "Graphics/DirectX/DirectXInterface.h"
 #include "Controllers/GameController.h"
 
-
 int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLine,int nCmdShow)
 {
 	if(OpenMutex(MUTEX_ALL_ACCESS,false,"WoA") != NULL)			// Disable multiple starting //
@@ -41,9 +40,10 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLin
 	delete sDXInterface;
 	
 	ReleaseMutex(hMutex);
-	
+
 #ifdef _DEBUG
 	_CrtDumpMemoryLeaks();
 #endif
 return 0;
 }
+

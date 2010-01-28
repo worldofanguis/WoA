@@ -16,7 +16,7 @@
 World::World()
 {
 	Map = NULL;
-	PPHM = 1;				// PixelPerHitMap (2 means 2x2 pixel is 1 entry in the hit map) // dont think we should go higher than 2 //
+	PPHM = 3;				// PixelPerHitMap (2 means 2x2 pixel is 1 entry in the hit map) // dont think we should go higher than 2 //
 }
 
 World::~World()
