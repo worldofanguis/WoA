@@ -18,6 +18,8 @@ DrawMgr::DrawMgr()
 	Objects.clear();
 	ViewWidth = 0;
 	ViewHeight = 0;
+	
+	Crosshair = NULL;
 }
 
 DrawMgr::~DrawMgr()
@@ -25,10 +27,10 @@ DrawMgr::~DrawMgr()
 	for(it=Objects.begin();it!=Objects.end();it++)
 		delete it->second;
 
-	delete Crosshair;
-
-	UnitDrawInfo::UnloadTextures();
 	Objects.clear();
+
+	delete Crosshair;
+	delete sUnitDrawInfo;
 }
 
 void DrawMgr::Setup(LPDIRECT3DDEVICE9 pDevice,LPD3DXSPRITE pSprite,int Width,int Height)
@@ -37,20 +39,20 @@ void DrawMgr::Setup(LPDIRECT3DDEVICE9 pDevice,LPD3DXSPRITE pSprite,int Width,int
 	ViewWidth = Width;
 	ViewHeight = Height;
 	
-	if(!UnitDrawInfo::PreloadTextures(pDevice))
+	if(!sUnitDrawInfo->PreloadTextures(pDevice))
 		throw "Phail!";
 	
-	Crosshair = new UnitDrawInfo("Crosshair",UnitDrawInfo::REMOVE_NEVER);
+	Crosshair = new UnitDrawInfo::UnitInfo("Crosshair",UnitDrawInfo::REMOVE_NEVER);
 }
-
 
 void DrawMgr::RegisterUnit(Unit* unit,char* TextureName,UnitDrawInfo::FLAGS Flag)
 {
-	Objects.push_back(UnitInfo(unit,new UnitDrawInfo(TextureName,Flag)));
+	Objects.push_back(UnitInfo(unit,new UnitDrawInfo::UnitInfo(TextureName,Flag)));
 }
 
 void DrawMgr::UnRegisterUnit(Unit* unit)
 {
+
 	for(it=Objects.begin();it!=Objects.end();it++)
 		if(it->first == unit)
 			{
@@ -106,7 +108,7 @@ void DrawMgr::Draw(int ViewLeft,int ViewTop)
 		}
 }
 
-void DrawMgr::DrawPlayer(Player* player,UnitDrawInfo* unitinfo,int ViewLeft,int ViewTop)
+void DrawMgr::DrawPlayer(Player* player,UnitDrawInfo::UnitInfo* unitinfo,int ViewLeft,int ViewTop)
 {
 	D3DXVECTOR3 v(player->GetX()-ViewLeft,player->GetY()-ViewTop,0);
 	pSprite->Draw(unitinfo->TextureInfo->pTexture,NULL,NULL,&v,0xFFFFFFFF);
@@ -116,13 +118,13 @@ void DrawMgr::DrawPlayer(Player* player,UnitDrawInfo* unitinfo,int ViewLeft,int 
 	pSprite->Draw(Crosshair->TextureInfo->pTexture,NULL,NULL,&v,0xFFFFFFFF);
 }
 
-void DrawMgr::DrawBullet(Bullet* bullet,UnitDrawInfo* unitinfo,int ViewLeft,int ViewTop)
+void DrawMgr::DrawBullet(Bullet* bullet,UnitDrawInfo::UnitInfo* unitinfo,int ViewLeft,int ViewTop)
 {
 	D3DXVECTOR3 v(bullet->GetX()-ViewLeft,bullet->GetY()-ViewTop,0);
 	pSprite->Draw(unitinfo->TextureInfo->pTexture,NULL,NULL,&v,0xFFFFFFFF);
 }
 
-void DrawMgr::DrawExplosion(Explosion* explosion,UnitDrawInfo* unitinfo,int ViewLeft,int ViewTop)
+void DrawMgr::DrawExplosion(Explosion* explosion,UnitDrawInfo::UnitInfo* unitinfo,int ViewLeft,int ViewTop)
 {
 	D3DXVECTOR3 v(explosion->GetX()-ViewLeft-10,explosion->GetY()-ViewTop-10,0);	// -10 is because the explosion animation is bigger than the real explosion
 	RECT SrcRect = {unitinfo->AnimationCurrentFrame*(explosion->GetWidth()+20),0,unitinfo->AnimationCurrentFrame*(explosion->GetWidth()+20)+(explosion->GetWidth()+20),explosion->GetHeight()+20};

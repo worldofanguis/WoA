@@ -8,58 +8,40 @@
  *                    World Of Anguis
  *
  */
- 
+
+
 #include "UnitDrawInfo.h"
 
-std::map<const char*,UnitDrawInfo::STextureInfo*> UnitDrawInfo::Textures;		// Static initialization o.O //
-
-UnitDrawInfo::UnitDrawInfo(char* TextureName,FLAGS Flag)
+UnitDrawInfo::UnitDrawInfo()
 {
-	this->Flag = Flag;
-	AnimationCurrentFrame = -1;
-
-	if(Flag == INVISIBLE)
-		{
-		TextureInfo = NULL;
-		return;
-		}
-
-	for(std::map<const char*,UnitDrawInfo::STextureInfo*>::iterator it=Textures.begin();it!=Textures.end();it++)
-		{
-		if(strcmp(it->first,TextureName) == NULL)
-			{
-			TextureInfo = it->second;
-			return;
-			}
-		}
-	throw "CantFindTheTexture";
 }
 
 UnitDrawInfo::~UnitDrawInfo()
 {
+	UnloadTextures();
 }
 
 bool UnitDrawInfo::PreloadTextures(LPDIRECT3DDEVICE9 pDevice)
 {
-	Textures.clear();
+	TextureMap.clear();
 	STextureInfo* TInfo;
 
-	if((TInfo = LoadTexture(pDevice,"..\\..\\pic\\Player\\Player1.bmp")) != NULL)		Textures["Player_1"] = TInfo; else return false;
-//	if((TInfo = LoadTexture(pDevice,"..\\..\\pic\\Bullet\\Explosion.bmp")) != NULL)		Textures["Explosion"] = TInfo; else return false;
-//	if((TInfo = LoadTexture(pDevice,"..\\..\\pic\\Bullet\\Def.bmp")) != NULL)			Textures["Bullet_Def"] = TInfo; else return false;
-	if((TInfo = LoadTexture(pDevice,"..\\..\\pic\\Weapon\\Crosshair.bmp")) != NULL)		Textures["Crosshair"] = TInfo; else return false;
+	if((TInfo = LoadTexture(pDevice,"..\\..\\pic\\Player\\Player1.bmp")) != NULL)		TextureMap["Player_1"] = TInfo; else return false;
+	if((TInfo = LoadTexture(pDevice,"..\\..\\pic\\Bullet\\Explosion.bmp")) != NULL)		TextureMap["Explosion"] = TInfo; else return false;
+	if((TInfo = LoadTexture(pDevice,"..\\..\\pic\\Bullet\\Def.bmp")) != NULL)			TextureMap["Bullet_Def"] = TInfo; else return false;
+	if((TInfo = LoadTexture(pDevice,"..\\..\\pic\\Weapon\\Crosshair.bmp")) != NULL)		TextureMap["Crosshair"] = TInfo; else return false;
 
 return true;
 }
 
 void UnitDrawInfo::UnloadTextures()
 {
-	for(std::map<const char*,UnitDrawInfo::STextureInfo*>::iterator it=Textures.begin();it!=Textures.end();it++)
+	for(std::map<const char*,UnitDrawInfo::STextureInfo*>::iterator it=TextureMap.begin();it!=TextureMap.end();it++)
 		{
 		SAFE_RELEASE(it->second->pTexture);
 		delete it->second;
 		}
-	Textures.clear();
+	TextureMap.clear();
 }
 
 UnitDrawInfo::STextureInfo* UnitDrawInfo::LoadTexture(LPDIRECT3DDEVICE9 pDevice,char* FileName)
@@ -103,4 +85,30 @@ UnitDrawInfo::STextureInfo* UnitDrawInfo::LoadTexture(LPDIRECT3DDEVICE9 pDevice,
 								&(TInfo->pTexture));
 
 return TInfo;
+}
+
+UnitDrawInfo::STextureInfo* UnitDrawInfo::GetTextureInfo(char* TextureName)
+{
+	for(std::map<const char*,UnitDrawInfo::STextureInfo*>::iterator it=TextureMap.begin();it!=TextureMap.end();it++)
+		{
+		if(strcmp(it->first,TextureName) == NULL)
+			return it->second;
+		}
+
+return NULL;
+}
+
+UnitDrawInfo::UnitInfo::UnitInfo(char* TextureName,FLAGS Flag)
+{
+	this->Flag = Flag;
+	AnimationCurrentFrame = -1;
+	AnimationFrameLastUpdateTime = 0;
+
+	if(Flag == INVISIBLE)
+		{
+		TextureInfo = NULL;
+		return;
+		}
+
+	TextureInfo = sUnitDrawInfo->GetTextureInfo(TextureName);
 }

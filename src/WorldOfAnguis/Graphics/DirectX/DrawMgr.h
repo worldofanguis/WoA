@@ -33,7 +33,7 @@
 #include "Units/Explosion/Explosion.h"
 #include "Units/UnitDrawInfo.h"
 
-typedef std::pair<Unit*,UnitDrawInfo*> UnitInfo;
+typedef std::pair<Unit*,UnitDrawInfo::UnitInfo*> UnitInfo;
 class DrawMgr : public Singleton<DrawMgr>
 {
 public:
@@ -49,9 +49,9 @@ public:
 private:
 	bool InSight(Unit* unit,int ViewLeft,int ViewTop);
 
-	void DrawPlayer(Player* player,UnitDrawInfo* unitinfo,int ViewLeft,int ViewTop);
-	void DrawBullet(Bullet* bullet,UnitDrawInfo* unitinfo,int ViewLeft,int ViewTop);
-	void DrawExplosion(Explosion* explosion,UnitDrawInfo* unitinfo,int ViewLeft,int ViewTop);
+	void DrawPlayer(Player* player,UnitDrawInfo::UnitInfo* unitinfo,int ViewLeft,int ViewTop);
+	void DrawBullet(Bullet* bullet,UnitDrawInfo::UnitInfo* unitinfo,int ViewLeft,int ViewTop);
+	void DrawExplosion(Explosion* explosion,UnitDrawInfo::UnitInfo* unitinfo,int ViewLeft,int ViewTop);
 
 	std::vector<UnitInfo> Objects;
 	std::vector<UnitInfo>::iterator it;
@@ -61,7 +61,7 @@ private:
 	
 	DWORD CurrentTime;
 	
-	UnitDrawInfo* Crosshair;
+	UnitDrawInfo::UnitInfo* Crosshair;
 	
 	LPD3DXSPRITE pSprite;
 };

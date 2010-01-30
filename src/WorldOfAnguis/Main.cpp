@@ -10,7 +10,9 @@
  */
 
 
-#define __SHOW_STUPID_WARNINGS__		// Debug //
+#ifdef _DEBUG
+#define __SHOW_STUPID_WARNINGS__
+#endif
 
 #include "Common.h"
 #include "Graphics/DirectX/DirectXInterface.h"
@@ -40,7 +42,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLin
 	delete sDXInterface;
 	
 	ReleaseMutex(hMutex);
-
+	
 #ifdef _DEBUG
 	_CrtDumpMemoryLeaks();
 #endif
