@@ -42,7 +42,7 @@ public:
 	
 	void Setup(LPDIRECT3DDEVICE9 pDevice,LPD3DXSPRITE pSprite,int Width,int Height);
 	
-	void RegisterUnit(Unit* unit,char* TextureName,UnitDrawInfo::FLAGS Flag);
+	void RegisterUnit(Unit* unit,char* TextureName,UnitDrawInfo::UnitInfo::FLAGS Flag);
 	void UnRegisterUnit(Unit* unit);
 	
 	void Draw(int ViewLeft,int ViewTop);

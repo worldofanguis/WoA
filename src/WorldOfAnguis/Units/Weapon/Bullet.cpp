@@ -30,7 +30,7 @@ Bullet::Bullet(Player* Creator,int X,int Y,float Angle,TYPES Type) : Unit(X,Y,BU
 			Damage = 2;
 			R = 50;
 		
-			sDrawMgr->RegisterUnit((Unit*)this,"Bullet_Def",UnitDrawInfo::REMOVE_NEVER);
+			sDrawMgr->RegisterUnit((Unit*)this,"Bullet_Def",UnitDrawInfo::UnitInfo::REMOVE_OBJMGR);
 			break;
 		}
 	

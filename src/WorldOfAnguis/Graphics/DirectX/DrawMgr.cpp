@@ -42,10 +42,10 @@ void DrawMgr::Setup(LPDIRECT3DDEVICE9 pDevice,LPD3DXSPRITE pSprite,int Width,int
 	if(!sUnitDrawInfo->PreloadTextures(pDevice))
 		throw "Phail!";
 	
-	Crosshair = new UnitDrawInfo::UnitInfo("Crosshair",UnitDrawInfo::REMOVE_NEVER);
+	Crosshair = new UnitDrawInfo::UnitInfo("Crosshair",UnitDrawInfo::UnitInfo::REMOVE_OBJMGR);
 }
 
-void DrawMgr::RegisterUnit(Unit* unit,char* TextureName,UnitDrawInfo::FLAGS Flag)
+void DrawMgr::RegisterUnit(Unit* unit,char* TextureName,UnitDrawInfo::UnitInfo::FLAGS Flag)
 {
 	Objects.push_back(UnitInfo(unit,new UnitDrawInfo::UnitInfo(TextureName,Flag)));
 }
@@ -76,7 +76,7 @@ void DrawMgr::Draw(int ViewLeft,int ViewTop)
 	CurrentTime = GetMSTime();
 	for(it=Objects.begin();it!=Objects.end();it++)
 		{
-		if(it->second->Flag == UnitDrawInfo::INVISIBLE)
+		if(it->second->Flag == UnitDrawInfo::UnitInfo::INVISIBLE)
 			continue;		// Invisible objects are ignored //
 
 		if(GetMSTimeDiff(it->second->AnimationFrameLastUpdateTime,CurrentTime) > it->second->TextureInfo->AnimationSpeed)
@@ -84,7 +84,7 @@ void DrawMgr::Draw(int ViewLeft,int ViewTop)
 			it->second->AnimationFrameLastUpdateTime = CurrentTime;
 			if(++(it->second->AnimationCurrentFrame) == it->second->TextureInfo->AnimationLastFrame)
 				{	// Reached the last animation frame, remove the object, or start again //
-				if(it->second->Flag == UnitDrawInfo::REMOVE_AT_LAST_FRAME)
+				if(it->second->Flag == UnitDrawInfo::UnitInfo::REMOVE_AT_LAST_FRAME)
 					it->first->SetState(Unit::STATE_INACTIVE);
 				else
 					it->second->AnimationCurrentFrame = 0;

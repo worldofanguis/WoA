@@ -28,7 +28,7 @@ Player::Player(int X,int Y,int SkinID) : Unit(X,Y,PLAYER)
 	
 	char PlayerTexture[MAX_PATH];
 	sprintf_s(PlayerTexture,sizeof(PlayerTexture),"Player_%d",SkinID);
-	sDrawMgr->RegisterUnit((Unit*)this,PlayerTexture,UnitDrawInfo::REMOVE_NEVER);
+	sDrawMgr->RegisterUnit((Unit*)this,PlayerTexture,UnitDrawInfo::UnitInfo::REMOVE_OBJMGR);
 }
 
 Player::~Player()

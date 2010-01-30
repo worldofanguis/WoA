@@ -26,9 +26,9 @@ Explosion::Explosion(Player* Creator,int X,int Y,int R,int Damage,bool Visible) 
 	ZeroMemory(Map,4*radius*radius);
 	
 	if(Visible)
-		sDrawMgr->RegisterUnit((Unit*)this,"Explosion",UnitDrawInfo::REMOVE_AT_LAST_FRAME);
+		sDrawMgr->RegisterUnit((Unit*)this,"Explosion",UnitDrawInfo::UnitInfo::REMOVE_AT_LAST_FRAME);
 	else
-		sDrawMgr->RegisterUnit((Unit*)this,NULL,UnitDrawInfo::INVISIBLE);
+		sDrawMgr->RegisterUnit((Unit*)this,NULL,UnitDrawInfo::UnitInfo::INVISIBLE);
 }
 
 Explosion::~Explosion()
