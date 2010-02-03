@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WorldOfAnguis", "VS2005\WorldOfAnguis.vcproj", "{17C9A75B-9A8B-4BCA-B57E-D4FC0ABE9939}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WorldOfAnguis", "VS2008\WorldOfAnguis.vcproj", "{17C9A75B-9A8B-4BCA-B57E-D4FC0ABE9939}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WoAServer", "VS2005\WoAServer.vcproj", "{C474AF34-B00C-4210-B90C-0FE69366BCC1}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WoAServer", "VS2008\WoAServer.vcproj", "{C474AF34-B00C-4210-B90C-0FE69366BCC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
