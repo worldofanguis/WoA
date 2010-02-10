@@ -49,7 +49,7 @@ UnitDrawInfo::STextureInfo* UnitDrawInfo::LoadTexture(LPDIRECT3DDEVICE9 pDevice,
 	FILE* FKez;
 	BITMAPFILEHEADER bmfh;
 	BITMAPINFOHEADER bmih;
-	
+
 	fopen_s(&FKez,FileName,"rb");
 	fread(&bmfh,sizeof(BITMAPFILEHEADER),1,FKez);
 	if(bmfh.bfType != 0x4D42)		// check if its a BMP (BM flag) //
@@ -60,14 +60,27 @@ UnitDrawInfo::STextureInfo* UnitDrawInfo::LoadTexture(LPDIRECT3DDEVICE9 pDevice,
 
 	fread(&bmih,sizeof(BITMAPINFOHEADER),1,FKez);
 	fclose(FKez);
-	
+
 	STextureInfo *TInfo = new STextureInfo;
 	TInfo->Width = bmih.biWidth;
 	TInfo->Height = bmih.biHeight;
-	
-	/* This must be read from a file */
-	TInfo->AnimationLastFrame = 20;
-	TInfo->AnimationSpeed = 25;		// Framechange delay //
+
+	/* Loadin the info file which contains additional informations about the unit texture (used for animations only) */
+	char InfoFile[MAX_PATH];
+	sprintf_s(InfoFile,sizeof(InfoFile),"%s.info.txt",FileName);
+	fopen_s(&FKez,InfoFile,"r");
+
+	if(FKez == NULL)
+		{
+		TInfo->AnimationLastFrame = 0;
+		TInfo->AnimationSpeed = 0;
+		}
+	else
+		{
+		fscanf_s(FKez,"FrameCount: %d\n",&TInfo->AnimationLastFrame,sizeof(TInfo->AnimationLastFrame));
+		fscanf_s(FKez,"AnimationSpeed: %d\n",&TInfo->AnimationSpeed,sizeof(TInfo->AnimationSpeed));
+		fclose(FKez);
+		}
 
 	D3DXCreateTextureFromFileEx(pDevice,						// Device
 								FileName,

@@ -1,0 +1,2 @@
+FrameCount: 20
+AnimationSpeed: 25
