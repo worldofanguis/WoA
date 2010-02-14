@@ -124,9 +124,6 @@ void GameController::Render()
 	// Drawing the HUD //
 	sHudView->Draw();												// and the hud //
 
-	/* Example for using the sSceenLog class */
-//	sScreenLog->DrawNow(&diff,ScreenLog::Track::UINT,20,30,0xFFFF0000);
-	
 	DXI->EndScene();
 }
 

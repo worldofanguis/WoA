@@ -45,7 +45,10 @@ private:
 	LPDIRECT3DTEXTURE9 pHUD;
 	/* Texture for the life bar */
 	LPDIRECT3DTEXTURE9 pLifeBar;
+	
 	RECT rLifeBar;
+	
+	int HUDStartY;
 	
 	char ScoreText[10];
 

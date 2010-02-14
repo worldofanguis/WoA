@@ -46,6 +46,8 @@ public:
 	void Draw(int Left,int Top,int Width,int Height);
 	/* Updates the pSurface (Terrain), should be called after exlosions */ 
 	void UpdateSurface(char *Map,int MapWidth,int PixelPerHitMap,RECT* DirtyRegion);
+	
+	LPDIRECT3DTEXTURE9 GetDisplaySurface() {return pDisplaySurface;}
 private:
 	int SurfaceWidth;
 	int SurfaceHeight;
