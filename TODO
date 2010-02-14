@@ -12,7 +12,7 @@
 
 
 =========== Things to add ==========
-	* DeltaTime for movement
+	* DeltaTime for movement - Implemented VSync till we have DeltaTime
 	* Jumping
 	* Weapons, weapons, weapons
 	* Rope
@@ -23,7 +23,6 @@
 
 =============== Bugs ===============
 Important:
-	* Explosions on one side affects the other side too (to check it disable dirtyregion update)
 	* Aiming
 	* Unit<->Unit collision, needs a little correction
 	*

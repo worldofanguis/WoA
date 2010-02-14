@@ -27,7 +27,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLin
 		}
 	HANDLE hMutex = CreateMutex(NULL,false,"WoA");
 	
-	if(FAILED(sDXInterface->Initialize(hInstance,true)))		// Initializing the DirectX interface:
+	if(FAILED(sDXInterface->Initialize(hInstance,true,true)))		// Initializing the DirectX interface:
 		{														//	creating window, and d3d device
 		MessageBox(HWND_DESKTOP,"U FAIL!",">_<",MB_OK);
 		return 0;

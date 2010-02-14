@@ -66,7 +66,7 @@ void DirectXInterface::MessagePump()
 		}
 }
 
-HRESULT DirectXInterface::Initialize(HINSTANCE hInstance,bool Windowed)
+HRESULT DirectXInterface::Initialize(HINSTANCE hInstance,bool Windowed,bool EnableVSync)
 {
 	this->hInstance = hInstance;
 	if(!CreateAppWindow())			// Create the apps window
@@ -88,22 +88,25 @@ HRESULT DirectXInterface::Initialize(HINSTANCE hInstance,bool Windowed)
 			return E_FAIL;
 
 		d3dpp.Windowed				= TRUE;
-		d3dpp.SwapEffect			= D3DSWAPEFFECT_DISCARD;
 		d3dpp.BackBufferFormat		= d3ddm.Format;									// D3DFMT_X8R8G8B8 !!! // 
-		d3dpp.PresentationInterval	= D3DPRESENT_INTERVAL_IMMEDIATE;				// D3DPRESENT_INTERVAL_ONE
 		}
 	else
 		{
 		d3dpp.Windowed               = FALSE;
-		d3dpp.SwapEffect             = D3DSWAPEFFECT_DISCARD;
 		d3dpp.BackBufferWidth        = 1024;
 		d3dpp.BackBufferHeight       = 768;
 		d3dpp.BackBufferFormat       = D3DFMT_X8R8G8B8;
-		d3dpp.PresentationInterval   = D3DPRESENT_INTERVAL_IMMEDIATE;
 		
 		ShowCursor(false);		 		// Hide cursor //
 		}
 
+	d3dpp.SwapEffect			 = D3DSWAPEFFECT_DISCARD;
+
+	if(EnableVSync)
+		d3dpp.PresentationInterval   = D3DPRESENT_INTERVAL_ONE;
+	else
+		d3dpp.PresentationInterval   = D3DPRESENT_INTERVAL_IMMEDIATE;
+		
 	// Create D3D Device //
 	if(FAILED(pD3D->CreateDevice(D3DADAPTER_DEFAULT,D3DDEVTYPE_HAL,hwnd,D3DCREATE_HARDWARE_VERTEXPROCESSING,&d3dpp,&pD3DDevice)))
         return E_FAIL;

@@ -39,7 +39,7 @@ public:
 	DirectXInterface();
 	~DirectXInterface();
 	
-	HRESULT Initialize(HINSTANCE hInstance,bool Windowed);			// Initializes DirectX //
+	HRESULT Initialize(HINSTANCE hInstance,bool Windowed,bool EnableVSync = false);			// Initializes DirectX //
 	void Cleanup();													// Cleanup DirectX //
 	
 	HINSTANCE GetInstance() {return hInstance;}
