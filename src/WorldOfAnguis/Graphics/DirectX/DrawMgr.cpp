@@ -126,7 +126,7 @@ void DrawMgr::DrawBullet(Bullet* bullet,UnitDrawInfo::UnitInfo* unitinfo,int Vie
 
 void DrawMgr::DrawExplosion(Explosion* explosion,UnitDrawInfo::UnitInfo* unitinfo,int ViewLeft,int ViewTop)
 {
-	D3DXVECTOR3 v(explosion->GetX()-ViewLeft-10,explosion->GetY()-ViewTop-10,0);	// -10 is because the explosion animation is bigger than the real explosion
-	RECT SrcRect = {unitinfo->AnimationCurrentFrame*(explosion->GetWidth()+20),0,unitinfo->AnimationCurrentFrame*(explosion->GetWidth()+20)+(explosion->GetWidth()+20),explosion->GetHeight()+20};
+	D3DXVECTOR3 v(explosion->GetX()-ViewLeft,explosion->GetY()-ViewTop,0);
+	RECT SrcRect = {unitinfo->AnimationCurrentFrame*(explosion->GetWidth()),0,unitinfo->AnimationCurrentFrame*(explosion->GetWidth())+(explosion->GetWidth()),explosion->GetHeight()};
 	pSprite->Draw(unitinfo->TextureInfo->pTexture,&SrcRect,NULL,&v,0xFFFFFFFF);
 }

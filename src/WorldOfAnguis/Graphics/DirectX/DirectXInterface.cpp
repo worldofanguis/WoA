@@ -109,7 +109,10 @@ HRESULT DirectXInterface::Initialize(HINSTANCE hInstance,bool Windowed,bool Enab
 		
 	// Create D3D Device //
 	if(FAILED(pD3D->CreateDevice(D3DADAPTER_DEFAULT,D3DDEVTYPE_HAL,hwnd,D3DCREATE_HARDWARE_VERTEXPROCESSING,&d3dpp,&pD3DDevice)))
-        return E_FAIL;
+		{			// If hardware vertexprocessing fails try software
+		if(FAILED(pD3D->CreateDevice(D3DADAPTER_DEFAULT,D3DDEVTYPE_HAL,hwnd,D3DCREATE_SOFTWARE_VERTEXPROCESSING,&d3dpp,&pD3DDevice)))	
+			return E_FAIL;
+        }
 
 	pD3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 	pD3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);

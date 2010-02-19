@@ -1,2 +1,2 @@
-FrameCount: 20
+FrameCount: 10
 AnimationSpeed: 25
